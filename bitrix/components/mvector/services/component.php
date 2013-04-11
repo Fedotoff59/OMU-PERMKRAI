@@ -71,7 +71,6 @@ $arResult = array(
    "ALIASES" => $arVariableAliases
 );
 
-$arProviders = Array(31, 65, 66, 67, 68, 69, 70);
 
 $arParams = array(
 'IB_SERVICES_ID' => 20,
