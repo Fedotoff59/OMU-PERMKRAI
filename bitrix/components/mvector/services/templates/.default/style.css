@@ -1,0 +1,33 @@
+    .slider {
+        width: 200px; 
+        margin-top: 5px;
+        float: left;
+    }
+    
+    .amount {
+        border: 0; 
+        color: red; 
+        font-weight: bold; 
+        margin-top: 5px; 
+        float: right;
+    }
+    
+    #ajax-commentform {
+        display: none;
+        width: 400px;
+        min-height: 300px;
+    }
+    
+    #add-comment-form {
+        padding: 20px 20px 0;
+    }
+    
+    .link-comment {
+        color: #2775C7;
+        text-decoration: none; 
+        border-bottom: 1px dashed;
+    }
+    
+    .link-comment:hover {
+        color: #2775C7;
+    }

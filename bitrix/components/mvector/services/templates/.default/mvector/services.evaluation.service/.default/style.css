@@ -1,0 +1,13 @@
+    .slider {
+        width: 200px; 
+        margin-top: 5px;
+        float: left;
+    }
+    
+    .amount {
+        border: 0; 
+        color: red; 
+        font-weight: bold; 
+        margin-top: 5px; 
+        float: right;
+    }
