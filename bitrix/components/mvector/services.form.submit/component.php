@@ -1,0 +1,11 @@
+<?
+/*
+ * 
+ * 
+ */
+
+$arResult = Array();
+
+       
+$this->IncludeComponentTemplate();
+?>

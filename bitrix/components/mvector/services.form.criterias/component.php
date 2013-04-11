@@ -1,5 +1,9 @@
 <?
-echo '<pre>'; print_r($arParams); echo '</pre>';
+/*
+ * Компонент формирует перечень критериев для выбранной услуги.
+ * Данные выводятся в виде формы с полузнками 
+ */
+
 if(CModule::IncludeModule("iblock")):
 
 // Получаем полное и скоращенное наименование услуги
@@ -17,13 +21,14 @@ if($ar_res = $res->GetNext())
 
 // Формируем данные для формы оценки
     $arFields = array();
+// Получаем по ID услуги IDs соответствующих критериев
     $db_props = CIBlockElement::GetProperty($arParams['IB_SERVICES_ID'], 
                 $arParams['SERVICE_ID'], "sort", "asc", array("CODE" => "CRITERIAS"));
     while ($ob = $db_props->GetNext())
     {
         if ($ob['VALUE'])
-        {
-           $arSelect = Array("ID","NAME"); // выборка имен критериев
+        {   // Зная IDs критериев оценки, получаем их имена
+           $arSelect = Array("ID","NAME"); 
            $arFilter = Array("IB_SERVICES_ID"=>$arParams['IB_CRITERIAS_ID'], 
                             "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y","ID"=>$ob['VALUE']);
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
@@ -35,7 +40,9 @@ if($ar_res = $res->GetNext())
     }
  
 //Передаем критерии шаблону   
-    $arResult['CRITERIAS'] = $arFields; 
+    $arResult['CRITERIAS'] = $arFields;
+    
+// Определяем имя формы
 
 endif;
 
