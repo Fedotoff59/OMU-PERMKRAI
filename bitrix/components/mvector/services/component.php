@@ -1,7 +1,6 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
 <?
-echo 'test';
 $arDefaultUrlTemplates404 = array(
    "services.list.services" => "index.php",
    "services.evaluation.service" => "#SERVICE_ID#/#LOCATION_ALIAS#",
