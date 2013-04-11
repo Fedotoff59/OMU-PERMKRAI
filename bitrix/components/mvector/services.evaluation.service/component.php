@@ -10,7 +10,7 @@ $_SESSION['COMMENT']['SERVICE_ID'] = $arParams['SERVICE_ID'];
 
 // Задаем имя формы для организации ajax взаимодействия
 $arResult['CRITERIAS_FORM_ID'] = 'criteriasform';
-
+ 
 $this->IncludeComponentTemplate();
 
 echo '<pre>'; echo print_r($arParams); echo '</pre>'; 
