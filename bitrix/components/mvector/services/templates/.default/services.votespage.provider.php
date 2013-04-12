@@ -2,7 +2,7 @@
 
 <?
 $APPLICATION->IncludeComponent(
-"mvector:services.evaluation.provider",
+"mvector:services.votespage.provider",
 ".default",
 Array('IB_SERVICES_ID' => $arParams['IB_SERVICES_ID'],
         'IB_CRITERIAS_ID' => $arParams['IB_CRITERIAS_ID'],

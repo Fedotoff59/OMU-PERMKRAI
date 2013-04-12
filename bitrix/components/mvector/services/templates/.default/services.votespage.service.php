@@ -54,9 +54,9 @@ if ($arProviders) // В зависимости от того, есть ли по
     }
     
 }
-else {  // Если поставщиков вообще нет, подключаем форму выбранной услуги
+else {  // Если поставщиков вообще нет, подключаем страницу с формой оценки выбранной услуги
         $APPLICATION->IncludeComponent(
-        "mvector:services.evaluation.service",
+        "mvector:services.votespage.service",
         ".default",
         Array(  'IB_SERVICES_ID' => $arParams['IB_SERVICES_ID'],
                 'IB_CRITERIAS_ID' => $arParams['IB_CRITERIAS_ID'],
