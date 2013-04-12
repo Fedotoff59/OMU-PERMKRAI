@@ -3,8 +3,8 @@
 <?
 $arDefaultUrlTemplates404 = array(
    "services.list.services" => "index.php",
-   "services.evaluation.service" => "#SERVICE_ID#/#LOCATION_ALIAS#",
-   "services.evaluation.provider" => "#SERVICE_ID#/providers/#LOCATION_ALIAS#/#PROVIDER_ID#",
+   "services.votespage.service" => "#SERVICE_ID#/#LOCATION_ALIAS#",
+   "services.votespage.provider" => "#SERVICE_ID#/providers/#LOCATION_ALIAS#/#PROVIDER_ID#",
 );
 
 $arDefaultVariableAliases404 = array();
