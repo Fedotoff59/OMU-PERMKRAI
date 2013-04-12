@@ -2,8 +2,17 @@
 
 <h2><? echo $arResult['SERVICE_FULL_NAME']; ?></h2>
 
-<form id="<?echo $arParams['CRITERIAS_FORM_ID'];?>" action="javascript:void();" method="post" enctype="multipart/form-data">
+<form id="<?echo $arParams['CRITERIAS_FORM_ID'];?>" action="javascript:void()" method="post" enctype="multipart/form-data">
     <?=bitrix_sessid_post()?>
+    <input type="hidden"
+           name="service_id"
+           value="<?echo $arParams['SERVICE_ID'];?>">
+    <input type="hidden"
+           name="service_name"
+           value="<?echo $arResult['SERVICE_NAME'];?>">
+    <input type="hidden"
+           name="location_id"
+           value="<?echo $arParams['LOCATION_ID'];?>">
     <table width="100%" border="0">
         <tr>
             <td>Ссылка на регламент</td>
@@ -48,11 +57,11 @@
                         <td valign="top" width="20">
                             <span class="amount">3</span>
                             <input  type="hidden" 
-                                    name="criteria_<? echo $i // индексируем поле для хранения кода критерия?>" 
-                                    value="<? echo $elName['ID'] // сохраняем код критерия ?>">
+                                    name="criteria_<? echo $i; // индексируем поле для хранения кода критерия?>" 
+                                    value="<? echo $elName['ID']; // сохраняем код критерия ?>">
                             <input  type="hidden"  
                                     class="val_keeper" 
-                                    name="eval_<? echo $i // устанавливаем значение оценки по умолчанию?>" 
+                                    name="eval_<? echo $i; // устанавливаем значение оценки по умолчанию?>" 
                                     value="3">
                         </td>
                     </tr>

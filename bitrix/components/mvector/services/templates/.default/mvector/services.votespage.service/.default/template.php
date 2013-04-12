@@ -41,8 +41,8 @@
                             "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
                             "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
                             "IB_LOCATIONS_ID" => $arParams['IB_LOCATIONS_ID'],
-                            "CURRENT_LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "CURRENT_SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
                             "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID']
                           )
             );?>
