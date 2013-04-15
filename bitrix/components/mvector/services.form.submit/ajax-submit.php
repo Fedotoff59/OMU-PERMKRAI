@@ -1,81 +1,110 @@
 <?
 /*
- * Файл служит для проверки запроса с данными об оценке.
- * В случае удачной проверки происходит отправка результата в виде сообщения
+ * Скрипт служит для проверки запроса с данными об оценке.
+ * Скрипт проверяет права пользователя на голосование в соответствии с установленными ограничениями.
+ * В случае успешной проверки - оценки сохраняются в БД.
+ * В случае неудачи выводится соответствующее сообщение об ошибке.
+ * Запись о неудачной попытке так же сохраняется в БД
  * 
  */
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
-$ERR_MESSAGE_ = '';
-
-function get_voting_obj ($LOCATION_ID, $SERVICE_ID, $PROVIDER_ID = 0) {
-    //
-    $arVotingObj = Array(
-        'TYPE' => NULL,
-        'LOCATION_ID' => $LOCATION_ID,
-        'SERVICE_ID' => $SERVICE_ID,
-        'PROVIDER_ID' => $PROVIDER_ID
-    );
-    if ($PROVIDER_ID == 0)
-        $arVotingObj['TYPE'] = 'SERVICE';
-    else 
-        $arVotingObj['TYPE'] = 'PROVIDER';
-    
-    return $arVotingObj;
-}
+define("ERR_MESSAGE_PERIOD", "Ошибка периода");
+define("ERR_MESSAGE_LOCATION", "Ошибка территории");
+define("ERR_MESSAGE_UNREGISTERED", "Ошибка! Необходимо зарегистрироваться!");
+define("THANKYOU_MESSAGE", "Спасибо, Ваш голос учтен!");
 
 function get_post_request($_POST) {
-        $arVotingFields = array(
-            'PROVIDER' => $_POST['provider_id'], // Этот параметр нужно определить
-            'SERVICE' => $_POST['service_id'], // Этот параметр нужно определить
+    global $USER;
+    $arResult = Array(); 
+    $arVotingFields = Array(
+            'PROVIDER' => $_POST['provider_id'], 
+            'SERVICE' => $_POST['service_id'], 
             'SERVICEDATE' => $_POST['service_date'],
-            'VALUATIONDATE' => date("d.m.Y"),
-            'CRITERIAVALUES' => array(),
-            'LOCATION' => $arParams['LOCATION_ID'],
+            'DATEOFVOTE' => date("d.m.Y"),
+            'CRITERIAVALUES' => Array(),
+            'LOCATION' => $_POST['location_id'],
             'USERID' => $USER->GetID(),
-            'USERIP' => $_SERVER['REMOTE_ADDR'],
-            //'USER_SESSION_ID' => $_POST['sessid']
+            'USERIP' => $_SERVER['REMOTE_ADDR']
             );
     for ($i = 1; $i <= intval($_POST['count_values']); $i++)
-            {$arFields['CRITERIAVALUES'][$_POST['criteria_'.$i]] = $_POST['eval_'.$i];}
+            $arVotingFields['CRITERIAVALUES'][$_POST['criteria_'.$i]] = $_POST['eval_'.$i];
+    $arResult['SERVICE_NAME'] = $_POST['service_name'];
+    $arResult['LOCATION_NAME'] = $_POST['location_name'];
+    $arResult['IB_VALUES_ID'] = $_POST['ib_values_id'];
+    $arResult['FIELDS'] = $arVotingFields;
+    return $arResult;
 }
 
+function save_vote($arVoteParams, $STATUS) {
+    // Формируем поля для записи в БД
+    // Формируем сообщение в соответствии со статусом оценки
+    $STATUS_ID = 5; // ERR_UNDEFINED
+    switch ($STATUS) {
+        case 'OK': $SAVE_MESSAGE = THANKYOU_MESSAGE; $STATUS_ID = 1; break;
+        case 'ERR_PERIOD': $SAVE_MESSAGE = ERR_MESSAGE_PERIOD; $STATUS_ID = 2; break;
+        case 'ERR_LOCATION': $SAVE_MESSAGE = ERR_MESSAGE_LOCATION; $STATUS_ID = 3; break;
+        case 'ERR_UNREGISTERED': $SAVE_MESSAGE = ERR_MESSAGE_UNREGISTERED; $STATUS_ID = 4; break;
+    }
+    $arVoteParams['FIELDS']['STATUS'] = Array("VALUE" => $STATUS_ID);
+    $arAddValuesElement = Array(
+        "NAME" => $arVoteParams['SERVICE_NAME'].' - '.$arVoteParams['LOCATION_NAME'],
+        "MODIFIED_BY" => $arVoteParams['FIELDS']['USERID'], // элемент изменен текущим пользователем
+        "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+        "IBLOCK_ID" => $arVoteParams['IB_VALUES_ID'],                // ID блока с оценками 
+        "PROPERTY_VALUES"=> $arVoteParams['FIELDS']
+        );
 
-function check_voting_obj_aceess($USER, $VOTING_OBJ) {
-    //
-    // Получить территорию текущего пользователя
-    $LOCATION_ID = '';
-}
-
-global $USER;
-
-if(CModule::IncludeModule("iblock")):
-if (isset($_POST['count_values'])) // Записываем оценку пользователя в базу
-{
-
-    echo '<p style="color: #f00;"><strong>Спасибо за оценку</strong></p>';
-    echo '<pre>'; echo print_r($arFields); echo '</pre>';
+    // Записываем оценку пользователя в базу
+    // Выводим сообщение о статусе оценки или об ошибке сохранения
     
     $el = new CIBlockElement;
-    
-    $arAddValuesElement = Array(
-        'NAME' => $arResult['SERVICE_NAME'].' - '.$arParams['LOCATION_NAME'],
-        "MODIFIED_BY" => $USER->GetID(), // элемент изменен текущим пользователем
-        "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
-        "IBLOCK_ID" => $arParams['IB_VALUES_ID'],                // ID блока с оценками 
-        "PROPERTY_VALUES"=> $arFields
-  );
-
-   // echo '<pre>'; print_r($arAddValuesElement); echo '</pre>';
-    
+    echo '<p style="color: #f00;"><strong>';
     if($EVAL_ID = $el->Add($arAddValuesElement))
-        echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
+        echo $SAVE_MESSAGE;
+        // echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
     else
         echo "Ошибка: ".$el->LAST_ERROR;
- 
- //echo '<pre>'; echo print_r($_POST); echo '</pre>';
-//echo 'Спасибо за оценку';
+    echo '</strong></p>';
+
 }
+
+
+function check_vote_aceess($arVoteParams) {
+    //
+    $STATUS = 'OK';
+    global $USER;
+    if (!$USER->GetID()) {
+        $STATUS = 'ERR_UNREGISTERED';
+        return $STATUS;
+    }
+    $rsUser = CUser::GetByID($USER);
+    $arUser = $rsUser->Fetch();
+    if($arUser["UF_LOCATION"] != $arVoteParams['FIELDS']['LOCATION']) {
+        $STATUS = 'ERR_LOCATION';
+        return $STATUS;
+    }
+    $date_of_vote = new DateTime('14.04.2012 19:00:39');
+    $cur_date = date('d.m.Y H:i:s');
+    $current_date = new DateTime('15.04.2013 21:00:38');
+    $interval = $current_date->diff($date_of_vote);
+    echo $interval->days;
+    //echo $cur_date;
+    return $STATUS;
+}
+
+if(CModule::IncludeModule("iblock")):
+if (isset($_POST['count_values'])) 
+{
+    // Получаем необходимые данные из POST запроса
+    $arVoteParams = get_post_request($_POST);
+    // Проверяем доступ пользователя
+    $vote_aceess =  check_vote_aceess($arVoteParams);
+    // Сохраняем оценки в БД
+    save_vote($arVoteParams, $vote_aceess);
+
+   //echo '<pre>'; print_r($arUser); echo '</pre>';
+ }
 endif;
 ?>

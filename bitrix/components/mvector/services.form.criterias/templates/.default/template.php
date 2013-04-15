@@ -5,14 +5,23 @@
 <form id="<?echo $arParams['CRITERIAS_FORM_ID'];?>" action="javascript:void()" method="post" enctype="multipart/form-data">
     <?=bitrix_sessid_post()?>
     <input type="hidden"
+           name="ib_values_id"
+           value="<?echo $arParams['IB_VALUES_ID'];?>">
+    <input type="hidden"
            name="service_id"
            value="<?echo $arParams['SERVICE_ID'];?>">
+   <input type="hidden"
+           name="provider_id"
+           value="0">
     <input type="hidden"
            name="service_name"
            value="<?echo $arResult['SERVICE_NAME'];?>">
     <input type="hidden"
            name="location_id"
            value="<?echo $arParams['LOCATION_ID'];?>">
+    <input type="hidden"
+           name="location_name"
+           value="<?echo $arParams['LOCATION_NAME'];?>">
     <table width="100%" border="0">
         <tr>
             <td>Ссылка на регламент</td>

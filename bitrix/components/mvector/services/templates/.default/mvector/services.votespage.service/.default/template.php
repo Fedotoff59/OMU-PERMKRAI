@@ -8,7 +8,10 @@
                     "SERVICE_ID" => $arParams['SERVICE_ID'],
                     "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
                     "IB_CRITERIAS_ID" => $arParams['IB_CRITERIAS_ID'],
-                    "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID'] 
+                    "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID'],
+                    "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
+                    "LOCATION_ID" => $arParams['LOCATION_ID'],
+                    "LOCATION_NAME" => $arParams['LOCATION_NAME']
                 )
         );?>
 </div>
