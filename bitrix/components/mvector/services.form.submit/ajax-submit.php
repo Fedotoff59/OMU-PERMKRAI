@@ -51,7 +51,7 @@ function save_vote($arVoteParams, $STATUS) {
     $arAddValuesElement = Array(
         "NAME" => $arVoteParams['SERVICE_NAME'].' - '.$arVoteParams['LOCATION_NAME'],
         "MODIFIED_BY" => $arVoteParams['FIELDS']['USERID'], // элемент изменен текущим пользователем
-        "IBLOCK_SECTION_ID" => false,          // элемент лежит в корне раздела
+        "IBLOCK_SECTION_ID" => 693,          // элемент лежит в разделе Апрель 2013
         "IBLOCK_ID" => $arVoteParams['IB_VALUES_ID'],                // ID блока с оценками 
         "PROPERTY_VALUES"=> $arVoteParams['FIELDS']
         );
@@ -89,8 +89,8 @@ function check_vote_aceess($arVoteParams) {
     $cur_date = date('d.m.Y H:i:s');
     $current_date = new DateTime('15.04.2013 21:00:38');
     $interval = $current_date->diff($date_of_vote);
-    echo $interval->days;
-    //echo $cur_date;
+    //echo $interval->days;
+    //echo $cur_date; 
     return $STATUS;
 }
 
