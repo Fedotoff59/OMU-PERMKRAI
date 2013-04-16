@@ -2,14 +2,14 @@
 
 <h2><? echo $arResult['SERVICE_FULL_NAME']; ?></h2>
 
-<form id="<?echo $arParams['CRITERIAS_FORM_ID'];?>" action="javascript:void()" method="post" enctype="multipart/form-data">
+<form id="<?echo CRITERIAS_FORM_ID?>" action="javascript:void()" method="post" enctype="multipart/form-data">
     <?=bitrix_sessid_post()?>
     <input type="hidden"
            name="service_id"
            value="<?echo $arParams['SERVICE_ID'];?>">
    <input type="hidden"
            name="provider_id"
-           value="0">
+           value="<?echo $arParams['PROVIDER_ID'];?>">
     <input type="hidden"
            name="service_name"
            value="<?echo $arResult['SERVICE_NAME'];?>">

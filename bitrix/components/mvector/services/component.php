@@ -92,7 +92,6 @@ $arParams['LOCATION_NAME'] = $arLocation['LOCATION_NAME'];
 //echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
 
 //echo '<pre>'; print_r($arParams); echo '</pre>';
-
 $this->IncludeComponentTemplate($componentPage);
 
 ?>

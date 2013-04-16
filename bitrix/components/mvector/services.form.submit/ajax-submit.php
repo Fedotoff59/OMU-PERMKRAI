@@ -19,7 +19,6 @@ define("THANKYOU_MESSAGE", "Спасибо, Ваш голос учтен!");
 function get_post_request($_POST) {
     global $USER;
     $arResult = Array(); 
-    $arResult['PERIODOFVOTE'] = get_voting_period(); // Из файла commonapi.php
     $arVotingFields = Array(
             'PROVIDER' => $_POST['provider_id'], 
             'SERVICE' => $_POST['service_id'], 
@@ -29,7 +28,6 @@ function get_post_request($_POST) {
             'LOCATION' => $_POST['location_id'],
             'USERID' => $USER->GetID(),
             'USERIP' => $_SERVER['REMOTE_ADDR'],
-            'PERIODOFVOTE' => $arResult['PERIODOFVOTE']['ID'],
             );
     for ($i = 1; $i <= intval($_POST['count_values']); $i++)
             $arVotingFields['CRITERIAVALUES'][$_POST['criteria_'.$i]] = $_POST['eval_'.$i];
@@ -40,29 +38,32 @@ function get_post_request($_POST) {
     return $arResult;
 }
 
-function save_vote($arVoteParams, $STATUS) {
+function save_vote($arVoteParams, $ACCESS) {
     // Формируем поля для записи в БД
     // Формируем сообщение в соответствии со статусом оценки
-    $STATUS_ID = 5; // ERR_UNDEFINED
-    switch ($STATUS) {
-        case 'OK': $SAVE_MESSAGE = THANKYOU_MESSAGE; $STATUS_ID = 1; break;
+    $ACCESS_ID = 5; // ERR_UNDEFINED
+    switch ($ACCESS) {
+        case 'OK': $SAVE_MESSAGE = THANKYOU_MESSAGE; $ACCESS_ID = 1; break;
         case 'ERR_PERIOD': {
             if($arVoteParams['FIELDS']['PROVIDER'] == 0)
                 $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_SERVICE; 
                 else $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_PROVIDER; 
-            $STATUS_ID = 2; 
+            $ACCESS_ID = 2; 
             break;
         }
-        case 'ERR_LOCATION': $SAVE_MESSAGE = ERR_MESSAGE_LOCATION; $STATUS_ID = 3; break;
-        case 'ERR_UNREGISTERED': $SAVE_MESSAGE = ERR_MESSAGE_UNREGISTERED; $STATUS_ID = 4; break;
+        case 'ERR_LOCATION': $SAVE_MESSAGE = ERR_MESSAGE_LOCATION; $ACCESS_ID = 3; break;
+        case 'ERR_UNREGISTERED': $SAVE_MESSAGE = ERR_MESSAGE_UNREGISTERED; $ACCESS_ID = 4; break;
     }
-    $arVoteParams['FIELDS']['STATUS'] = Array("VALUE" => $STATUS_ID);
+    $arVoteParams['FIELDS']['STATUS'] = Array("VALUE" => $ACCESS_ID);
+    $arSaveProps = $arVoteParams['FIELDS'];
+    // Добавляем в оценку информацию о текущем отчетном периоде
+    $arSaveProps['PERIODOFVOTE'] = $arVoteParams['PERIODOFVOTE']['ID'];
     $arAddValuesElement = Array(
         "NAME" => $arVoteParams['SERVICE_NAME'].' - '.$arVoteParams['LOCATION_NAME'],
         "MODIFIED_BY" => $arVoteParams['FIELDS']['USERID'], // элемент изменен текущим пользователем
         "IBLOCK_SECTION_ID" => $arVoteParams['PERIODOFVOTE']['SECTION_ID'],  // Определяем раздел, где лежит элемент
         "IBLOCK_ID" => IB_VALUES_ID,                // ID блока с оценками 
-        "PROPERTY_VALUES"=> $arVoteParams['FIELDS'],
+        "PROPERTY_VALUES"=> $arSaveProps,
         );
 
     // Записываем оценку пользователя в базу
@@ -80,19 +81,19 @@ function save_vote($arVoteParams, $STATUS) {
 }
 
 
-function check_vote_aceess($arVoteParams) {
+function check_vote_acсess($arVoteParams) {
     //По умолчанию статус не определен
-    $STATUS = 'ERR_UNDEFINED';
+    $ACCESS = 'ERR_UNDEFINED';
     // Проверяем, зарегистрирован ли пользователь
     global $USER;
     if (!$USER->GetID()) 
-        $STATUS = 'ERR_UNREGISTERED';
+        $ACCESS = 'ERR_UNREGISTERED';
         else {
         // Проверяем, в своем ли муниципалитете голосует пользователь
         $rsUser = CUser::GetByID($USER);
         $arUser = $rsUser->Fetch();
         if($arUser["UF_LOCATION"] != $arVoteParams['FIELDS']['LOCATION']) 
-            $STATUS = 'ERR_LOCATION';
+            $ACCESS = 'ERR_LOCATION';
             else {
                 // Последняя проверка
                 // Проверям превышение количества голосов за 1 объект оценки
@@ -112,12 +113,12 @@ function check_vote_aceess($arVoteParams) {
                     $i++;
                 }
                 if ($i < $arVoteParams['PERIODOFVOTE']['PERIODVOTESCOUNT']) 
-                    $STATUS = 'OK'; 
-                    else $STATUS = 'ERR_PERIOD';     
+                    $ACCESS = 'OK'; 
+                    else $ACCESS = 'ERR_PERIOD';     
 
             }
     }
-    return $STATUS;
+    return $ACCESS;
 }
 
 if(CModule::IncludeModule("iblock")):
@@ -125,8 +126,10 @@ if (isset($_POST['count_values']))
 {
     // Получаем необходимые данные из POST запроса
     $arVoteParams = get_post_request($_POST);
+    // Получаем данные о текущем периоде голосования
+    $arVoteParams['PERIODOFVOTE'] = get_voting_period(); // Из файла commonapi.php
     // Проверяем доступ пользователя
-    $vote_aceess =  check_vote_aceess($arVoteParams);
+    $vote_aceess = check_vote_acсess($arVoteParams);
     // Сохраняем оценки в БД
     save_vote($arVoteParams, $vote_aceess);
     //echo '<pre>'; print_r($arVoteParams); echo '</pre>';

@@ -11,15 +11,15 @@ if(CModule::IncludeModule("iblock")):
 
 //Определяем ID инфоблока поставщиков в соответствии с выбранной территорией
 
-$db_props = CIBlockElement::GetProperty(IB_LOCATIONS_ID, $arParams['LOCATION_ID'], Array("sort" => "asc"), Array("CODE"=>"IBPROVIDERS"));
-if($ar_props = $db_props->Fetch())
-	$IB_PROVIDERS_ID = IntVal($ar_props["VALUE"]);
+    $arLocationParams = get_location_params($arParams['LOCATION_ID']);                                          
+
+    $IB_PROVIDERS_ID = $arLocationParams['IB_PROVIDERS_ID'];
 
 // Проверка наличия поставщиков
 
     $arProviders = Array();
     $arSelect = Array("ID", "NAME");
-    $arFilter = Array("IBLOCK_ID"=>IntVal($IB_PROVIDERS_ID), 
+    $arFilter = Array("IBLOCK_ID" => IntVal($IB_PROVIDERS_ID), 
                       "ACTIVE" => "Y", 
                       "PROPERTY_SERVICES" => $arParams['SEF_VARIABLES']['SERVICE_ID']
                 );
@@ -63,8 +63,8 @@ else {  // Если поставщиков вообще нет, подключа
         Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
                 'LOCATION_ID' => $arParams['LOCATION_ID'],
                 'LOCATION_NAME' => $arParams['LOCATION_NAME'],
-            ),
-            $component
+                'PROVIDER_ID' => 0,
+            ), $component
         );
    }
 ?>

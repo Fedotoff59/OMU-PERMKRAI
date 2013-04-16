@@ -6,6 +6,7 @@
 <div id="form-criterias" style="width: 75%">
     <?$APPLICATION->IncludeComponent("mvector:services.form.criterias","",Array(
                     "SERVICE_ID" => $arParams['SERVICE_ID'],
+                    "PROVIDER_ID" => $arParams['PROVIDER_ID'], // 0
                     "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID'],
                     "LOCATION_ID" => $arParams['LOCATION_ID'],
                     "LOCATION_NAME" => $arParams['LOCATION_NAME']
@@ -33,8 +34,7 @@
         <td valign="top">              <!-- Показываем блок кнопки оценки -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.submit","realtime", Array(
                             "LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "SERVICE_ID" => $arParams['SERVICE_ID'],
-                            "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID']
+                            "SERVICE_ID" => $arParams['SERVICE_ID']
                           )
             );?>
         </td>
@@ -45,7 +45,8 @@
 <div id="comments-view" style="width: 80%">
     <?$APPLICATION->IncludeComponent("mvector:services.form.comments","amountform", Array(
                 "LOCATION_ID" => $arParams['LOCATION_ID'],
-                "SERVICE_ID" => $arParams['SERVICE_ID']
-                          )
-    );?>
+                "SERVICE_ID" => $arParams['SERVICE_ID'],
+                "PROVIDER_ID" => $arParams['PROVIDER_ID'] // 0
+                )
+            );?>
 </div>
