@@ -11,7 +11,7 @@ $res = CIBlockElement::GetByID($arParams['SERVICE_ID']);
 if($ar_res = $res->GetNext())
     {
         $arResult['SERVICE_NAME'] = $ar_res['NAME'];
-        $db_props = CIBlockElement::GetProperty($arParams['IB_SERVICES_ID'], 
+        $db_props = CIBlockElement::GetProperty(IB_SERVICES_ID, 
                 $arParams['SERVICE_ID'], array("sort" => "asc"), 
                 array("CODE"=>"FULLNAME"));
         if($ar_props = $db_props->Fetch())
@@ -22,15 +22,17 @@ if($ar_res = $res->GetNext())
 // Формируем данные для формы оценки
     $arFields = array();
 // Получаем по ID услуги IDs соответствующих критериев
-    $db_props = CIBlockElement::GetProperty($arParams['IB_SERVICES_ID'], 
+    $db_props = CIBlockElement::GetProperty(IB_SERVICES_ID, 
                 $arParams['SERVICE_ID'], "sort", "asc", array("CODE" => "CRITERIAS"));
     while ($ob = $db_props->GetNext())
     {
         if ($ob['VALUE'])
         {   // Зная IDs критериев оценки, получаем их имена
            $arSelect = Array("ID","NAME"); 
-           $arFilter = Array("IB_SERVICES_ID"=>$arParams['IB_CRITERIAS_ID'], 
-                            "ACTIVE_DATE"=>"Y", "ACTIVE"=>"Y","ID"=>$ob['VALUE']);
+           $arFilter = Array(   "IBLOCK_ID" => IB_CRITERIAS_ID, 
+                                "ID" => $ob['VALUE'],
+                                "ACTIVE" => "Y"
+                            );
             $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
            if ($ob2 = $res->GetNextElement())
            {

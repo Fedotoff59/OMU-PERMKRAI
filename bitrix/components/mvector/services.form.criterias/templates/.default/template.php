@@ -5,9 +5,6 @@
 <form id="<?echo $arParams['CRITERIAS_FORM_ID'];?>" action="javascript:void()" method="post" enctype="multipart/form-data">
     <?=bitrix_sessid_post()?>
     <input type="hidden"
-           name="ib_values_id"
-           value="<?echo $arParams['IB_VALUES_ID'];?>">
-    <input type="hidden"
            name="service_id"
            value="<?echo $arParams['SERVICE_ID'];?>">
    <input type="hidden"

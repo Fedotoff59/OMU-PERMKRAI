@@ -11,9 +11,8 @@
     $Provider_ID = $arParams['PROVISOR_ID'];
     $Location_ID = $arParams['LOCATION_ID'];
     
-    $IB_LOCATIONS_ID = 23;
     // Определяем, из какого инфоблока будем читать комментарии     
-    $db_props = CIBlockElement::GetProperty($IB_LOCATIONS_ID, $Location_ID, Array("sort"=>"asc"), Array("CODE"=>"IBCOMMENTS"));
+    $db_props = CIBlockElement::GetProperty(IB_LOCATIONS_ID, $Location_ID, Array("sort"=>"asc"), Array("CODE"=>"IBCOMMENTS"));
        if($ar_props = $db_props->Fetch())
           $IB_COMMENTS_ID = IntVal($ar_props["VALUE"]);
           else

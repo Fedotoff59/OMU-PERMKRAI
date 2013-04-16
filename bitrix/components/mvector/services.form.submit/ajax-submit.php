@@ -35,7 +35,6 @@ function get_post_request($_POST) {
             $arVotingFields['CRITERIAVALUES'][$_POST['criteria_'.$i]] = $_POST['eval_'.$i];
     $arResult['SERVICE_NAME'] = $_POST['service_name'];
     $arResult['LOCATION_NAME'] = $_POST['location_name'];
-    $arResult['IB_VALUES_ID'] = $_POST['ib_values_id'];
     $arResult['FIELDS'] = $arVotingFields;
 
     return $arResult;
@@ -62,7 +61,7 @@ function save_vote($arVoteParams, $STATUS) {
         "NAME" => $arVoteParams['SERVICE_NAME'].' - '.$arVoteParams['LOCATION_NAME'],
         "MODIFIED_BY" => $arVoteParams['FIELDS']['USERID'], // элемент изменен текущим пользователем
         "IBLOCK_SECTION_ID" => $arVoteParams['PERIODOFVOTE']['SECTION_ID'],  // Определяем раздел, где лежит элемент
-        "IBLOCK_ID" => $arVoteParams['IB_VALUES_ID'],                // ID блока с оценками 
+        "IBLOCK_ID" => IB_VALUES_ID,                // ID блока с оценками 
         "PROPERTY_VALUES"=> $arVoteParams['FIELDS'],
         );
 
@@ -99,7 +98,7 @@ function check_vote_aceess($arVoteParams) {
                 // Проверям превышение количества голосов за 1 объект оценки
                 // Если меньше, то проверка полностью пройдена
                 $arSelect = Array("ID", "NAME");
-                $arFilter = Array(  "IBLOCK_ID"=> $arVoteParams['IB_VALUES_ID'], 
+                $arFilter = Array(  "IBLOCK_ID"=> IB_VALUES_ID, 
                         "ACTIVE"=>"Y", 
                         "PROPERTY_LOCATION" => $arVoteParams['FIELDS']['LOCATION'],
                         "PROPERTY_SERVICE" => $arVoteParams['FIELDS']['SERVICE'],

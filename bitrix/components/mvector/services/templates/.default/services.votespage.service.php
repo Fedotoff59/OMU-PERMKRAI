@@ -19,7 +19,10 @@ if($ar_props = $db_props->Fetch())
 
     $arProviders = Array();
     $arSelect = Array("ID", "NAME");
-    $arFilter = Array("IBLOCK_ID"=>IntVal($IB_PROVIDERS_ID), "PROPERTY_SERVICES" => $arParams['SEF_VARIABLES']['SERVICE_ID']);
+    $arFilter = Array("IBLOCK_ID"=>IntVal($IB_PROVIDERS_ID), 
+                      "ACTIVE" => "Y", 
+                      "PROPERTY_SERVICES" => $arParams['SEF_VARIABLES']['SERVICE_ID']
+                );
     $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
     while($ob = $res->GetNextElement())
      {
@@ -42,8 +45,7 @@ if ($arProviders) // В зависимости от того, есть ли по
             $APPLICATION->IncludeComponent(
             "mvector:services.list.providers",
             ".default",
-            Array(  'IB_SERVICES_ID' => $arParams['IB_SERVICES_ID'],
-                    'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
+            Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
                     'LOCATION_ALIAS' => $arParams['LOCATION_ALIAS'],
                     'LOCATION_ID' => $arParams['LOCATION_ID'],
                     'LOCATION_NAME' => $arParams['LOCATION_NAME'],
@@ -58,12 +60,9 @@ else {  // Если поставщиков вообще нет, подключа
         $APPLICATION->IncludeComponent(
         "mvector:services.votespage.service",
         ".default",
-        Array(  'IB_SERVICES_ID' => $arParams['IB_SERVICES_ID'],
-                'IB_CRITERIAS_ID' => $arParams['IB_CRITERIAS_ID'],
-                'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
+        Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
                 'LOCATION_ID' => $arParams['LOCATION_ID'],
                 'LOCATION_NAME' => $arParams['LOCATION_NAME'],
-                'IB_VALUES_ID' => $arParams['IB_VALUES_ID']
             ),
             $component
         );

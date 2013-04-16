@@ -3,12 +3,14 @@
  * Общие константы:
  * ID инфоблоков
  * Значения по умолчанию
+ * Константы
  */
 
 define("IB_SERVICES_ID", 20);
 define("IB_CRITERIAS_ID", 21);
 define("IB_VALUES_ID", 71);
 define("IB_LOCATIONS_ID", 23);
+define("DEFAULT_LOCATION_ID", 470); // Пермь
 define("IB_PROVIDERS_IDS", Array());
 
 /*

@@ -6,10 +6,7 @@
 <div id="form-criterias" style="width: 75%">
     <?$APPLICATION->IncludeComponent("mvector:services.form.criterias","",Array(
                     "SERVICE_ID" => $arParams['SERVICE_ID'],
-                    "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
-                    "IB_CRITERIAS_ID" => $arParams['IB_CRITERIAS_ID'],
                     "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID'],
-                    "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
                     "LOCATION_ID" => $arParams['LOCATION_ID'],
                     "LOCATION_NAME" => $arParams['LOCATION_NAME']
                 )
@@ -21,9 +18,6 @@
     <tr>
         <td valign="top" width="200">   <!-- Показываем рейтинг услуги -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","rating", Array(
-                            "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
-                            "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
-                            "IB_LOCATIONS_ID" => $arParams['IB_LOCATIONS_ID'],
                             "CURRENT_LOCATION_ID" => $arParams['LOCATION_ID'],
                             "CURRENT_SERVICE_ID" => $arParams['SERVICE_ID']
                        )
@@ -31,9 +25,6 @@
         </td>
         <td valign="top" width="200">  <!-- Показываем удовлетворенность услугой -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","loyalty", Array(
-                            "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
-                            "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
-                            "IB_LOCATIONS_ID" => $arParams['IB_LOCATIONS_ID'],
                             "CURRENT_LOCATION_ID" => $arParams['LOCATION_ID'],
                             "CURRENT_SERVICE_ID" => $arParams['SERVICE_ID']
                       )
@@ -41,9 +32,6 @@
         </td>
         <td valign="top">              <!-- Показываем блок кнопки оценки -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.submit","realtime", Array(
-                            "IB_VALUES_ID" => $arParams['IB_VALUES_ID'],
-                            "IB_SERVICES_ID" => $arParams['IB_SERVICES_ID'],
-                            "IB_LOCATIONS_ID" => $arParams['IB_LOCATIONS_ID'],
                             "LOCATION_ID" => $arParams['LOCATION_ID'],
                             "SERVICE_ID" => $arParams['SERVICE_ID'],
                             "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID']
