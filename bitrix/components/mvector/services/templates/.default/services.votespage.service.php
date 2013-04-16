@@ -11,7 +11,7 @@ if(CModule::IncludeModule("iblock")):
 
 //Определяем ID инфоблока поставщиков в соответствии с выбранной территорией
 
-$db_props = CIBlockElement::GetProperty($arParams['IB_LOCATIONS_ID'], $arParams['LOCATION_ID'], Array("sort" => "asc"), Array("CODE"=>"IBPROVIDERS"));
+$db_props = CIBlockElement::GetProperty(IB_LOCATIONS_ID, $arParams['LOCATION_ID'], Array("sort" => "asc"), Array("CODE"=>"IBPROVIDERS"));
 if($ar_props = $db_props->Fetch())
 	$IB_PROVIDERS_ID = IntVal($ar_props["VALUE"]);
 

@@ -1,9 +1,7 @@
 <?
 
 $arResult = array();
-unset($_SESSION['COMMENT']);
-$_SESSION['COMMENT']['SERVICE_ID'] = $arParams['SERVICE_ID'];
-$_SESSION['COMMENT']['PROVIDER_ID'] = $arParams['PROVIDER_ID'];
+
 
 
 
@@ -11,6 +9,7 @@ $_SESSION['COMMENT']['PROVIDER_ID'] = $arParams['PROVIDER_ID'];
 /*
  *  Получаем карточку поставщика
  */
+/*
     $arResult['PROVIDER'] = Array();
     $arSelect = Array('NAME');
     $arFilter = Array('IBLOCK_ID' => $arParams['IB_PROVISORS_ID'], "ID" => $arParams['PROVIDER_ID'], "ACTIVE"=>"Y");
@@ -36,8 +35,9 @@ $_SESSION['COMMENT']['PROVIDER_ID'] = $arParams['PROVIDER_ID'];
             {
                // Добавить дополнительные услуги
             }
-    
+  }
+  */  
     $this->IncludeComponentTemplate();
-    }
+    
 
 ?>

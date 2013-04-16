@@ -6,9 +6,14 @@
  */
    
     $arResult = Array();
+    
+    unset($_SESSION['COMMENT']);
+    $_SESSION['COMMENT']['SERVICE_ID'] = $arParams['SERVICE_ID'];
+    if (isset($arParams['PROVIDER_ID']) && $arParams['PROVIDER_ID'] > 0)
+        $_SESSION['COMMENT']['PROVIDER_ID'] = $arParams['PROVIDER_ID'];
 
     $Service_ID = $arParams['SERVICE_ID'];
-    $Provider_ID = $arParams['PROVISOR_ID'];
+    $Provider_ID = $arParams['PROVIDER_ID'];
     $Location_ID = $arParams['LOCATION_ID'];
     
     // Определяем, из какого инфоблока будем читать комментарии     
@@ -22,7 +27,7 @@
     $arFilter = Array();
     $arFilter['IBLOCK_ID'] = intval($IB_COMMENTS_ID);
     // Определяем поля выборки в зависимости от того задан ли поставщик
-    if ($Provider_ID != 0)
+    if ($Provider_ID > 0)
        $arFilter['PROPERTY_PROVIDER'] = $Provider_ID;
     $arFilter['PROPERTY_SERVICE'] = $Service_ID;
     $arFilter['ACTIVE'] = 'Y';

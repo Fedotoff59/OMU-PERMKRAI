@@ -7,7 +7,7 @@ $APPLICATION->IncludeComponent(
 Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
         'LOCATION_ID' => $arParams['LOCATION_ID'],
         'LOCATION_NAME' => $arParams['LOCATION_NAME'],
-        'PROVISOR_ID' => $arParams['SEF_VARIABLES']['PROVISOR_ID']
+        'PROVIDER_ID' => $arParams['SEF_VARIABLES']['PROVIDER_ID']
 ), $component
 ); 
 ?>
