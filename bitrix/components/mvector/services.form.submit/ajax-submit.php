@@ -10,14 +10,16 @@
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
-define("ERR_MESSAGE_PERIOD", "Ошибка периода");
-define("ERR_MESSAGE_LOCATION", "Ошибка территории");
-define("ERR_MESSAGE_UNREGISTERED", "Ошибка! Необходимо зарегистрироваться!");
+define("ERR_MESSAGE_PERIOD_SERVICE", "Ошибка! Превышено число голосов от одного пользователя. За эту услугу Вы сможете проголосовать в следующем месяце.");
+define("ERR_MESSAGE_PERIOD_PROVIDER", "Ошибка! Превышено число голосов от одного пользователя. За этого поставщика Вы сможете проголосовать в следующем месяце.");
+define("ERR_MESSAGE_LOCATION", "Ошибка! Вы можете ставить оценки поставщикам и услугам только в пределах своей территории.");
+define("ERR_MESSAGE_UNREGISTERED", "Ошибка! Для оценки Вам необходимо зарегистрироваться!");
 define("THANKYOU_MESSAGE", "Спасибо, Ваш голос учтен!");
 
 function get_post_request($_POST) {
     global $USER;
     $arResult = Array(); 
+    $arResult['PERIODOFVOTE'] = get_voting_period(); // Из файла commonapi.php
     $arVotingFields = Array(
             'PROVIDER' => $_POST['provider_id'], 
             'SERVICE' => $_POST['service_id'], 
@@ -26,7 +28,8 @@ function get_post_request($_POST) {
             'CRITERIAVALUES' => Array(),
             'LOCATION' => $_POST['location_id'],
             'USERID' => $USER->GetID(),
-            'USERIP' => $_SERVER['REMOTE_ADDR']
+            'USERIP' => $_SERVER['REMOTE_ADDR'],
+            'PERIODOFVOTE' => $arResult['PERIODOFVOTE']['ID'],
             );
     for ($i = 1; $i <= intval($_POST['count_values']); $i++)
             $arVotingFields['CRITERIAVALUES'][$_POST['criteria_'.$i]] = $_POST['eval_'.$i];
@@ -34,6 +37,7 @@ function get_post_request($_POST) {
     $arResult['LOCATION_NAME'] = $_POST['location_name'];
     $arResult['IB_VALUES_ID'] = $_POST['ib_values_id'];
     $arResult['FIELDS'] = $arVotingFields;
+
     return $arResult;
 }
 
@@ -43,7 +47,13 @@ function save_vote($arVoteParams, $STATUS) {
     $STATUS_ID = 5; // ERR_UNDEFINED
     switch ($STATUS) {
         case 'OK': $SAVE_MESSAGE = THANKYOU_MESSAGE; $STATUS_ID = 1; break;
-        case 'ERR_PERIOD': $SAVE_MESSAGE = ERR_MESSAGE_PERIOD; $STATUS_ID = 2; break;
+        case 'ERR_PERIOD': {
+            if($arVoteParams['FIELDS']['PROVIDER'] == 0)
+                $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_SERVICE; 
+                else $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_PROVIDER; 
+            $STATUS_ID = 2; 
+            break;
+        }
         case 'ERR_LOCATION': $SAVE_MESSAGE = ERR_MESSAGE_LOCATION; $STATUS_ID = 3; break;
         case 'ERR_UNREGISTERED': $SAVE_MESSAGE = ERR_MESSAGE_UNREGISTERED; $STATUS_ID = 4; break;
     }
@@ -51,9 +61,9 @@ function save_vote($arVoteParams, $STATUS) {
     $arAddValuesElement = Array(
         "NAME" => $arVoteParams['SERVICE_NAME'].' - '.$arVoteParams['LOCATION_NAME'],
         "MODIFIED_BY" => $arVoteParams['FIELDS']['USERID'], // элемент изменен текущим пользователем
-        "IBLOCK_SECTION_ID" => 693,          // элемент лежит в разделе Апрель 2013
+        "IBLOCK_SECTION_ID" => $arVoteParams['PERIODOFVOTE']['SECTION_ID'],  // Определяем раздел, где лежит элемент
         "IBLOCK_ID" => $arVoteParams['IB_VALUES_ID'],                // ID блока с оценками 
-        "PROPERTY_VALUES"=> $arVoteParams['FIELDS']
+        "PROPERTY_VALUES"=> $arVoteParams['FIELDS'],
         );
 
     // Записываем оценку пользователя в базу
@@ -72,25 +82,42 @@ function save_vote($arVoteParams, $STATUS) {
 
 
 function check_vote_aceess($arVoteParams) {
-    //
-    $STATUS = 'OK';
+    //По умолчанию статус не определен
+    $STATUS = 'ERR_UNDEFINED';
+    // Проверяем, зарегистрирован ли пользователь
     global $USER;
-    if (!$USER->GetID()) {
+    if (!$USER->GetID()) 
         $STATUS = 'ERR_UNREGISTERED';
-        return $STATUS;
+        else {
+        // Проверяем, в своем ли муниципалитете голосует пользователь
+        $rsUser = CUser::GetByID($USER);
+        $arUser = $rsUser->Fetch();
+        if($arUser["UF_LOCATION"] != $arVoteParams['FIELDS']['LOCATION']) 
+            $STATUS = 'ERR_LOCATION';
+            else {
+                // Последняя проверка
+                // Проверям превышение количества голосов за 1 объект оценки
+                // Если меньше, то проверка полностью пройдена
+                $arSelect = Array("ID", "NAME");
+                $arFilter = Array(  "IBLOCK_ID"=> $arVoteParams['IB_VALUES_ID'], 
+                        "ACTIVE"=>"Y", 
+                        "PROPERTY_LOCATION" => $arVoteParams['FIELDS']['LOCATION'],
+                        "PROPERTY_SERVICE" => $arVoteParams['FIELDS']['SERVICE'],
+                        "PROPERTY_PROVIDER" => $arVoteParams['FIELDS']['PROVIDER'],
+                        "PROPERTY_USERID" =>  $USER->GetID(),
+                        "PROPERTY_PERIODOFVOTE" => $arVoteParams['PERIODOFVOTE']['ID']);
+                $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+                $i = 0;
+                while($ob = $res->GetNextElement())
+                {
+                    $i++;
+                }
+                if ($i < $arVoteParams['PERIODOFVOTE']['PERIODVOTESCOUNT']) 
+                    $STATUS = 'OK'; 
+                    else $STATUS = 'ERR_PERIOD';     
+
+            }
     }
-    $rsUser = CUser::GetByID($USER);
-    $arUser = $rsUser->Fetch();
-    if($arUser["UF_LOCATION"] != $arVoteParams['FIELDS']['LOCATION']) {
-        $STATUS = 'ERR_LOCATION';
-        return $STATUS;
-    }
-    $date_of_vote = new DateTime('14.04.2012 19:00:39');
-    $cur_date = date('d.m.Y H:i:s');
-    $current_date = new DateTime('15.04.2013 21:00:38');
-    $interval = $current_date->diff($date_of_vote);
-    //echo $interval->days;
-    //echo $cur_date; 
     return $STATUS;
 }
 
@@ -103,8 +130,9 @@ if (isset($_POST['count_values']))
     $vote_aceess =  check_vote_aceess($arVoteParams);
     // Сохраняем оценки в БД
     save_vote($arVoteParams, $vote_aceess);
-
-   //echo '<pre>'; print_r($arUser); echo '</pre>';
+    //echo '<pre>'; print_r($arVoteParams); echo '</pre>';
  }
 endif;
+
+require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");
 ?>

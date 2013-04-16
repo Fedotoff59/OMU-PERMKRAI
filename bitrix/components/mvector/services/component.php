@@ -72,7 +72,7 @@ $arResult = array(
 );
 
 
-$arParams = array(
+$arParams = Array(
 'IB_SERVICES_ID' => 20,
 'IB_CRITERIAS_ID' => 21,
 'IB_VALUES_ID' => 71,
@@ -80,9 +80,6 @@ $arParams = array(
 'IB_PROVISORS_ID' => 24,
 'IB_PROVIDERS_IDS' => $arProviders,
 'SEF_VARIABLES' => $arVariables,
-//'PLACE_ID' => 470,
-//'PLACE_NAME' => 'Пермь',
-//'PLACE_ALIAS' => 'perm'
 );
 
 if(isset($_POST['locations'])) { // Изменилось ли местоположение по запросу пользователя

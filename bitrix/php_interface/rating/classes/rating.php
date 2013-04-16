@@ -5,6 +5,7 @@ class CRating {
     const IB_SERVICES_ID = 20;
     const IB_PROVISORS_ID = 24;
     const IB_LOCATIONS_ID = 23;
+    const IB_VALUES_PERIOD_CODE = "IB_VALUES_PERIOD";
 
 /*=============================================================================
 * 
@@ -254,6 +255,31 @@ class CRating {
 
         echo '<pre>'; print_r($arLocationRating); echo '</pre>'.$fullAverageRating;
     }
+    
+ /*=============================================================================
+* 
+*   Функция возвращает свойства текущего отчетного периода
+* 
+*=============================================================================*/
+    
+    function get_voting_period() {
+        if(CModule::IncludeModule("iblock")):
+        
+        $arCurPeriod = Array();
+        $arSelect = Array("ID", "NAME", "PROPERTY_PERIODSECTION", "PROPERTY_PERIODVOTESCOUNT");
+        $arFilter = Array("IBLOCK_CODE"=>self::IB_VALUES_PERIOD_CODE, "ACTIVE"=>"Y");
+        $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+        while($ob = $res->GetNextElement())
+        {
+            $arFields = $ob->GetFields();
+            // Получаем ID раздела, где будут сохраняться оценки
+            $arCurPeriod['SECTION_ID'] = $arFields['PROPERTY_PERIODSECTION_VALUE'];
+            // Получаем ограничение по количеству голосов за 1 объект в текущем отчетном периоде
+            $arCurPeriod['PERIODVOTESCOUNT'] = $arFields['PROPERTY_PERIODVOTESCOUNT_VALUE'];
+        }
+        return $arCurPeriod;
+        endif;
+}
 }
 
 ?> 
