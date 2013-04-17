@@ -7,7 +7,6 @@
     <?$APPLICATION->IncludeComponent("mvector:services.form.criterias","",Array(
                     "SERVICE_ID" => $arParams['SERVICE_ID'],
                     "PROVIDER_ID" => $arParams['PROVIDER_ID'], // 0
-                    "CRITERIAS_FORM_ID" => $arResult['CRITERIAS_FORM_ID'],
                     "LOCATION_ID" => $arParams['LOCATION_ID'],
                     "LOCATION_NAME" => $arParams['LOCATION_NAME']
                 )

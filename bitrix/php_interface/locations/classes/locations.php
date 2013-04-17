@@ -11,7 +11,7 @@ class CLocations {
         global $APPLICATION;
         $Location_ID = 0;
         $arLocation = Array ();
-        if ($_SESSION['LOCATION_ID'] > 0)
+        if (isset($_SESSION['LOCATION_ID']) && $_SESSION['LOCATION_ID'] > 0)
             $Location_ID = $_SESSION['LOCATION_ID'];
             elseif ($APPLICATION->get_cookie("LOCATION_ID") > 0)
                 $Location_ID = $APPLICATION->get_cookie("LOCATION_ID");
@@ -26,7 +26,13 @@ class CLocations {
              $arFilter = Array('IBLOCK_ID' => IB_LOCATIONS_ID, 
                                'ID' => $Location_ID
                                 );
-            $arSelect  = Array('IBLOCK_ID', 'ID', 'NAME', 'PROPERTY_ALIAS');
+             $arSelect = Array(  'ID', 
+                        'NAME', 
+                        'PROPERTY_ALIAS', 
+                        'PROPERTY_IBPROVIDERS', 
+                        'PROPERTY_IBCOMMENTS', 
+                        'PROPERTY_SPECIALIST'
+                    );
             $db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
             while($el = $db_List->GetNextElement())
             {
@@ -34,6 +40,9 @@ class CLocations {
                 $arLocation['LOCATION_ID'] = $arFields['ID'];
                 $arLocation['LOCATION_NAME'] = $arFields['NAME'];
                 $arLocation['LOCATION_ALIAS'] = $arFields['PROPERTY_ALIAS_VALUE'];
+                $arLocation['IB_PROVIDERS_ID'] = $arFields['PROPERTY_IBPROVIDERS_VALUE'];
+                $arLocation['IB_COMMENTS_ID'] = $arFields['PROPERTY_IBCOMMENTS_VALUE'];
+                $arLocation['SPECIALIST_ID'] = $arFields['PROPERTY_SPECIALIST_VALUE'];
                 
             }
         endif;   

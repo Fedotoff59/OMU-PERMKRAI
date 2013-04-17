@@ -2,9 +2,9 @@
 
 <?
 $APPLICATION->IncludeComponent(
-"mvector:services.list.services",
-".default",
-Array('LOCATION_ALIAS' => $arParams['LOCATION_ALIAS']
-), $component
+    "mvector:services.list.services",
+    ".default",
+    Array('LOCATION_ALIAS' => $arResult['CUR_LOCATION_ALIAS']
+    ), $component
 ); 
 ?>

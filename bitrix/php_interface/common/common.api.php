@@ -17,6 +17,8 @@ define("DEFAULT_LOCATION_ID", 470); // Пермь
 // Задаем имя формы для организации ajax взаимодействия
 define("CRITERIAS_FORM_ID", "criteriasform");
 
+define ("ERR_MESSAFE_SEF_MODE", "Ошибка! Для работы компонента необходимо включить режим SEF");
+
 /*
  * Функция возвращает данные о текущем отчетном периоде
  * 
@@ -41,33 +43,15 @@ function get_voting_period() {
     return $arCurPeriod;
     endif;
 }
-
-function get_location_params($LOCATION_ID) {
-    if(CModule::IncludeModule("iblock")):
-    $arResult = Array();
-    $arSelect = Array(  'ID', 
-                        'NAME', 
-                        'PROPERTY_ALIAS', 
-                        'PROPERTY_IBPROVIDERS', 
-                        'PROPERTY_IBCOMMENTS', 
-                        'PROPERTY_SPECIALIST'
-                    );
-    $arFilter = Array(  "IBLOCK_ID" => IB_LOCATIONS_ID, 
-                        "ID" => $LOCATION_ID, 
-                        "ACTIVE" => "Y");
-    $res = CIBlockElement::GetList(FALSE, $arFilter, false, false, FALSE);
-    while($ob = $res->GetNextElement()) {
-        $arFields = $ob->GetFields();
-        $arProps = $ob->GetProperties();
-        $arResult['ID'] = $arFields['ID'];
-        $arResult['NAME'] = $arFields['NAME'];
-        $arResult['ALIAS'] = $arProps['ALIAS']['VALUE'];
-        $arResult['IB_PROVIDERS_ID'] = $arProps['IBPROVIDERS']['VALUE'];
-        $arResult['IB_COMMENTS_ID'] = $arProps['IBCOMMENTS']['VALUE'];
-        $arResult['IB_SPECIALIST_ID'] = $arProps['SPECIALIST']['VALUE'];
-    }
-    return $arResult;
-   endif;
-}
-
 ?>
+ <?
+ $arGLOBAL_LOCATION = CLocations::Getlocation();
+ define(CUR_LOCATION_ID, $arGLOBAL_LOCATION['LOCATION_ID']);
+ define(CUR_LOCATION_NAME, $arGLOBAL_LOCATION['LOCATION_NAME']);
+ define(CUR_LOCATION_ALIAS, $arGLOBAL_LOCATION['LOCATION_ALIAS']);
+ define(CUR_LOCATION_IB_PROVIDERS_ID, $arGLOBAL_LOCATION['IB_PROVIDERS_ID']);
+ define(CUR_LOCATION_IB_COMMENTS_ID, $arGLOBAL_LOCATION['IB_COMMENTS_ID']);
+ define(CUR_LOCATION_SPECIALIST_ID, $arGLOBAL_LOCATION['SPECIALIST_ID']);
+ unset($arGLOBAL_LOCATION);
+ //echo '<pre>'; print_r($arLocation); echo '</pre>';
+ ?>

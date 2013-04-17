@@ -1,0 +1,13 @@
+/* 
+    Document   : style
+    Created on : 17.04.2013, 11:24:45
+    Author     : User-315
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#ajax-add-answer {
+    display: none ;
+    width: 800px ; min-height : 400px;
+}
+

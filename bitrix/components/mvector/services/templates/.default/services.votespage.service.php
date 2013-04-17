@@ -9,19 +9,13 @@
 
 if(CModule::IncludeModule("iblock")):
 
-//Определяем ID инфоблока поставщиков в соответствии с выбранной территорией
-
-    $arLocationParams = get_location_params($arParams['LOCATION_ID']);                                          
-
-    $IB_PROVIDERS_ID = $arLocationParams['IB_PROVIDERS_ID'];
-
 // Проверка наличия поставщиков
 
     $arProviders = Array();
     $arSelect = Array("ID", "NAME");
-    $arFilter = Array("IBLOCK_ID" => IntVal($IB_PROVIDERS_ID), 
+    $arFilter = Array("IBLOCK_ID" => IntVal($arResult['CUR_LOCATION_IB_PROVIDERS_ID']), 
                       "ACTIVE" => "Y", 
-                      "PROPERTY_SERVICES" => $arParams['SEF_VARIABLES']['SERVICE_ID']
+                      "PROPERTY_SERVICES" => $arResult['VARIABLES']['SERVICE_ID']
                 );
     $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
     while($ob = $res->GetNextElement())
@@ -37,7 +31,7 @@ if ($arProviders) // В зависимости от того, есть ли по
 {
     // Если только 1 поставщик - сразу переходим на форму оценки этого поставщика
     if (count($arProviders) == 1) {      
-        $link2form = '/services/'.$arParams['SEF_VARIABLES']['SERVICE_ID'].'/providers/'.$arParams['LOCATION_ALIAS'].'/'.$arProviders[0]['ID'];
+        $link2form = '/services/'.$arResult['VARIABLES']['SERVICE_ID'].'/providers/'.$arResult['CUR_LOCATION_ALIAS'].'/'.$arProviders[0]['ID'];
         LocalRedirect($link2form);        
     }
     // Если несколько поставщиков, подключаем компонент вывода списка поставщиков
@@ -45,10 +39,10 @@ if ($arProviders) // В зависимости от того, есть ли по
             $APPLICATION->IncludeComponent(
             "mvector:services.list.providers",
             ".default",
-            Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
-                    'LOCATION_ALIAS' => $arParams['LOCATION_ALIAS'],
-                    'LOCATION_ID' => $arParams['LOCATION_ID'],
-                    'LOCATION_NAME' => $arParams['LOCATION_NAME'],
+            Array(  'SERVICE_ID' => $arResult['VARIABLES']['SERVICE_ID'],
+                    'LOCATION_ALIAS' => $arResult['CUR_LOCATION_ALIAS'],
+                    'LOCATION_ID' => $arResult['CUR_LOCATION_ID'],
+                    'LOCATION_NAME' => $arResult['CUR_LOCATION_NAME'],
                     'COUNT_PROVIDERS' => count($arProviders),
                     'PROVIDERS' => $arProviders
                 ), $component
@@ -60,9 +54,9 @@ else {  // Если поставщиков вообще нет, подключа
         $APPLICATION->IncludeComponent(
         "mvector:services.votespage.service",
         ".default",
-        Array(  'SERVICE_ID' => $arParams['SEF_VARIABLES']['SERVICE_ID'],
-                'LOCATION_ID' => $arParams['LOCATION_ID'],
-                'LOCATION_NAME' => $arParams['LOCATION_NAME'],
+        Array(  'SERVICE_ID' => $arResult['VARIABLES']['SERVICE_ID'],
+                'LOCATION_ID' => $arResult['CUR_LOCATION_ID'],
+                'LOCATION_NAME' => $arResult['CUR_LOCATION_NAME'],
                 'PROVIDER_ID' => 0,
             ), $component
         );

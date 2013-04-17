@@ -10,10 +10,6 @@ function FunctionName(params)
 */
 ?>
 <?
-if (file_exists($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/commonapi.php"))
-		require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/commonapi.php");
-?>
-<?
 AddEventHandler("iblock", "OnAfterIBlockElementAdd", Array("AfterProviderActivity", "OnAfterProviderActivity"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("AfterProviderActivity", "OnAfterProviderActivity"));
 
@@ -49,4 +45,8 @@ CModule::AddAutoloadClasses(
                 'PHPExcel' => '/bitrix/php_interface/Excel/classes/PHPExcel.php',
         )
 );
+?>
+<?
+if (file_exists($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/common.api.php"))
+		require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/common.api.php");
 ?>
