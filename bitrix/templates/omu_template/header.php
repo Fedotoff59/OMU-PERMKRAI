@@ -58,8 +58,7 @@
 		);?>
 	</div>
 
-    
-    
+ 
 	<div id="menu">
 	<?$APPLICATION->IncludeComponent("bitrix:menu", "horizontal_multilevel", array(
 	"ROOT_MENU_TYPE" => "top",
@@ -77,6 +76,15 @@
 	false
 );?>
 	</div>
+    <div>
+        <?$APPLICATION->IncludeComponent(
+				"mvector:location.choice",
+				"",
+				Array(
+					"DEFAULT" => 470, // Пермь 
+				)
+			);?>
+    </div>
 </div>
 
 <table id="content" cellpadding="0" cellspacing="0">

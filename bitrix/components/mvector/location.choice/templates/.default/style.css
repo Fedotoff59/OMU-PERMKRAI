@@ -6,7 +6,7 @@
         Purpose of the stylesheet follows.
 */
 
-#ajax-add-answer {
+#location-form {
     display: none ;
     width: 800px ; min-height : 400px;
 }

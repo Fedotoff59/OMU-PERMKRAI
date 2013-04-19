@@ -1,7 +1,7 @@
 BX.ready(function(){
    
-   var addAnswer = new BX.PopupWindow("my_answer", null, {
-      content: BX('ajax-add-answer'),
+   var popupLocationForm = new BX.PopupWindow("LocationForm", null, {
+      content: BX('location-form'),
       closeIcon: {right: "20px", top: "10px"},
       titleBar: {content: BX.create("span", {html: '<strong>Выбор муниципального образования</strong>', 'props': {'className': 'access-title-bar'}})}, 
         zIndex: 0,
@@ -31,7 +31,7 @@ BX.ready(function(){
          ]
    }); 
    $('#click_test').click(function(){
-      BX.ajax.insertToNode('/bitrix/components/mvector/popup/locations_choice_form.php', BX('ajax-add-answer'), true); // функция ajax-загрузки контента из урла в #div
-      addAnswer.show(); // появление окна
+      BX.ajax.insertToNode('/bitrix/components/mvector/location.choice/locations_choice_form.php', BX('location-form'), true); // функция ajax-загрузки контента из урла в #div
+      popupLocationForm.show(); // появление окна
    });
 });
