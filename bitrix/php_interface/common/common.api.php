@@ -44,14 +44,3 @@ function get_voting_period() {
     endif;
 }
 ?>
- <?
- $arGLOBAL_LOCATION = CLocations::Getlocation();
- define(CUR_LOCATION_ID, $arGLOBAL_LOCATION['LOCATION_ID']);
- define(CUR_LOCATION_NAME, $arGLOBAL_LOCATION['LOCATION_NAME']);
- define(CUR_LOCATION_ALIAS, $arGLOBAL_LOCATION['LOCATION_ALIAS']);
- define(CUR_LOCATION_IB_PROVIDERS_ID, $arGLOBAL_LOCATION['IB_PROVIDERS_ID']);
- define(CUR_LOCATION_IB_COMMENTS_ID, $arGLOBAL_LOCATION['IB_COMMENTS_ID']);
- define(CUR_LOCATION_SPECIALIST_ID, $arGLOBAL_LOCATION['SPECIALIST_ID']);
- unset($arGLOBAL_LOCATION);
- //echo '<pre>'; print_r($arLocation); echo '</pre>';
- ?>

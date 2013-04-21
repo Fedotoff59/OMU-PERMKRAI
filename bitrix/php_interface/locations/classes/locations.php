@@ -3,8 +3,8 @@
 class CLocations {
     
     
-    //const DEFAULT_LOCATION_ID = 470; // Пермь
-    //const IB_LOCATIONS_ID = 23; // Инфблок с местоположениями
+    const DEFAULT_LOCATION_ID = DEFAULT_LOCATION_ID; // Пермь
+    const IB_LOCATIONS_ID = IB_LOCATIONS_ID; // Инфблок с местоположениями
     
     
     function GetLocation() {
@@ -16,14 +16,14 @@ class CLocations {
             elseif ($APPLICATION->get_cookie("LOCATION_ID") > 0)
                 $Location_ID = $APPLICATION->get_cookie("LOCATION_ID");
                 else {
-                    $Location_ID = DEFAULT_LOCATION_ID;
+                    $Location_ID = self::DEFAULT_LOCATION_ID;
                     self::SetLocationByID($Location_ID);
                 }
         if ($Location_ID == 0)
             return false;
         
         if(CModule::IncludeModule("iblock")): 
-             $arFilter = Array('IBLOCK_ID' => IB_LOCATIONS_ID, 
+             $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
                                'ID' => $Location_ID
                                 );
              $arSelect = Array(  'ID', 
@@ -67,7 +67,7 @@ class CLocations {
         global $APPLICATION;
         if (isset($Location_ALIAS) && $Location_ALIAS != '') {
             if(CModule::IncludeModule("iblock")): 
-            $arFilter = Array('IBLOCK_ID' => IB_LOCATIONS_ID, 
+            $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
                               'PROPERTY_ALIAS' => $Location_ALIAS
                              );
             $arSelect  = Array('IBLOCK_ID', 'ID');
