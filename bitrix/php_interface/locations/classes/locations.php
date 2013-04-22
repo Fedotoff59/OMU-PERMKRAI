@@ -3,25 +3,13 @@
 class CLocations {
     
     
-    const DEFAULT_LOCATION_ID = DEFAULT_LOCATION_ID; // Пермь
     const IB_LOCATIONS_ID = IB_LOCATIONS_ID; // Инфблок с местоположениями
     
     
-    function GetLocation() {
-        global $APPLICATION;
-        $Location_ID = 0;
-        $arLocation = Array ();
-        if (isset($_SESSION['LOCATION_ID']) && $_SESSION['LOCATION_ID'] > 0)
-            $Location_ID = $_SESSION['LOCATION_ID'];
-            elseif ($APPLICATION->get_cookie("LOCATION_ID") > 0)
-                $Location_ID = $APPLICATION->get_cookie("LOCATION_ID");
-                else {
-                    $Location_ID = self::DEFAULT_LOCATION_ID;
-                    self::SetLocationByID($Location_ID);
-                }
-        if ($Location_ID == 0)
-            return false;
+    function GetLocationParams($Location_ID) {
         
+        $arLocation = Array();
+        if (isset($Location_ID) && $Location_ID > 0) {
         if(CModule::IncludeModule("iblock")): 
              $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
                                'ID' => $Location_ID
@@ -45,11 +33,9 @@ class CLocations {
                 $arLocation['SPECIALIST_ID'] = $arFields['PROPERTY_SPECIALIST_VALUE'];
                 
             }
-        endif;   
-
+        endif;     
+        }
         return $arLocation;
-
-                
      }
  
     function SetLocationByID ($Location_ID) {

@@ -1,6 +1,7 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");?>
+<span class="close-reveal-modal">&#215;</span>
 
-<form id="locations_select" action="http://<? echo SITE_SERVER_NAME; ?>/services/" method="post" enctype="multipart/form-data">
+<form id="locations_select" action="http://<?=SITE_SERVER_NAME?>/services/" method="post" enctype="multipart/form-data">
 <?
 if(CModule::IncludeModule("iblock")):
 $arSelect = Array("ID", "NAME");

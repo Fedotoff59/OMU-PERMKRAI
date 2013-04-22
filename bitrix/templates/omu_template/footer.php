@@ -30,6 +30,5 @@ IncludeTemplateLangFile(__FILE__);
 </table>
 
 </div>
-
 </body>
 </html>

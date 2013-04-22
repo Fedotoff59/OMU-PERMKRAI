@@ -3,20 +3,24 @@
 <head>
 <?$APPLICATION->ShowHead()?>
 <title><?$APPLICATION->ShowTitle()?></title>
+ <?CJSCore::Init(array("jquery", 'ajax', 'popup'));?>
     <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.0/themes/base/jquery-ui.css" />
-    <script src="http://code.jquery.com/jquery-1.8.3.js"></script>
     <script src="http://code.jquery.com/ui/1.10.0/jquery-ui.js"></script>
     <script src="http://tablesorter.ru/jquery.tablesorter.min.js"></script>
+
+
     
-    
-<? CUtil::InitJSCore( array('ajax' ,'window', 'popup' ));?>
+
+
     
 <script>
     $(document).ready(function() 
     { 
         $("#Sortable").tablesorter(); 
+                
     } 
 ); 
+
 </script>
 </head>
 

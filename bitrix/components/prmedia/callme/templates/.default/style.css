@@ -1,0 +1,185 @@
+/* reset */
+div.call_container div, div.call_container span, div.call_container p,div.call_container a, div.call_container img, div.call_container strong, div.call_container b, div.call_container u, div.call_container i, div.call_container ol, div.call_container ul, div.call_container li,div.call_container fieldset, div.call_container form, div.call_container label,div.call_container table, div.call_container tr, div.call_container td
+{
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: 14px Arial;
+	vertical-align: baseline;
+	outline: none;
+	background: none;
+}
+
+div.call_container table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* main */
+
+div.call_container{
+	position: relative;
+}
+
+div.call_container span.call{
+	cursor: pointer;
+	border-bottom: 1px dotted #1161d8;
+	color:#1161d8;
+	font-size: 14px;
+}
+
+div.call_container div.call_wrapper{
+	display: none;
+	position:fixed;
+	top:0;
+	left:0;
+	z-index: 500;
+	background: url(images/type1_bg.png) repeat left top;
+	width: 100%;
+	height: 100%;
+	
+}
+
+div.call_container div.call_popup{
+	position: absolute;
+	background: #fff;
+	border: 1px solid #e1e1e1;
+	z-index: 550;
+	padding: 20px;
+	width: 185px;
+	*padding-top: 40px;
+}
+
+div.call_container div.type1{
+	top: 50%;
+	left: 50%;	
+	margin: -115px 0 0 -100px;
+}
+
+div.call_container .hid{
+	display: none;
+}
+
+div.call_container .vis{
+	display: block;
+}
+
+div.call_container div.call_popup div.arrow{
+	display: none;
+	position: absolute;
+	width: 21px;
+	height: 11px;
+	top: -11px;
+	left:21px;
+	background: url(images/popup_arrow.png) no-repeat left top;
+}
+
+div.call_container div.call_popup div.close{
+	position: absolute;
+	top:8px;
+	right: 10px;
+	background: url(images/close_popup.png) no-repeat left top;
+	width: 9px;
+	height: 8px;
+	cursor: pointer;
+}
+
+div.call_container div.response p.errtext{
+	font: 12px Arial,sans-serif;
+	margin: 0!important;
+	padding: 0;
+}
+
+div.call_container .form_table {
+	//margin-top: -15px;
+}
+
+div.call_container div.response p.oktext{
+	font: 18px Arial,sans-serif;
+	line-height: 22px;
+	color: #19a400;
+	margin: 39px 0 34px 0!important;
+	padding: 0;
+	text-align: center;
+}
+
+div.call_container table.form_table td.descr{
+	width: 100px;
+}
+
+div.call_container table.form_table td.input{
+	width: 175px;
+	height: 40px;
+	vertical-align: middle;
+}
+
+div.call_container table.form_table td.input .required{
+	background-image: url('images/required.jpg');
+	background-repeat: no-repeat;
+	background-position: 98% 20%;
+}
+
+
+
+div.call_container input.text{
+	height: 25px;
+	height: 22px\0/;
+	width: 180px;
+	border: 1px solid #c2c2c2;
+	padding: 0 0 0 7px;
+	color: #252525;
+	font: 14px Arial, sans-serif;
+	margin-left: 0px;
+	//padding: 5px 0 0 5px;
+}
+
+div.call_container table.form_table div.fake_input{
+	height: 19px;
+	width: 165px;
+	border: 1px solid #c2c2c2;
+	background: url(images/input_bg_top.png) repeat-x left top;
+	padding: 5px 7px 0 7px;
+	color: #252525;
+	font: 14px Arial, sans-serif;
+	outline: none;
+	cursor: text;
+}
+
+div.call_container table.form_table input.text.err{
+	border: 1px solid #cd1100;
+}
+
+div.call_container table.form_table input#captcha{
+	margin-top: 7px;
+}
+
+div.call_container table.form_table input.blue_btn{
+	border: 1px solid #1c4b6e;
+	background: #1161d8;
+	padding: 8px 21px;
+	color: #fff;
+	font: Arial 14px;
+	text-transform: uppercase;
+	cursor: pointer;
+	border-radius:3px; 
+	-webkit-border-radius:3px;
+	-moz-border-radius:3px;
+	-khtml-border-radius:3px;
+	//padding-right: 0px;
+	//padding-left: 0px;
+	//margin-top: 0px !important;
+}
+
+div.call_container table.form_table input.blue_btn, x:-moz-any-link { 
+	margin: 0px 10px 0 6px;
+} 
+
+div.call_container img.captcha_img{
+	width: 180px;
+	height: 40px;
+	margin: 15px 0 13px 0;
+
+}
+
+

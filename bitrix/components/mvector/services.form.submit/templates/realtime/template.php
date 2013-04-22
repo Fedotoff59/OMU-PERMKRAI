@@ -3,7 +3,7 @@
 <div style="width: 200px; height: 80px; float: right; background: #dcf; ">
     <div style="margin-top: 15%; text-align: center;" class="results" >
         <strong> 
-            <a href="javascript:void()" id="submit">ОЦЕНИТЬ</a> 
+            <a href="javascript:void(0)" id="submit">ОЦЕНИТЬ</a> 
         </strong>
     </div>
 </div>
