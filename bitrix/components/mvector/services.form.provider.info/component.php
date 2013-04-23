@@ -1,7 +1,6 @@
 <?
 /*
- * Компонент выводит список поставщиков,
- * соответствующих текущему МО и выбранной услуге.
+ * Компонент выводит карточку данных поставщика.
  */
 
 $arResult = Array();
@@ -10,8 +9,7 @@ $arResult = Array();
  *  Получаем карточку поставщика
  */
     $arResult['PROVIDER'] = Array();
-    $arSelect = Array('NAME');
-    $arFilter = Array('IBLOCK_ID' => $arParams['IB_PROVISORS_ID'], "ID" => $arParams['PROVIDER_ID'], "ACTIVE"=>"Y");
+    $arFilter = Array("ID" => $arParams['PROVIDER_ID'], "ACTIVE"=>"Y");
     $res = CIBlockElement::GetList(false, $arFilter, false, false, false);
    //  echo '<pre>'; print_r($arFilter); echo '</pre>';
     while($ob = $res->GetNextElement())

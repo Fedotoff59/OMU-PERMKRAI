@@ -15,7 +15,7 @@
                 $IB_COMMENTS_ID = false;
         // Создаем элемент инфоблока        
         $arFields = array(
-            'PROVIDER' => $_SESSION['COMMENT']['PROVISOR_ID'],
+            'PROVIDER' => $_SESSION['COMMENT']['PROVIDER_ID'],
             'CREATEDATE' => date("d.m.Y H:i:s"),
             'SERVICE' => $_SESSION['COMMENT']['SERVICE_ID'],
             'COMMENTTEXT' => $_POST['text'],

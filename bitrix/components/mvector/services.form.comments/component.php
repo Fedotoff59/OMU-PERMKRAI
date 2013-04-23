@@ -68,7 +68,7 @@
     
     
 //echo '<strong>Данные компонента:</strong> <br />';
-//echo '<pre>';  print_r($arFields); echo '</pre>';
+//echo '<pre>';  print_r($arFilter); echo '</pre>';
 
 $this->IncludeComponentTemplate();
 ?>

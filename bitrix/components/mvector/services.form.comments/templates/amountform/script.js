@@ -46,7 +46,7 @@
                 }); 
                 
                 $('#link-toaddcomment').click(function(){
-                    BX.ajax.insertToNode('/bitrix/components/mvector/popup/add_comment_form.php', BX('ajax-commentform'), false);
+                    BX.ajax.insertToNode('/bitrix/components/mvector/services.form.comments/add_comment_form.php', BX('ajax-commentform'), false);
                     // функция ajax-загрузки контента из урла в #div
                     commentForm.show(); // появление окна
                 });
