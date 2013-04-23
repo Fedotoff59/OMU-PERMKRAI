@@ -1,5 +1,5 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<div style="float: right; width: 20%; min-height: 550px; margin-top: 15px; text-align: center; padding-top: 15px;">
+<div style="float: right; width: 23%; min-height: 550px; margin-top: 15px; text-align: center; padding-top: 15px;">
     <?$APPLICATION->IncludeComponent("mvector:services.form.provider.info","",Array(
                     "PROVIDER_ID" => $arParams['PROVIDER_ID'],
                 )
@@ -20,7 +20,12 @@
 <table width="73%" border="0">
     <tr>
         <td valign="top" width="200">   <!-- Показываем рейтинг услуги -->
-            Рейтинг поставщика
+            <?$APPLICATION->IncludeComponent("mvector:services.form.provider.rating","realtime", Array(
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "PROVIDER_ID" => $arParams['PROVIDER_ID']
+                      )
+            );?>  
         </td>
         <td valign="top" width="200">  <!-- Показываем удовлетворенность услугой -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","loyalty", Array(
@@ -46,7 +51,7 @@
                 "LOCATION_ID" => $arParams['LOCATION_ID'],
                 "SERVICE_ID" => $arParams['SERVICE_ID'],
                 "PROVIDER_ID" => $arParams['PROVIDER_ID']
-                          )
+                )
     );?>
 </div>
 

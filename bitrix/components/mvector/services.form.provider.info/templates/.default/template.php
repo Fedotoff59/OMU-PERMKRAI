@@ -13,9 +13,9 @@ if ($arResult['PROVIDER']['PHONE'])
     echo '<strong>Телефон:</strong><br />'.$arResult['PROVIDER']['PHONE'].'<br /><br />';
 if ($arResult['PROVIDER']['FAX'])
     echo '<strong>Факс:</strong><br />'.$arResult['PROVIDER']['FAX'].'<br /><br />';
-if ($arResult['PROVIDER']['SITE'])
-    echo '<strong>Сайт:</strong><br /><a href="'.$arResult['PROVIDER']['SITE'].'" target="_blank">'.$arResult['PROVIDER']['SITE'].'</a><br /><br />';
 if ($arResult['PROVIDER']['EMAIL'])
     echo '<strong>E-mail:</strong><br /><a href="mailto:'.$arResult['PROVIDER']['EMAIL'].'">'.$arResult['PROVIDER']['EMAIL'].'</a><br /><br />';
+if ($arResult['PROVIDER']['SITE'])
+    echo '<strong>Сайт:</strong><br /><a href="'.$arResult['PROVIDER']['SITE'].'" target="_blank">'.$arResult['PROVIDER']['SITE'].'</a><br /><br />';
 ?>
 </div>

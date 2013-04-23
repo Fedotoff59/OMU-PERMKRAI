@@ -1,10 +1,9 @@
 <?
 class CRating {
     
-    const IB_VALUES_ID = 71;
-    const IB_SERVICES_ID = 20;
-    const IB_PROVISORS_ID = 24;
-    const IB_LOCATIONS_ID = 23;
+    const IB_VALUES_ID = IB_VALUES_ID;
+    const IB_SERVICES_ID = IB_SERVICES_ID;
+    const IB_LOCATIONS_ID = IB_LOCATIONS_ID;
     const IB_VALUES_PERIOD_CODE = "IB_VALUES_PERIOD";
 
 /*=============================================================================
@@ -13,7 +12,7 @@ class CRating {
 * 
 =============================================================================*/    
     
-    function provisors_rating ($arProvisors = Array(),
+    function providers_rating ($arProviders = Array(),
                                $SERVICE_ID = 0,
                                $quantile = 1.282)
     {
@@ -44,17 +43,18 @@ class CRating {
         $arValues = Array();        
       
         $arFilter = Array('IBLOCK_ID' => self::IB_VALUES_ID, 
-                          'PROPERTY_PROVISOR' => $arProvisors,
-                          'PROPERTY_SERVICE' => $SERVICE_ID
+                          'PROPERTY_PROVIDER' => $arProviders,
+                          'PROPERTY_SERVICE' => $SERVICE_ID,
+                          'PROPERTY_STATUS_VALUE' => 'OK'
                          );
-	$arSelectFields  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION', 'PROPERTY_SERVICE', 'PROPERTY_PROVISOR.ID', 'PROPERTY_CRITERIAVALUES');
+	$arSelectFields  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION', 'PROPERTY_SERVICE', 'PROPERTY_PROVIDER.ID', 'PROPERTY_CRITERIAVALUES');
 	$db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelectFields);
         while($el = $db_List->GetNextElement())
 	{
         
             $arFields = $el->GetFields();
             // Каждому поставщику присваивается свой массив наборов оценок    
-            $arValues[$arFields['PROPERTY_PROVISOR_ID']][] = $arFields['PROPERTY_CRITERIAVALUES_VALUE'];
+            $arValues[$arFields['PROPERTY_PROVIDER_ID']][] = $arFields['PROPERTY_CRITERIAVALUES_VALUE'];
         }
 
 /*
@@ -144,9 +144,10 @@ class CRating {
       
         $arFilter = Array('IBLOCK_ID' => self::IB_VALUES_ID, 
                           'PROPERTY_LOCATION' => $arLocations,
-                          'PROPERTY_SERVICE' => $arServiсes
+                          'PROPERTY_SERVICE' => $arServiсes,
+                          'PROPERTY_STATUS_VALUE' => 'OK'
                          );
-	$arSelect  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION.ID', 'PROPERTY_SERVICE.ID', 'PROPERTY_PROVISOR.ID', 'PROPERTY_CRITERIAVALUES');
+	$arSelect  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION.ID', 'PROPERTY_SERVICE.ID', 'PROPERTY_PROVIDER.ID', 'PROPERTY_CRITERIAVALUES');
 	$db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
         while($el = $db_List->GetNextElement())
 	{
