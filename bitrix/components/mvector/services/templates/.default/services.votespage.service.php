@@ -13,7 +13,7 @@ if(CModule::IncludeModule("iblock")):
 
     $arProviders = Array();
     $arSelect = Array("ID", "NAME");
-    $arFilter = Array("IBLOCK_ID" => IntVal($arResult['CUR_LOCATION_IB_PROVIDERS_ID']), 
+    $arFilter = Array("IBLOCK_ID" => IntVal($arResult['LOCATION']['IB_PROVIDERS_ID']), 
                       "ACTIVE" => "Y", 
                       "PROPERTY_SERVICES" => $arResult['VARIABLES']['SERVICE_ID']
                 );
@@ -31,7 +31,7 @@ if ($arProviders) // В зависимости от того, есть ли по
 {
     // Если только 1 поставщик - сразу переходим на форму оценки этого поставщика
     if (count($arProviders) == 1) {      
-        $link2form = '/services/'.$arResult['VARIABLES']['SERVICE_ID'].'/providers/'.$arResult['CUR_LOCATION_ALIAS'].'/'.$arProviders[0]['ID'];
+        $link2form = '/services/'.$arResult['VARIABLES']['SERVICE_ID'].'/providers/'.$arResult['LOCATION']['LOCATION_ALIAS'].'/'.$arProviders[0]['ID'];
         LocalRedirect($link2form);        
     }
     // Если несколько поставщиков, подключаем компонент вывода списка поставщиков
@@ -40,9 +40,9 @@ if ($arProviders) // В зависимости от того, есть ли по
             "mvector:services.list.providers",
             ".default",
             Array(  'SERVICE_ID' => $arResult['VARIABLES']['SERVICE_ID'],
-                    'LOCATION_ALIAS' => $arResult['CUR_LOCATION_ALIAS'],
-                    'LOCATION_ID' => $arResult['CUR_LOCATION_ID'],
-                    'LOCATION_NAME' => $arResult['CUR_LOCATION_NAME'],
+                    'LOCATION_ALIAS' => $arResult['LOCATION']['LOCATION_ALIAS'],
+                    'LOCATION_ID' => $arResult['LOCATION']['LOCATION_ID'],
+                    'LOCATION_NAME' => $arResult['LOCATION']['LOCATION_NAME'],
                     'COUNT_PROVIDERS' => count($arProviders),
                     'PROVIDERS' => $arProviders
                 ), $component
@@ -55,8 +55,8 @@ else {  // Если поставщиков вообще нет, подключа
         "mvector:services.votespage.service",
         ".default",
         Array(  'SERVICE_ID' => $arResult['VARIABLES']['SERVICE_ID'],
-                'LOCATION_ID' => $arResult['CUR_LOCATION_ID'],
-                'LOCATION_NAME' => $arResult['CUR_LOCATION_NAME'],
+                'LOCATION_ID' => $arResult['LOCATION']['LOCATION_ID'],
+                'LOCATION_NAME' => $arResult['LOCATION']['LOCATION_NAME'],
                 'PROVIDER_ID' => 0,
             ), $component
         );

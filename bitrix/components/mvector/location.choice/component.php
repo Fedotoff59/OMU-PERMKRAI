@@ -35,7 +35,7 @@ if (isset($_SESSION['LOCATION_ID']) && $_SESSION['LOCATION_ID'] > 0)
     }
 // Получаем параметры выбранного МО
 $arChoiceLocation = CLocations::GetLocationParams($ChoiceLocation_ID);
-$arResult = $arChoiceLocation;
+$arResult = $arChoiceLocation[$ChoiceLocation_ID];
        
 $this->IncludeComponentTemplate();
 ?>

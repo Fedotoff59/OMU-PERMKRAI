@@ -14,28 +14,27 @@ if ($arParams['SEF_MODE'] != 'Y')
     {
         echo ERR_MESSAFE_SEF_MODE;
     } else {
-    $arVariables = array();
-    $arUrlTemplates = CComponentEngine::MakeComponentUrlTemplates($arDefaultUrlTemplates404, $arParams['SEF_URL_TEMPLATES']);
-    $componentPage = CComponentEngine::ParseComponentPath($arParams['SEF_FOLDER'], $arUrlTemplates, $arVariables);
-    $arResult = array('VARIABLES' => $arVariables);
+        $arResult = Array();
+        $arVariables = Array();
+        $arUrlTemplates = CComponentEngine::MakeComponentUrlTemplates($arDefaultUrlTemplates404, $arParams['SEF_URL_TEMPLATES']);
+        $componentPage = CComponentEngine::ParseComponentPath($arParams['SEF_FOLDER'], $arUrlTemplates, $arVariables);
+        // Проверяем, есть ли переменные в адресной строке
+        if (!empty($arVariables)) {
+            // Сохраняем переменные в результат
+            $arResult['VARIABLES'] = $arVariables;
+            // Определяем территорию компонента по переменной
+            $CurLocation = CLocations::GetLocationByAlias($arVariables['LOCATION_ALIAS']);
+        // Если переменных нет, значит, это главная страница
+        // Значение территории компонента устанавливаем из выбранного пользователем
+        } else $CurLocation = CLocations::GetCurrentLocationID();
+        if($CurLocation > 0) {
+            $arLocation = CLocations::GetLocationParams($CurLocation);
+            foreach($arLocation as $LocationID => $LocationParams)
+                $arResult['LOCATION'] = $LocationParams;
+        }
     
-    if(isset($_POST['locations'])) { // Изменилось ли местоположение по запросу пользователя
-        CLocations::SetlocationByID($_POST['locations']);
-        LocalRedirect('http://'.SITE_SERVER_NAME.'/services/');
-        } 
-    if (isset($arVariables['LOCATION_ALIAS'])) { 
-               CLocations::SetLocationByAlias($arVariables['LOCATION_ALIAS']);
-    } else {
-         $arResult['CUR_LOCATION_ID'] = CUR_LOCATION_ID;
-         $arResult['CUR_LOCATION_NAME'] = CUR_LOCATION_NAME;
-         $arResult['CUR_LOCATION_ALIAS'] = CUR_LOCATION_ALIAS;
-         $arResult['CUR_LOCATION_IB_PROVIDERS_ID'] = CUR_LOCATION_IB_PROVIDERS_ID;
-         $arResult['CUR_LOCATION_IB_COMMENTS_ID'] = CUR_LOCATION_IB_COMMENTS_ID;
-         $arResult['CUR_LOCATION_SPECIALIST_ID'] = CUR_LOCATION_SPECIALIST_ID; 
-    }
-
         //echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
-        echo '<pre>'; print_r($arResult); echo '</pre>';
+        //echo '<pre>'; print_r($arResult); echo '</pre>';
         $this->IncludeComponentTemplate($componentPage);
     }
 ?>

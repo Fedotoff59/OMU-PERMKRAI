@@ -4,7 +4,7 @@
     <div style="margin: 5px 0 10px; text-align: center;">Текущий ретинг услуги:<br />
         <strong>
            <div style="margin-top: 10px; font-size: 1.8em; text-align: center;">
-               <?echo $arResult[$arParams['CURRENT_LOCATION_ID']][$arParams['CURRENT_SERVICE_ID']]['AVERAGE_RATING']; ?>
+               <?echo $arResult[$arParams['LOCATION_ID']][$arParams['SERVICE_ID']]['AVERAGE_RATING']; ?>
             </div>
         </strong>
     </div>

@@ -18,22 +18,23 @@
     <tr>
         <td valign="top" width="200">   <!-- Показываем рейтинг услуги -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","rating", Array(
-                            "CURRENT_LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "CURRENT_SERVICE_ID" => $arParams['SERVICE_ID']
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID']
                        )
             );?>
         </td>
         <td valign="top" width="200">  <!-- Показываем удовлетворенность услугой -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","loyalty", Array(
-                            "CURRENT_LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "CURRENT_SERVICE_ID" => $arParams['SERVICE_ID']
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID']
                       )
             );?>            
         </td>
         <td valign="top">              <!-- Показываем блок кнопки оценки -->
             <?$APPLICATION->IncludeComponent("mvector:services.form.submit","realtime", Array(
                             "LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "SERVICE_ID" => $arParams['SERVICE_ID']
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "PROVIDER_ID" => $arParams['PROVIDER_ID'] // 0
                           )
             );?>
         </td>

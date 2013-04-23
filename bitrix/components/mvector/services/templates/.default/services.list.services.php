@@ -4,7 +4,7 @@
 $APPLICATION->IncludeComponent(
     "mvector:services.list.services",
     ".default",
-    Array('LOCATION_ALIAS' => $arResult['CUR_LOCATION_ALIAS']
+    Array('LOCATION_ALIAS' => $arResult['LOCATION']['LOCATION_ALIAS']
     ), $component
 ); 
 ?>

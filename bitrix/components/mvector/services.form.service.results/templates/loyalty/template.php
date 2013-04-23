@@ -4,11 +4,11 @@
     <div style="margin: 5px 0 10px; text-align: center;">Удовлетворенность услугой:<br />
         <strong>
             <div style="margin-top: 10px; font-size: 1.8em; text-align: center;">
-                <?echo $arResult[$arParams['CURRENT_LOCATION_ID']][$arParams['CURRENT_SERVICE_ID']]['AVERAGE_PERCENT_RATING']; ?>
+                <?echo $arResult[$arParams['LOCATION_ID']][$arParams['SERVICE_ID']]['AVERAGE_PERCENT_RATING']; ?>
             </div>
         </strong>
    </div>
 </div>
 <span style="color: #999; float: right;">
-    <?echo $arResult[$arParams['CURRENT_LOCATION_ID']][$arParams['CURRENT_SERVICE_ID']]['VOTES_AMOUNT']; ?>
+    <?echo $arResult[$arParams['LOCATION_ID']][$arParams['SERVICE_ID']]['VOTES_AMOUNT']; ?>
 </span>

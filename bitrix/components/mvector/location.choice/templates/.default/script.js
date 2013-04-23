@@ -13,7 +13,7 @@ BX.ready(function() {
                 alert(xhr.responseCode);
             }
         });
-        $('#chose-location-form').jsPopup.ShowDialog('/bitrix/components/mvector/location.choice/form-location-choice.php');
    });
+   $('#chose-location-link').fancybox();
 });
 	

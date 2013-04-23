@@ -1,27 +1,48 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");?>
-<span class="close-reveal-modal">&#215;</span>
 
-<form id="locations_select" action="http://<?=SITE_SERVER_NAME?>/services/" method="post" enctype="multipart/form-data">
+<script type="text/javascript">
+$(document).ready(function(){
+   $('#locations-table').click(function(e) {  
+        if (e.target.className == 'popup-location-link') {
+            var locationtextid = e.target.id;
+            var locationid = locationtextid.split('-');
+            $.ajax({
+                type: 'POST',
+                url: '/bitrix/components/mvector/location.choice/ajax-location-choice.php',
+                data: ({'location_choice': locationid[1]}),
+                success: function(data) {
+                    // Переадресация в случе, если мы находимся в разделе оценки
+                    var currenturl = window.location.href;
+                    var spliturl = currenturl.split('/');
+                    if (spliturl[3] == 'services') {
+                        window.location.replace("/services/");
+                    }
+                    // Вписываем выбранную территорию
+                    $('#chose-location-link').html(data);
+                },
+                error:  function(xhr, str){
+                    alert(xhr.responseCode);
+                }
+            });
+            //$("#log").html("link: " + url[3]);
+            $.fancybox.close();
+        }
+   });
+});
+</script>
+<table width="100%" border="0" id="locations-table"><tr><td width="50%" align="left">
 <?
-if(CModule::IncludeModule("iblock")):
-$arSelect = Array("ID", "NAME");
-$arFilter = Array("IBLOCK_ID"=>23);
-$res = CIBlockElement::GetList(Array('NAME' => 'ASC'), $arFilter, false, false, $arSelect);
+$arLocation = CLocations::GetLocationParams();
 $i = 0;
-echo '<table width="100%" border="0"><tr><td width="50%">';
-while($ob = $res->GetNextElement())
+foreach($arLocation as $LocationID => $LocationParams)
 {
- $i++;
-  $arFields = $ob->GetFields();
- // print_r($arFields);
-if ($i % 25 == 0) echo '</td><td width="50%">';
-  echo '<input type="radio" name="locations" value="'.$arFields['ID'].'">'.$arFields['NAME'].'</input><br />';
-}
-//echo '</td></tr></table>';
-endif;
+    $i++;
+    if ($i % 25 == 0) echo '</td><td width="50%" align="left">';
+?>     
+    <a href="javascript:;" class="popup-location-link" id="location-<?=$LocationID?>"><?=$LocationParams['LOCATION_NAME']?></a><br>
+<?
+} // endwhile
 ?>
-
-
-</form>
-
+</td></tr></table>
+<div id="log"></div>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");?>

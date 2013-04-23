@@ -6,9 +6,9 @@
    
     $arResult = Array();
 
-    $curService_ID = $arParams['CURRENT_SERVICE_ID'];
+    $curService_ID = $arParams['SERVICE_ID'];
     
-    $curLocation_ID = $arParams['CURRENT_LOCATION_ID'];
+    $curLocation_ID = $arParams['LOCATION_ID'];
     
     $arLocation[] = $curLocation_ID;
     

@@ -5,36 +5,41 @@ class CLocations {
     
     const IB_LOCATIONS_ID = IB_LOCATIONS_ID; // Инфблок с местоположениями
     
+    function GetCurrentLocationID() {
+        $Location_ID = 0;
+        if (isset($_SESSION['LOCATION_ID']) && $_SESSION['LOCATION_ID'] > 0)
+            $Location_ID = $_SESSION['LOCATION_ID'];
+        return $Location_ID;
+    }
     
-    function GetLocationParams($Location_ID) {
+    function GetLocationParams($arLocation_ID = Array()) {
         
         $arLocation = Array();
-        if (isset($Location_ID) && $Location_ID > 0) {
         if(CModule::IncludeModule("iblock")): 
-             $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
-                               'ID' => $Location_ID
+            $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
+                               'ID' => $arLocation_ID
                                 );
-             $arSelect = Array(  'ID', 
+            $arSelect = Array(  'ID', 
                         'NAME', 
                         'PROPERTY_ALIAS', 
                         'PROPERTY_IBPROVIDERS', 
                         'PROPERTY_IBCOMMENTS', 
                         'PROPERTY_SPECIALIST'
                     );
-            $db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+            $arOrder = Array("NAME" => "ASC");
+            $db_List = CIBlockElement::GetList($arOrder, $arFilter, false, false, $arSelect);
             while($el = $db_List->GetNextElement())
             {
                 $arFields = $el->GetFields();
-                $arLocation['LOCATION_ID'] = $arFields['ID'];
-                $arLocation['LOCATION_NAME'] = $arFields['NAME'];
-                $arLocation['LOCATION_ALIAS'] = $arFields['PROPERTY_ALIAS_VALUE'];
-                $arLocation['IB_PROVIDERS_ID'] = $arFields['PROPERTY_IBPROVIDERS_VALUE'];
-                $arLocation['IB_COMMENTS_ID'] = $arFields['PROPERTY_IBCOMMENTS_VALUE'];
-                $arLocation['SPECIALIST_ID'] = $arFields['PROPERTY_SPECIALIST_VALUE'];
+                $arLocation[$arFields['ID']]['LOCATION_ID'] = $arFields['ID'];
+                $arLocation[$arFields['ID']]['LOCATION_NAME'] = $arFields['NAME'];
+                $arLocation[$arFields['ID']]['LOCATION_ALIAS'] = $arFields['PROPERTY_ALIAS_VALUE'];
+                $arLocation[$arFields['ID']]['IB_PROVIDERS_ID'] = $arFields['PROPERTY_IBPROVIDERS_VALUE'];
+                $arLocation[$arFields['ID']]['IB_COMMENTS_ID'] = $arFields['PROPERTY_IBCOMMENTS_VALUE'];
+                $arLocation[$arFields['ID']]['SPECIALIST_ID'] = $arFields['PROPERTY_SPECIALIST_VALUE'];
                 
             }
         endif;     
-        }
         return $arLocation;
      }
  
@@ -48,9 +53,10 @@ class CLocations {
         
     }
     
-    function SetLocationByAlias ($Location_ALIAS) {
+    function GetLocationByAlias ($Location_ALIAS) {
         
         global $APPLICATION;
+        $Location_ID = 0;
         if (isset($Location_ALIAS) && $Location_ALIAS != '') {
             if(CModule::IncludeModule("iblock")): 
             $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
@@ -62,12 +68,11 @@ class CLocations {
             {
                 $arFields = $el->GetFields();
                 $Location_ID = $arFields['ID'];
-                self::SetLocationByID($Location_ID);
             }  
             endif;
             
         }
-
+        return $Location_ID;
     }
     
 }
