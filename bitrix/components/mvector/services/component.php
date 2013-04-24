@@ -34,7 +34,7 @@ if ($arParams['SEF_MODE'] != 'Y')
         }
     
         //echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
-        //echo '<pre>'; print_r($arResult); echo '</pre>';
+        //echo '<pre>'; print_r($_SESSION); echo '</pre>';
         $this->IncludeComponentTemplate($componentPage);
     }
 ?>

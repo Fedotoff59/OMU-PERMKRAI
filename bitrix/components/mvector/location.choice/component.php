@@ -15,27 +15,43 @@ $arChiceLocation = Array ();
 // Флаг показа уведомления о выборе местоположения
 $bShowRemindChoiceWindow = false;
 // Проверяем, есть ли значение в сессии
-if (isset($_SESSION['LOCATION_ID']) && $_SESSION['LOCATION_ID'] > 0)
+if ($_SESSION['LOCATION_ID'] > 0) {
+    
+    $flag = 'session';
     $ChoiceLocation_ID = $_SESSION['LOCATION_ID'];
-    else {
+}    else {
         // Если нету, проверяем, есть ли пользовательское поле со значением
-        $rsUser = CUser::GetByID($USER);
-        $arUser = $rsUser->Fetch();
-        if(isset($arUser["UF_LOCATION"]) && $arUser["UF_LOCATION"] > 0)
+        global $USER;
+        
+        if($USER->IsAuthorized()) {
+         $flag = 'user';   
+              $rsUser = CUser::GetByID($USER);
+                 $arUser = $rsUser->Fetch();
             $ChoiceLocation_ID = $arUser["UF_LOCATION"];
-            else {
+        }  else {
                 // Если нет, устанавливаем, что нужно показать уведомление о выборе
                 // Проверям, есть значение в куках
                 $bShowRemindChoiceWindow = true;
-                if ($APPLICATION->get_cookie("LOCATION_ID") > 0)
+                global $APPLICATION;
+                $CokieLocation = $APPLICATION->get_cookie("LOCATION_ID");
+                if ($APPLICATION->get_cookie("LOCATION_ID")) {
+                    
+                $flag = 'cookie';
                    $ChoiceLocation_ID = $APPLICATION->get_cookie("LOCATION_ID");
                     // Если нет, устанавливаем значение по умолчанию
-                    else $ChoiceLocation_ID = DEFAULT_LOCATION_ID;
+                }    else {
+                        $ChoiceLocation_ID = DEFAULT_LOCATION_ID;
+                        $flag = 'default';
+                }
             }
     }
+echo $flag;
+CLocations::SetLocationByID($ChoiceLocation_ID);
 // Получаем параметры выбранного МО
 $arChoiceLocation = CLocations::GetLocationParams($ChoiceLocation_ID);
 $arResult = $arChoiceLocation[$ChoiceLocation_ID];
-       
+                global $APPLICATION;
+                $CokieLocation = $APPLICATION->get_cookie("LOCATION_ID");
+                
 $this->IncludeComponentTemplate();
 ?>

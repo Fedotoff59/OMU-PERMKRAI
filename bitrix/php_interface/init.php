@@ -12,6 +12,7 @@ function FunctionName(params)
 <?
 AddEventHandler("iblock", "OnAfterIBlockElementAdd", Array("AfterProviderActivity", "OnAfterProviderActivity"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("AfterProviderActivity", "OnAfterProviderActivity"));
+AddEventHandler("main", "OnAfterUserLogin", Array("SetUserLocation", "OnAfterUserLoginHandler"));
 
 class AfterProviderActivity
 {
@@ -32,6 +33,29 @@ class AfterProviderActivity
                     array("Voters"=>Array("user_1", "user_10")));        
     }
     
+}
+
+class SetUserLocation
+{
+    // создаем обработчик события "OnAfterUserLogin"
+    function OnAfterUserLoginHandler(&$fields)
+    {
+        // если логин успешен то
+        if($fields['USER_ID'] > 0)
+        {
+               // ищем пользователя по логину
+                $rsUser = CUser::GetByLogin($fields['LOGIN']);
+                // и если нашли, то
+                if ($arUser = $rsUser->Fetch())
+                {   // смотрим, есть ли у пользователя поле с территорией
+                    if (isset($arUser["UF_LOCATION"]))
+                        // если есть, то устанавливаем территорию пользователя
+                        CLocations::SetLocationByID($arUser["UF_LOCATION"]);
+
+                }
+
+        }
+    }
 }
 ?>
 <?
