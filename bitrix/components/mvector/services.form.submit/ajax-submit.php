@@ -10,11 +10,11 @@
 
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/prolog_before.php");
 
-define("ERR_MESSAGE_PERIOD_SERVICE", "Ошибка! Превышено число голосов от одного пользователя. За эту услугу Вы сможете проголосовать в следующем месяце.");
-define("ERR_MESSAGE_PERIOD_PROVIDER", "Ошибка! Превышено число голосов от одного пользователя. За этого поставщика Вы сможете проголосовать в следующем месяце.");
-define("ERR_MESSAGE_LOCATION", "Ошибка! Вы можете ставить оценки поставщикам и услугам только в пределах своей территории.");
-define("ERR_MESSAGE_UNREGISTERED", "Ошибка! Для оценки Вам необходимо зарегистрироваться!");
-define("THANKYOU_MESSAGE", "Спасибо, Ваш голос учтен!");
+define("ERR_MSG_PERIOD_SERVICE", "Ошибка! Превышено число голосов от одного пользователя. За эту услугу Вы сможете проголосовать в следующем месяце.");
+define("ERR_MSG_PERIOD_PROVIDER", "Ошибка! Превышено число голосов от одного пользователя. За этого поставщика Вы сможете проголосовать в следующем месяце.");
+define("ERR_MSG_LOCATION", "Ошибка! Вы можете ставить оценки поставщикам и услугам только в пределах своей территории.");
+define("ERR_MSG_UNREGISTERED", "Ошибка! Для оценки Вам необходимо зарегистрироваться!");
+define("THANKYOU_MSG", "Спасибо, Ваш голос учтен!");
 
 function get_post_request($_POST) {
     global $USER;
@@ -43,16 +43,16 @@ function save_vote($arVoteParams, $ACCESS) {
     // Формируем сообщение в соответствии со статусом оценки
     $ACCESS_ID = 5; // ERR_UNDEFINED
     switch ($ACCESS) {
-        case 'OK': $SAVE_MESSAGE = THANKYOU_MESSAGE; $ACCESS_ID = 1; break;
+        case 'OK': $SAVE_MSG = THANKYOU_MSG; $ACCESS_ID = 1; break;
         case 'ERR_PERIOD': {
             if($arVoteParams['FIELDS']['PROVIDER'] == 0)
-                $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_SERVICE; 
-                else $SAVE_MESSAGE = ERR_MESSAGE_PERIOD_PROVIDER; 
+                $SAVE_MSG = ERR_MSG_PERIOD_SERVICE; 
+                else $SAVE_MSG = ERR_MSG_PERIOD_PROVIDER; 
             $ACCESS_ID = 2; 
             break;
         }
-        case 'ERR_LOCATION': $SAVE_MESSAGE = ERR_MESSAGE_LOCATION; $ACCESS_ID = 3; break;
-        case 'ERR_UNREGISTERED': $SAVE_MESSAGE = ERR_MESSAGE_UNREGISTERED; $ACCESS_ID = 4; break;
+        case 'ERR_LOCATION': $SAVE_MSG = ERR_MSG_LOCATION; $ACCESS_ID = 3; break;
+        case 'ERR_UNREGISTERED': $SAVE_MSG = ERR_MSG_UNREGISTERED; $ACCESS_ID = 4; break;
     }
     $arVoteParams['FIELDS']['STATUS'] = Array("VALUE" => $ACCESS_ID);
     $arSaveProps = $arVoteParams['FIELDS'];
@@ -72,7 +72,7 @@ function save_vote($arVoteParams, $ACCESS) {
     $el = new CIBlockElement;
     echo '<p style="color: #f00;"><strong>';
     if($EVAL_ID = $el->Add($arAddValuesElement))
-        echo $SAVE_MESSAGE;
+        echo $SAVE_MSG;
         // echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
     else
         echo "Ошибка: ".$el->LAST_ERROR;
@@ -86,7 +86,7 @@ function check_vote_acсess($arVoteParams) {
     $ACCESS = 'ERR_UNDEFINED';
     // Проверяем, зарегистрирован ли пользователь
     global $USER;
-    if (!$USER->GetID()) 
+    if (!$USER->IsAuthorized()) 
         $ACCESS = 'ERR_UNREGISTERED';
         else {
         // Проверяем, в своем ли муниципалитете голосует пользователь
