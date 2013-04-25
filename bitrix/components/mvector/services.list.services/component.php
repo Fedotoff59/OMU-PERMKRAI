@@ -1,7 +1,7 @@
 <?
 
 if(CModule::IncludeModule("iblock")):
-
+  
 	$arResult = Array();
 	$arFilter = Array('IBLOCK_ID'=>IB_SERVICES_ID, 'ACTIVE'=>'Y');
 	$db_Section_list = CIBlockSection::GetList(Array($by=>"id", $by2=>"asc"), $arFilter, true);
@@ -18,6 +18,11 @@ if(CModule::IncludeModule("iblock")):
 			$arResult[$arSection_result['ID']]['ELEMENTS'][$arElementFields['ID']] = $arElementFields['NAME'];
 		}
 	}
+        $CurLocation = CLocations::GetCurrentLocationID();
+        if($CurLocation > 0) 
+            $arLocation = CLocations::GetLocationParams($CurLocation);
+            foreach($arLocation as $LocationID => $LocationParams)
+                $arParams['LOCATION_ALIAS'] = $LocationParams['LOCATION_ALIAS'];
 
 endif;
 

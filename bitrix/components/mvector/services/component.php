@@ -2,7 +2,6 @@
 
 <?
 $arDefaultUrlTemplates404 = Array(
-   "services.list.services" => "index.php",
    "services.votespage.service" => "#SERVICE_ID#/#LOCATION_ALIAS#",
    "services.votespage.provider" => "#SERVICE_ID#/providers/#LOCATION_ALIAS#/#PROVIDER_ID#",
 );
@@ -26,15 +25,13 @@ if ($arParams['SEF_MODE'] != 'Y')
             $CurLocation = CLocations::GetLocationByAlias($arVariables['LOCATION_ALIAS']);
         // Если переменных нет, значит, это главная страница
         // Значение территории компонента устанавливаем из выбранного пользователем
-        } else $CurLocation = CLocations::GetCurrentLocationID();
-        if($CurLocation > 0) {
+        } else echo 'wtf!';
+        if($CurLocation > 0) 
             $arLocation = CLocations::GetLocationParams($CurLocation);
             foreach($arLocation as $LocationID => $LocationParams)
                 $arResult['LOCATION'] = $LocationParams;
-        }
-    
-        //echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
-        //echo '<pre>'; print_r($_SESSION); echo '</pre>';
+        echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
+        echo '<pre>'; print_r($arVariables); echo '</pre>';
         $this->IncludeComponentTemplate($componentPage);
     }
 ?>

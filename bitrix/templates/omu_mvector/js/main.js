@@ -21,7 +21,7 @@ function initInputs() {
 }
 
 // placeholder class
-;(function(){
+(function(){
 	var placeholderCollection = [];
 	PlaceholderInput = function() {
 		this.options = {
