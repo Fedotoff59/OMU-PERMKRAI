@@ -12,7 +12,7 @@ if(CModule::IncludeModule("iblock")):
 // Проверка наличия поставщиков
 
     $arProviders = Array();
-    $arSelect = Array("ID", "NAME");
+    $arSelect = Array("ID", "NAME", "PROPERTY_ADDRESS");
     $arFilter = Array("IBLOCK_ID" => IntVal($arResult['LOCATION']['IB_PROVIDERS_ID']), 
                       "ACTIVE" => "Y", 
                       "PROPERTY_SERVICES" => $arResult['VARIABLES']['SERVICE_ID']

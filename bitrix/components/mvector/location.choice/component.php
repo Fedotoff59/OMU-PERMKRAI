@@ -45,7 +45,7 @@ if ($_SESSION['LOCATION_ID'] > 0) {
                 }
             }
     }
-echo $flag;
+//echo $flag;
 CLocations::SetLocationByID($ChoiceLocation_ID);
 // Получаем параметры выбранного МО
 $arChoiceLocation = CLocations::GetLocationParams($ChoiceLocation_ID);

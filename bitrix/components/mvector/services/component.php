@@ -31,7 +31,7 @@ if ($arParams['SEF_MODE'] != 'Y')
             foreach($arLocation as $LocationID => $LocationParams)
                 $arResult['LOCATION'] = $LocationParams;
         echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
-        echo '<pre>'; print_r($arVariables); echo '</pre>';
+        //echo '<pre>'; print_r($arVariables); echo '</pre>';
         $this->IncludeComponentTemplate($componentPage);
     }
 ?>

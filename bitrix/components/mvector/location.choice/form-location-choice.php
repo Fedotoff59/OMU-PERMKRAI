@@ -2,7 +2,11 @@
 
 <script type="text/javascript">
 $(document).ready(function(){
-   $('#locations-table').click(function(e) {  
+   $('#close-popup').click(function() {
+        $('#page-ovaerlay').empty();
+   });
+   $('.popup-location-link').click(function(e) {  
+        //$("#log").html("link: " + e.target.className);
         if (e.target.className == 'popup-location-link') {
             var locationtextid = e.target.id;
             var locationid = locationtextid.split('-');
@@ -14,35 +18,43 @@ $(document).ready(function(){
                     // Переадресация в случе, если мы находимся в разделе оценки
                     var currenturl = window.location.href;
                     var spliturl = currenturl.split('/');
-                    if (spliturl[3] == 'services') {
-                        window.location.replace("/services/");
-                    }
+                    if (spliturl[3] == 'services' || spliturl[3] == '') {
+                        window.location.replace("/");
+                    } else $('#page-ovaerlay').empty();
                     // Вписываем выбранную территорию
                     $('#chose-location-link').html(data);
+                    $("#log").html("link: " + spliturl[3]);
                 },
                 error:  function(xhr, str){
                     alert(xhr.responseCode);
                 }
             });
-            //$("#log").html("link: " + url[3]);
-            $.fancybox.close();
         }
    });
 });
 </script>
-<table width="100%" border="0" id="locations-table"><tr><td width="50%" align="left">
+<div class="overlay"></div>
+<div class="lightbox">
+    <a href="#" class="close" id="close-popup">close</a>
+    <div class="clearfix"></div>
+    <h2>Выберите муниципальный район</h2>
+    <div class="column">
+        <ul>
 <?
 $arLocation = CLocations::GetLocationParams();
 $i = 0;
 foreach($arLocation as $LocationID => $LocationParams)
 {
     $i++;
-    if ($i % 25 == 0) echo '</td><td width="50%" align="left">';
+    if ($i % 25 == 0) echo '</ul></div><div class="column"><ul>';
 ?>     
-    <a href="javascript:;" class="popup-location-link" id="location-<?=$LocationID?>"><?=$LocationParams['LOCATION_NAME']?></a><br>
+    <li><a href="javascript:;" class="popup-location-link" id="location-<?=$LocationID?>"><?=$LocationParams['LOCATION_NAME']?></a></li>
 <?
 } // endwhile
 ?>
-</td></tr></table>
-<div id="log"></div>
+        </ul>
+        <div id="log"></div>
+    </div>
+</div>
+
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");?>
