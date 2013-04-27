@@ -65,6 +65,7 @@ CModule::AddAutoloadClasses(
            // ключ - имя класса, значение - путь относительно корня сайта к файлу с классом
                 'CRating' => '/bitrix/php_interface/rating/classes/rating.php',
                 'CLocations' => '/bitrix/php_interface/locations/classes/locations.php',
+                'CServices' =>  '/bitrix/php_interface/services/classes/services.php',
                 'CDataExport' => '/bitrix/php_interface/dataexport/classes/dataexport.php',
                 'PHPExcel' => '/bitrix/php_interface/Excel/classes/PHPExcel.php',
         )

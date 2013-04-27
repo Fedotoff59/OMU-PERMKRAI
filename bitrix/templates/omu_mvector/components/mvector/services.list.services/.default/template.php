@@ -3,7 +3,7 @@
 <ul class="services">
 <?
     $i = 0;
-    foreach($arResult as $sID => $arSectionData)
+    foreach($arResult['SERVICES'] as $sID => $arSectionData)
     {
         $i++;
 ?>
@@ -14,7 +14,7 @@
                 foreach($arSectionData['ELEMENTS'] as $elID => $elName)
                     {
                 ?>
-                        <li><a href="services/<?=$elID;?>/<?=$arParams['LOCATION_ALIAS'];?>"><?=$elName;?></a></li>
+                        <li><a href="services/<?=$elID;?>/<?=$arResult['LOCATION_ALIAS'];?>"><?=$elName;?></a></li>
                 <?  }   ?>
             </ul>
             <span class="arrow"></span>
