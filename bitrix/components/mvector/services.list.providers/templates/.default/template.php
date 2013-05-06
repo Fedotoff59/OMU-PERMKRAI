@@ -7,6 +7,6 @@
     for($i=0; $i < intval($arResult['COUNT_PROVIDERS']); $i++) 
         {   
 ?>
-    <li><a href="/services/<?=$arResult['SERVICE_ID'];?>/providers/<?=$arResult['LOCATION_ALIAS'];?>/<?=$arResult['PROVIDERS'][$i]['ID'];?>"><?=$arResult['PROVIDERS'][$i]['NAME'];?></a></li>
+    <li><a href="/services/<?=$arResult['SERVICE_ID'];?>/providers/<?=$arResult['LOCATION_ALIAS'];?>/<?=$arResult['PROVIDERS'][$i]['ID'];?>/"><?=$arResult['PROVIDERS'][$i]['NAME'];?></a></li>
 <?      } ?>
 </ol>

@@ -3,7 +3,7 @@
 <div id="content">
     <h1>Выбор поставщика услуг</h1>
     <div class="btn-row2">
-        <a href="#" class="submit2"><span><span>Выбор услуги</span></span></a>
+        <a href="#" class="submit2" id="chose-service-link"><span><span>Выбор услуги</span></span></a>
 	<span class="choose"><?=$arResult['SERVICE_NAME']?></span>
     </div>
     <ul class="address-list">
@@ -12,7 +12,7 @@
         {   
         ?>
         <li>
-            <h4><a href="/services/<?=$arResult['SERVICE_ID'];?>/providers/<?=$arResult['LOCATION_ALIAS'];?>/<?=$arResult['PROVIDERS'][$i]['ID'];?>"><?=$arResult['PROVIDERS'][$i]['NAME'];?></a></h4>
+            <h4><a href="/services/<?=$arResult['SERVICE_ID'];?>/providers/<?=$arResult['LOCATION_ALIAS'];?>/<?=$arResult['PROVIDERS'][$i]['ID'];?>/"><?=$arResult['PROVIDERS'][$i]['NAME'];?></a></h4>
             <p><?=$arResult['PROVIDERS'][$i]['PROPERTY_ADDRESS_VALUE'];?></p>
 	</li>
         <?

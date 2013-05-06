@@ -18,7 +18,7 @@ $(document).ready(function(){
                     // Переадресация в случе, если мы находимся в разделе оценки
                     var currenturl = window.location.href;
                     var spliturl = currenturl.split('/');
-                    if (spliturl[3] == 'services' || spliturl[3] == '') {
+                    if (spliturl[3] == 'services' || spliturl[3] == '' || spliturl[3] == '#') {
                         window.location.replace("/");
                     } else $('#page-ovaerlay').empty();
                     // Вписываем выбранную территорию

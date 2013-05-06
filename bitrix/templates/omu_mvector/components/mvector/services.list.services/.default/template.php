@@ -14,7 +14,7 @@
                 foreach($arSectionData['ELEMENTS'] as $elID => $elName)
                     {
                 ?>
-                        <li><a href="services/<?=$elID;?>/<?=$arResult['LOCATION_ALIAS'];?>"><?=$elName;?></a></li>
+                        <li><a href="services/<?=$elID;?>/<?=$arResult['LOCATION_ALIAS'];?>/"><?=$elName;?></a></li>
                 <?  }   ?>
             </ul>
             <span class="arrow"></span>

@@ -17,7 +17,7 @@ if(CModule::IncludeModule("iblock")):
                       "ACTIVE" => "Y", 
                       "PROPERTY_SERVICES" => $arResult['VARIABLES']['SERVICE_ID']
                 );
-    $res = CIBlockElement::GetList(array(), $arFilter, false, false, $arSelect);
+    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
     while($ob = $res->GetNextElement())
      {
             $arProviders[] = $ob->GetFields();
@@ -31,7 +31,13 @@ if ($arProviders) // В зависимости от того, есть ли по
 {
     // Если только 1 поставщик - сразу переходим на форму оценки этого поставщика
     if (count($arProviders) == 1) {      
-        $link2form = '/services/'.$arResult['VARIABLES']['SERVICE_ID'].'/providers/'.$arResult['LOCATION']['LOCATION_ALIAS'].'/'.$arProviders[0]['ID'];
+        $link2form = '/services/';
+        $link2form .= $arResult['VARIABLES']['SERVICE_ID'];
+        $link2form .= '/providers/';
+        $link2form .= $arResult['LOCATION']['LOCATION_ALIAS'];
+        $link2form .= '/';
+        $link2form .= $arProviders[0]['ID'];
+        $link2form .= '/';
         LocalRedirect($link2form);        
     }
     // Если несколько поставщиков, подключаем компонент вывода списка поставщиков

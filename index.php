@@ -28,8 +28,8 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
     $APPLICATION->IncludeComponent(
         "mvector:services.list.services",
         ".default",
-        Array('LOCATION_ALIAS' => $arResult['LOCATION']['LOCATION_ALIAS']
-        ), false
+        Array(), 
+        false
     ); 
     ?>
     <!-- infographic -->
