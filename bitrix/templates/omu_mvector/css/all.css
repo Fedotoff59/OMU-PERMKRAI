@@ -1666,17 +1666,19 @@ ul li {
 	-moz-border-radius:0 3px 3px 0;
 	-webkit-border-radius:0 3px 3px 0;
 }
-.address-list {
+.address-list, .address-list-paging {
 	margin:0;
 	padding:16px 0 0;
-	border-bottom:1px solid #e1e4e7;
 }
-.address-list li {
+.address-list-paging {
+    border-bottom:1px solid #e1e4e7;
+}
+.address-list li, .address-list-paging li {
 	padding:0 0 19px;
 	background:none;
 }
-.address-list h4 {margin:0;}
-.address-list h4 a {color:#2594cb;}
+.address-list h4, .address-list-paging h4 {margin:0;}
+.address-list h4 a, .address-list-paging h4 a {color:#2594cb;}
 .search-list .select-text {
 	background:#fcf2dc;
 	padding:0 3px;

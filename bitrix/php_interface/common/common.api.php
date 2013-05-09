@@ -17,8 +17,11 @@ define("DEFAULT_LOCATION_ID", 470); // Пермь
 // Задаем имя формы для организации ajax взаимодействия
 define("CRITERIAS_FORM_ID", "criteriasform");
 
-define ("ERR_MESSAFE_SEF_MODE", "Ошибка! Для работы компонента необходимо включить режим SEF");
+define("ERR_MESSAFE_SEF_MODE", "Ошибка! Для работы компонента необходимо включить режим SEF");
 
+// Задаем текстовые константы для постраничной навигации
+define("TEXT_NEXT_PAGE", "Следующая страница");
+define("TEXT_PREV_PAGE", "Предыдущая страница");
 /*
  * Функция возвращает данные о текущем отчетном периоде
  * 
@@ -42,5 +45,60 @@ function get_voting_period() {
         }
     return $arCurPeriod;
     endif;
+}
+
+/*
+ * Функция постраничную навигацию: активную страницу, страницы, которые рядом,
+ * номера элементов, которые нужно вывести
+ * 
+ */
+function pagenav($curpage, $elcount, $eltopagelimit = 15, $pageingrouplimit = 5) {
+    $arNav = Array();
+    // Расчет количества страниц
+    if ($elcount % $eltopagelimit == 0)
+        $totalpages = $elcount / $eltopagelimit;
+        else $totalpages = floor($elcount / $eltopagelimit) + 1;
+    // Проверка на правильность значения $curpage, если не проходит, то сброс на 1
+    if($curpage < 1 || $curpage > $totalpages)
+       $curpage = 1;
+    // Определяем количество групп страниц
+    if ($totalpages % $pageingrouplimit == 0)
+        $totalpagesgroups = $totalpages / $pageingrouplimit;
+        else $totalpagesgroups = floor($totalpages / $pageingrouplimit) + 1;
+    // Определяем текущую группу страницы
+    if ($curpage % $pageingrouplimit == 0)
+        $curpagegroup = $curpage / $pageingrouplimit;
+        else $curpagegroup = floor($curpage / $pageingrouplimit) + 1;
+    if ($curpagegroup > 1)
+        $arNav['ARROW_PREV'] = true;
+        else $arNav['ARROW_PREV'] = false;
+    if ($curpagegroup < $totalpagesgroups)
+        $arNav['ARROW_NEXT'] = true;
+        else $arNav['ARROW_NEXT'] = false;
+    // Определяем стартовый номер элемента (отсчет с нуля)
+    $navstart = ($curpage - 1) * $eltopagelimit;
+    // Определяем конечный номер элемента
+    $navend = $navstart + $eltopagelimit;
+    // Если конечный номер больше кол-ва элементов - переопределяем
+    if ($navend > $elcount)
+        $navend = $elcount;
+    $navend -= 1;
+    // Определяем стартовый номер страницы
+    $pagestart = ($curpagegroup - 1) * $pageingrouplimit + 1;
+    // Определяем конечный номер страницы
+    $pageend = $pagestart + $pageingrouplimit - 1;
+    // Если конечный номер больше кол-ва страниц - переопределяем
+    if ($pageend > $totalpages)
+        $pageend = $totalpages;
+    $arNav['ACTIVE_PAGE'] = $curpage;
+    $arNav['START_PAGE'] = $pagestart;
+    $arNav['END_PAGE'] = $pageend;
+    $arNav['START_NAV'] = $navstart;
+    $arNav['END_NAV'] = $navend;
+    $arNav['TOTALPAGES'] = $totalpages;
+    if ($arNav['END_PAGE'] > 1)
+        $arNav['UL_CLASS'] = 'address-list-paging';
+        else $arNav['UL_CLASS'] = 'address-list';
+    return $arNav;
 }
 ?>

@@ -13,7 +13,7 @@ class CServices {
         if(CModule::IncludeModule("iblock")):
         $arServices = Array();
 	$arFilter = Array('IBLOCK_ID'=>self::IB_SERVICES_ID, 'ACTIVE'=>'Y');
-	$db_Section_list = CIBlockSection::GetList(Array($by=>"id", $by2=>"asc"), $arFilter, true);
+	$db_Section_list = CIBlockSection::GetList(Array("sort"=>"asc"), $arFilter, true);
 	while($arSection_result = $db_Section_list->GetNext())
 	{
 		$arElementFilter = Array('IBLOCK_ID' => self::IB_SERVICES_ID, 'SECTION_ID' => $arSection_result['ID']);
