@@ -1,52 +1,63 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<div style="float: right; background-color: #ccc; width: 20%; min-height: 550px; margin-top: 15px; text-align: center; padding-top: 15px;">
-    Правая колонка
-</div>
-<!-- Вывод формы критериев оценки -->
-<div id="form-criterias" style="width: 75%">
+<!-- content -->
+<div id="content">
+    <!-- Вывод блока под формой критериев оценки -->
     <?$APPLICATION->IncludeComponent("mvector:services.form.criterias","",Array(
                     "SERVICE_ID" => $arParams['SERVICE_ID'],
-                    "PROVIDER_ID" => $arParams['PROVIDER_ID'], // 0
+                    "PROVIDER_ID" => $arParams['PROVIDER_ID'],
                     "LOCATION_ID" => $arParams['LOCATION_ID'],
                     "LOCATION_NAME" => $arParams['LOCATION_NAME']
                 )
-        );?>
+    );?>
+    <!-- Показываем блок кнопки оценки -->
+    <?$APPLICATION->IncludeComponent("mvector:services.form.submit","", Array(
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "PROVIDER_ID" => $arParams['PROVIDER_ID']
+                          )
+    );?>
+    <!-- Вывод формы комментариев -->
+    <?$APPLICATION->IncludeComponent("mvector:services.form.comments","", Array(
+                "LOCATION_ID" => $arParams['LOCATION_ID'],
+                "SERVICE_ID" => $arParams['SERVICE_ID'],
+                "PROVIDER_ID" => $arParams['PROVIDER_ID']
+                )
+    );?>		
 </div>
-
-<!-- Вывод блока под формой критериев оценки -->
-<table width="73%" border="0">
-    <tr>
-        <td valign="top" width="200">   <!-- Показываем рейтинг услуги -->
+<div id="sidebar">
+    <div class="about-box">
+        <!-- Показываем рейтинг поставщика и удовлетворенность услугой -->
+        <div class="info">
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","rating", Array(
                             "LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "SERVICE_ID" => $arParams['SERVICE_ID']
-                       )
-            );?>
-        </td>
-        <td valign="top" width="200">  <!-- Показываем удовлетворенность услугой -->
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "PROVIDER_ID" => $arParams['PROVIDER_ID']
+                      )
+            );?>  
             <?$APPLICATION->IncludeComponent("mvector:services.form.service.results","loyalty", Array(
                             "LOCATION_ID" => $arParams['LOCATION_ID'],
                             "SERVICE_ID" => $arParams['SERVICE_ID']
                       )
-            );?>            
-        </td>
-        <td valign="top">              <!-- Показываем блок кнопки оценки -->
-            <?$APPLICATION->IncludeComponent("mvector:services.form.submit","realtime", Array(
-                            "LOCATION_ID" => $arParams['LOCATION_ID'],
-                            "SERVICE_ID" => $arParams['SERVICE_ID'],
-                            "PROVIDER_ID" => $arParams['PROVIDER_ID'] // 0
-                          )
-            );?>
-        </td>
-    </tr>
-</table>
-
-<!-- Вывод формы комментариев -->
-<div id="comments-view" style="width: 80%">
-    <?$APPLICATION->IncludeComponent("mvector:services.form.comments","amountform", Array(
-                "LOCATION_ID" => $arParams['LOCATION_ID'],
-                "SERVICE_ID" => $arParams['SERVICE_ID'],
-                "PROVIDER_ID" => $arParams['PROVIDER_ID'] // 0
-                )
-            );?>
+            );?>   
+	</div>
+    </div>
+    <!-- Показываем случайный комментарий -->
+    <!--<div class="quote-box">
+        <blockquote>
+            <q>Всегда отличная работа! Приятно посмотреть на то, что делают наши дружинники для того, чтобы мы могли гулять по вечерам и не боялись за </q>
+            <cite>— Валерий Овчинников</cite>
+        </blockquote>
+        <div class="text">
+            <span class="icon"></span>
+            <p>Деятельность добровольных формирований по охране общественного порядка</p>
+        </div>
+    </div>-->
+    <!-- Баннер карты -->
+    <div class="map-banner">
+        <a href="#">
+            <img src="<?=SITE_TEMPLATE_PATH?>/images/banner-map.gif" alt="" />
+            <span>Карта удовлетворённости услугами</span>
+	</a>
+    </div>
+    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH."/sidebar_right.php", Array(), Array());?>
 </div>

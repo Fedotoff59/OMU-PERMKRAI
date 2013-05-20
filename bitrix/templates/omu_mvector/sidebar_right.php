@@ -1,5 +1,5 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-<div id="sidebar">
+
 				<div class="quote-box">
 					<blockquote>
 						<q>Всегда отличная работа! Приятно посмотреть на то, что делают наши дружинники для того, чтобы мы могли гулять по вечерам и не боялись за </q>
@@ -17,11 +17,10 @@
 					</a>
 				</div>
 				
-                            <div class="banner-help">
+                            <!--<div class="banner-help">
 					<a href="#">
 						Интерактивный помощник
 						<img src="<?=SITE_TEMPLATE_PATH?>/images/banner-img01.png" alt="" />
 					</a>
-				</div>
-				<p class="contact-p">Контакты технической поддержки <a href="#">support@mail.ru</a></p>
-			</div>
+				</div>-->
+				<p class="contact-p">Контакты технической поддержки <a href="#">fd@m-vector.org</a></p>

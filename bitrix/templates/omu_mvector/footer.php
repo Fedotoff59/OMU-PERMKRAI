@@ -3,12 +3,12 @@ if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();
 IncludeTemplateLangFile(__FILE__);
 ?>
         <div class="bottom-hold">
-            <ul class="social">
+            <!--<ul class="social">
 		<li><a href="#" class="vk">vk</a></li>
 		<li><a href="#" class="facebook">facebook</a></li>
 		<li><a href="#" class="twitter">twitter</a></li>
                 <li><a href="#" class="google">google</a></li>
-            </ul>
+            </ul>-->
             <ul class="link-holder">
 		<li><a href="#">Правительство Пермского края</a></li>
 		<li><a href="#">Портал госзакупок РФ</a></li>

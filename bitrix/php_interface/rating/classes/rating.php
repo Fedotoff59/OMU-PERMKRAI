@@ -41,11 +41,12 @@ class CRating {
  */
         
         $arValues = Array();        
-      
+        $arCurPeriod = get_voting_period();
         $arFilter = Array('IBLOCK_ID' => self::IB_VALUES_ID, 
                           'PROPERTY_PROVIDER' => $arProviders,
                           'PROPERTY_SERVICE' => $SERVICE_ID,
-                          'PROPERTY_STATUS_VALUE' => 'OK'
+                          'PROPERTY_STATUS_VALUE' => 'OK',
+                          'SECTION_ID' => $arCurPeriod['SECTION_ID']
                          );
 	$arSelectFields  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION', 'PROPERTY_SERVICE', 'PROPERTY_PROVIDER.ID', 'PROPERTY_CRITERIAVALUES');
 	$db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelectFields);
@@ -141,11 +142,12 @@ class CRating {
  */
         
         $arValues = Array();        
-      
+        $arCurPeriod = get_voting_period();
         $arFilter = Array('IBLOCK_ID' => self::IB_VALUES_ID, 
                           'PROPERTY_LOCATION' => $arLocations,
                           'PROPERTY_SERVICE' => $arServiсes,
-                          'PROPERTY_STATUS_VALUE' => 'OK'
+                          'PROPERTY_STATUS_VALUE' => 'OK',
+                          'SECTION_ID' => $arCurPeriod['SECTION_ID']
                          );
 	$arSelect  = Array('IBLOCK_ID', 'ID', 'PROPERTY_LOCATION.ID', 'PROPERTY_SERVICE.ID', 'PROPERTY_PROVIDER.ID', 'PROPERTY_CRITERIAVALUES');
 	$db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);

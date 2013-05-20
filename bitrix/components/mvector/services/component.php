@@ -30,7 +30,7 @@ if ($arParams['SEF_MODE'] != 'Y')
             $arLocation = CLocations::GetLocationParams($CurLocation);
             foreach($arLocation as $LocationID => $LocationParams)
                 $arResult['LOCATION'] = $LocationParams;
-        echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
+        //echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
         //echo '<pre>'; print_r($arVariables); echo '</pre>';
         $this->IncludeComponentTemplate($componentPage);
     }

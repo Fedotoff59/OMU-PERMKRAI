@@ -49,35 +49,18 @@
             <div class="clearfix"></div>
             <div class="nav-row">
                 <ul id="nav">
-                    <li><a class="active" href="#">О портале</a></li>
-                    <li><a href="#">Оценка услуг</a></li>
+                    <li><a href="/about/">О портале</a></li>
+                    <li><a href="http://<?=SITE_SERVER_NAME?>">Оценка услуг</a></li>
                     <li><a href="#">Рейтинги</a></li>
                     <li><a href="#">Полезные ссылки</a></li>
 		</ul>
-		<ul class="r-list">
-                    <li class="login">
-                        <a href="#">Войти в личный кабинет </a>
-			<div class="drop">
-                            <form action="#">
-                                <label for="input1">Электронная почта</label>
-                                <div class="input">
-                                    <input type="text" id="input1" />
-                                </div>
-                                <a href="#" class="pass-link">Напомнить пароль</a>
-                                <label for="input2">Пароль</label>
-                                <div class="input">
-                                    <input type="password" id="input2" />
-                                </div>
-                                <span class="submit">
-                                    <input type="submit" class="btn" value="Войти в личный кабинет" />
-                                    <span class="r"></span>
-                                </span>
-                            </form>
-			</div>
-                    </li>
-                    <li><a href="#">Зарегистрироваться</a></li>
-		</ul>
+		<?$APPLICATION->IncludeComponent("bitrix:system.auth.form", "auth", Array(
+			"REGISTER_URL"	=>	"/auth/",
+			"PROFILE_URL"	=>	"/personal/profile/"
+			)
+                );?>
             </div>
         </div>
     </div>
+    <?//=parse_url($_SERVER['PHP_SELF'], PHP_URL_PATH)?>
     <div id="main">

@@ -71,8 +71,11 @@ function save_vote($arVoteParams, $ACCESS) {
     
     $el = new CIBlockElement;
     echo '<p style="color: #f00;"><strong>';
-    if($EVAL_ID = $el->Add($arAddValuesElement))
+    if($EVAL_ID = $el->Add($arAddValuesElement)) {
+        if ($SAVE_MSG != THANKYOU_MSG)
+            $SAVE_MSG = "<span style='font-size: 0.9em; line-height: 1.2em'>".$SAVE_MSG."</span>";
         echo $SAVE_MSG;
+    }
         // echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
     else
         echo "Ошибка: ".$el->LAST_ERROR;

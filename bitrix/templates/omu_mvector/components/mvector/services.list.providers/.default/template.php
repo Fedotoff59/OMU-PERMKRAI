@@ -52,4 +52,6 @@
     <?  }   ?>
 </div>
 <!-- sidebar-right -->
-<?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH."/sidebar_right.php", Array(), Array());?>
+<div id="sidebar">
+    <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH."/sidebar_right.php", Array(), Array());?>
+</div>

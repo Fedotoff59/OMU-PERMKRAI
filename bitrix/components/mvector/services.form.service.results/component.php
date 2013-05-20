@@ -19,16 +19,16 @@
     $stLoyalty = $arResult[$curLocation_ID][$curService_ID]['AVERAGE_PERCENT_RATING'];
     $stRating = $arResult[$curLocation_ID][$curService_ID]['AVERAGE_RATING'];
     $stVotesAmount = $arResult['FULL_VOTES_AMOUNT'];
-    if ($stVotesAmount > 0)
+    if (false /*$stVotesAmount > 0*/)
         {
-            $stLoyalty = sprintf("%.2f", $stLoyalty).' %';
+            $stLoyalty = sprintf("%.0f", $stLoyalty).' %';
             $stRating = sprintf("%.2f", $stRating);
             $stVotesAmount = '(Число оценок: '.$stVotesAmount.')';
         }
     else  
         {
-            $stLoyalty = "Нет данных";
-            $stRating = "Нет данных";
+            $stLoyalty = "&nbsp;&nbsp;&otimes;";
+            $stRating = "&nbsp;&nbsp;&otimes;";
             $stVotesAmount = "";
         }
     $arResult[$curLocation_ID][$curService_ID]['AVERAGE_PERCENT_RATING'] = $stLoyalty;

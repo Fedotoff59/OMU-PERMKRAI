@@ -13,14 +13,14 @@
 
     $stRating = $arResult[$curProvider_ID]['AVERAGE_RATING'];
     $stVotesAmount = $arResult[$curProvider_ID]['VOTES_AMOUNT'];
-    if ($stRating > 0)
+    if (false/*$stRating > 0*/)
         {
             $stRating = sprintf("%.2f", $stRating);
             $stVotesAmount = '(Число голосов: '.$stVotesAmount.')';
         }
     else  
         {
-            $stRating = "Нет данных";
+            $stRating = '&nbsp;&nbsp;&otimes;';
             $stVotesAmount = "";
         }
     $arResult[$curProvider_ID]['AVERAGE_RATING'] = $stRating;
