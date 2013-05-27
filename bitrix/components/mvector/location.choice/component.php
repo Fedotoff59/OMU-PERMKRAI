@@ -27,7 +27,7 @@ if ($_SESSION['LOCATION_ID'] > 0) {
          $flag = 'user';   
               $rsUser = CUser::GetByID($USER);
                  $arUser = $rsUser->Fetch();
-            $ChoiceLocation_ID = $arUser["UF_LOCATION"];
+            $ChoiceLocation_ID = $arUser["UF_USERLOCATION"];
         }  else {
                 // Если нет, устанавливаем, что нужно показать уведомление о выборе
                 // Проверям, есть значение в куках

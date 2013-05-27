@@ -16,6 +16,13 @@
                             "PROVIDER_ID" => $arParams['PROVIDER_ID']
                           )
     );?>
+    <!-- Показываем блок других услуг поставщика -->
+    <?$APPLICATION->IncludeComponent("mvector:services.form.provider.otherservices","", Array(
+                            "LOCATION_ID" => $arParams['LOCATION_ID'],
+                            "SERVICE_ID" => $arParams['SERVICE_ID'],
+                            "PROVIDER_ID" => $arParams['PROVIDER_ID']
+                          )
+    );?>
     <!-- Вывод формы комментариев -->
     <?$APPLICATION->IncludeComponent("mvector:services.form.comments","", Array(
                 "LOCATION_ID" => $arParams['LOCATION_ID'],

@@ -1,13 +1,32 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 
 <div class="btn-row">
-    <!--<a href="#" class="button send-btn"><span></span>Отправить благодарность</a>-->
+    <div class="btn-award">
+        <a href="#" class="button send-btn open-award"><span></span>Отправить благодарность</a>
+    </div>
     <?if ($USER->IsAuthorized()) {    ?>
         <a href="#" class="button add-btn open"><span></span>Добавить  комментарий</a>
     <?  }?>
     <? if(count($arResult) > 0) { ?>
     <h2>Комментарии</h2>
     <?  }?>
+    <div class="award-popup">
+        <form id="commentsform" action="javascript:void()" method="post" enctype="multipart/form-data">
+            <a href="#" class="close">close</a>
+            <h2>Отправить благодарность поставщику</h2>
+            <div class="row3">
+ <p><b>Каким браузером в основном пользуетесь:</b><Br>
+   <input type="radio" name="browser" value="ie"> Internet Explorer<Br>
+   <input type="radio" name="browser" value="opera"> Opera<Br>
+   <input type="radio" name="browser" value="firefox"> Firefox<Br>
+  </p>
+            </div>
+            <span class="submit">
+                <input id="submit-award" type="submit" value="Отправить" class="btn">
+                <span class="r"></span>
+            </span>
+        </form>
+    </div>
     <div class="comment-popup">
         <form id="commentsform" action="javascript:void()" method="post" enctype="multipart/form-data">
             <a href="#" class="close">close</a>

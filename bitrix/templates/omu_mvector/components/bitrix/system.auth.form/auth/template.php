@@ -26,7 +26,7 @@
                 ?>
                 <input type="hidden" name="AUTH_FORM" value="Y" />
                 <input type="hidden" name="TYPE" value="AUTH" />
-                <label for="input1">Электронная почта</label>
+                <label for="input1">Имя пользователя</label>
 		<div class="input">
                     <input type="text" name="USER_LOGIN" maxlength="50" value="<?=$arResult["USER_LOGIN"]?>" size="17" />
 		</div>
@@ -50,14 +50,16 @@
 
 <?else:?>
 
-<form action="<?=$arResult["AUTH_URL"]?>">
-
-<?=$arResult["USER_NAME"]?> [<a href="<?=$arResult["PROFILE_URL"]?>" class="profile-link" title="<?=GetMessage("AUTH_PROFILE")?>"><?=$arResult["USER_LOGIN"]?></a>]
+<form id="logout-form" action="<?=$arResult["AUTH_URL"]?>">
 
 <?foreach ($arResult["GET"] as $key => $value):?>
 	<input type="hidden" name="<?=$key?>" value="<?=$value?>" />
 <?endforeach?>
 	<input type="hidden" name="logout" value="yes" />
-	<input type="image" src="<?=$templateFolder?>/images/login.gif" alt="<?=GetMessage("AUTH_LOGOUT_BUTTON")?>">
+
 </form>
+<div class="user-r">
+    <a id="logout-link" href="javascript:void(0)">выйти</a>
+    <span><a href="<?=$arResult["PROFILE_URL"]?>" title="<?=GetMessage("AUTH_PROFILE")?>"><?=$arResult["USER_NAME"]?></a></span>
+</div>
 <?endif?>

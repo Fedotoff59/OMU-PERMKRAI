@@ -1,19 +1,6 @@
-function ShowLoginForm()
-{
-	var div = document.getElementById("login-form-window");
-	if (!div)
-		return;
-	div.style.display = "block";
-	document.body.appendChild(div);
-	return false;
-}
-
-function CloseLoginForm()
-{
-	var div = document.getElementById("login-form-window");
-	if (!div)
-		return;
-
-	div.style.display = "none";
-	return false;
-}
+BX.ready(function() {
+     $('#logout-link').click(function(e) {
+          e.preventDefault();
+          $('#logout-form').submit();
+   });
+});

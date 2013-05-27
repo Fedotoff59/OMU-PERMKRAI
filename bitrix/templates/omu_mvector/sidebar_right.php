@@ -2,8 +2,8 @@
 
 				<div class="quote-box">
 					<blockquote>
-						<q>Всегда отличная работа! Приятно посмотреть на то, что делают наши дружинники для того, чтобы мы могли гулять по вечерам и не боялись за </q>
-						<cite>— Валерий Овчинников</cite>
+						<q>Текст комментария.</q>
+						<cite>— Имя автора</cite>
 					</blockquote>
 					<div class="text">
 						<span class="icon"></span>
@@ -17,10 +17,10 @@
 					</a>
 				</div>
 				
-                            <!--<div class="banner-help">
-					<a href="#">
+                            <div class="banner-help">
+					<a href="http://<?=SITE_SERVER_NAME?>/links/materials/videohelper.php">
 						Интерактивный помощник
-						<img src="<?=SITE_TEMPLATE_PATH?>/images/banner-img01.png" alt="" />
+						<img src="<?=SITE_TEMPLATE_PATH?>/images/videohelper.png" alt="" />
 					</a>
-				</div>-->
-				<p class="contact-p">Контакты технической поддержки <a href="#">fd@m-vector.org</a></p>
+				</div>
+				<p class="contact-p">Контакты технической поддержки <a href="mailto:fd@m-vector.org">fd@m-vector.org</a></p>

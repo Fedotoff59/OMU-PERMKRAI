@@ -95,7 +95,7 @@ function check_vote_acсess($arVoteParams) {
         // Проверяем, в своем ли муниципалитете голосует пользователь
         $rsUser = CUser::GetByID($USER);
         $arUser = $rsUser->Fetch();
-        if($arUser["UF_LOCATION"] != $arVoteParams['FIELDS']['LOCATION']) 
+        if($arUser["UF_USERLOCATION"] != $arVoteParams['FIELDS']['LOCATION']) 
             $ACCESS = 'ERR_LOCATION';
             else {
                 // Последняя проверка

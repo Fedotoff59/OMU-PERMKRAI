@@ -17,20 +17,38 @@ AddEventHandler("main", "OnAfterUserLogin", Array("SetUserLocation", "OnAfterUse
 class AfterProviderActivity
 {
     
+    const IBT_PROVIDERS = 'IBT_PROVIDERS';
+    
     public function OnAfterProviderActivity(&$arFields)
     {
         // Устанавливаем массив инфоблоков с поставщиками
-        // !!!! Нужно заменить на проверку соответствующего типа инфоблоков
-        $arIBProviders = Array(31, 63);
-        // Устанавливаем пользователей, чьи действия не будут вызывать бизнес-процесс
-        $arAdmins = Array(1, 10);
-        global $USER;
-        $UserID = $USER->GetID();
-        if (!in_array($UserID, $arAdmins))
-            if($arFields["ID"]>0 && in_array($arFields["IBLOCK_ID"], $arIBProviders))
-                CBPDocument::StartWorkflow(6, //6 <- ID  БП Утверждение по первому голосу
-                    array("iblock","CIBlockDocument", $arFields["ID"]),
-                    array("Voters"=>Array("user_1", "user_10")));        
+        // Проверяем в каком типе инфоблока происходят изменения
+        $res = CIBlock::GetList(
+	Array(), 
+	Array(
+		'ID' => $arFields["IBLOCK_ID"], 
+	), true
+        );
+        while($ar_res = $res->Fetch())
+        {
+            $IBT = $ar_res['IBLOCK_TYPE_ID'];
+        }
+        // Сравниваем результат проверки с 'IBT_PROVIDERS'
+        if ($IBT == self::IBT_PROVIDERS):
+        // Устанавливаем пользователей, чьи действия будут вызывать бизнес-процесс
+        if (CSite::InGroup(Array(8)))
+        {
+            if($arFields["ID"] > 0)
+               CBPDocument::StartWorkflow(6, //6 <- ID  БП Утверждение по первому голосу
+               Array("iblock", "CIBlockDocument", $arFields["ID"]),
+               Array("Voters" => Array("user_1", "user_10")));
+        } elseif (CSite::InGroup(Array(1, 9))) {
+            if($arFields["ID"] > 0)
+               CBPDocument::StartWorkflow(6, //6 <- ID  БП Утверждение по первому голосу
+               Array("iblock", "CIBlockDocument", $arFields["ID"]),
+               Array("Voters" => Array("user_1")));
+        }
+        endif;
     }
     
 }
@@ -48,9 +66,9 @@ class SetUserLocation
                 // и если нашли, то
                 if ($arUser = $rsUser->Fetch())
                 {   // смотрим, есть ли у пользователя поле с территорией
-                    if (isset($arUser["UF_LOCATION"]))
+                    if (isset($arUser["UF_USERLOCATION"]))
                         // если есть, то устанавливаем территорию пользователя
-                        CLocations::SetLocationByID($arUser["UF_LOCATION"]);
+                        CLocations::SetLocationByID($arUser["UF_USERLOCATION"]);
 
                 }
 
@@ -61,17 +79,18 @@ class SetUserLocation
 <?
 CModule::AddAutoloadClasses(
         '', // не указываем имя модуля
-        array(
+        Array(
            // ключ - имя класса, значение - путь относительно корня сайта к файлу с классом
                 'CRating' => '/bitrix/php_interface/rating/classes/rating.php',
                 'CLocations' => '/bitrix/php_interface/locations/classes/locations.php',
                 'CServices' =>  '/bitrix/php_interface/services/classes/services.php',
                 'CDataExport' => '/bitrix/php_interface/dataexport/classes/dataexport.php',
                 'PHPExcel' => '/bitrix/php_interface/Excel/classes/PHPExcel.php',
+                'TCPDF' => '/bitrix/php_interface/tcpdf/tcpdf.php'
         )
 );
 ?>
 <?
 if (file_exists($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/common.api.php"))
-		require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/common.api.php");
+    require_once($_SERVER["DOCUMENT_ROOT"]."/bitrix/php_interface/common/common.api.php");
 ?>

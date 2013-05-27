@@ -782,6 +782,9 @@ function initPopups() {
 		new ContentPopup({
 			holder: this
 		});
+                new AwardPopup({
+			holder: this
+		});
 	});
 }
 
@@ -796,6 +799,25 @@ function ContentPopup(opt) {
 		btnClose: '.close',
                 btnSubmit: '.submit',
 		openClass: 'popup-active',
+		clickEvent: 'click',
+		mode: 'click',
+		hideOnClickLink: true,
+		hideOnClickOutside: true,
+		delay: 50
+	}, opt);
+	if(this.options.holder) {
+		this.holder = this.options.holder;
+		this.init();
+	}
+}
+function AwardPopup(opt) {
+	this.options = lib.extend({
+		holder: null,
+		popup: '.award-popup',
+		btnOpen: '.open-award',
+		btnClose: '.close',
+                btnSubmit: '.submit',
+		openClass: 'award-active',
 		clickEvent: 'click',
 		mode: 'click',
 		hideOnClickLink: true,
@@ -921,7 +943,120 @@ ContentPopup.prototype = {
 		}
 	}
 };
+AwardPopup.prototype = {
+	init: function() {
+		this.findElements();
+		this.attachEvents();
+	},
+	findElements: function() {
+		this.popup = lib.queryElementsBySelector(this.options.popup, this.holder);
+		this.btnOpen = lib.queryElementsBySelector(this.options.btnOpen, this.holder);
+		this.btnSubmit = lib.queryElementsBySelector(this.options.btnSubmit, this.holder);
+                this.btnClose = lib.queryElementsBySelector(this.options.btnClose, this.holder);
+		this.isTouchDevice = /MSIE 10.*Touch/.test(navigator.userAgent) || ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+	},
+	attachEvents: function() {
+		// handle popup openers
+		var self = this;
+		this.clickMode = this.isTouchDevice || (self.options.mode === self.options.clickEvent);
 
+		if(this.clickMode) {
+			// handle click mode
+			lib.each(this.btnOpen, function(index, btnOpen) {
+				lib.event.add(btnOpen, self.options.clickEvent, function(e) {
+					if(lib.hasClass(self.holder, self.options.openClass)) {
+						if(self.options.hideOnClickLink) {
+							self.hidePopup();
+						}
+					} else {
+						self.showPopup();
+					}
+					e.preventDefault();
+				});
+			});
+
+			// prepare outside click handler
+			this.outsideClickHandler = lib.bind(this.outsideClickHandler, this);
+		} else {
+			// handle hover mode
+			var timer, delayedFunc = function(func) {
+				clearTimeout(timer);
+				timer = setTimeout(function() {
+					func.call(self);
+				}, self.options.delay);
+			};
+			lib.each(this.btnOpen, function(index, btnOpen) {
+				lib.event.add(btnOpen, 'mouseover', function() {
+					delayedFunc(self.showPopup);
+				});
+				lib.event.add(btnOpen, 'mouseout', function() {
+					delayedFunc(self.hidePopup);
+				});
+			});
+			lib.each(this.popup, function(index, popup) {
+				lib.event.add(popup, 'mouseover', function() {
+					delayedFunc(self.showPopup);
+				});
+				lib.event.add(popup, 'mouseout', function() {
+					delayedFunc(self.hidePopup);
+				});
+			});
+		}
+
+		// handle close buttons
+		lib.each(this.btnClose, function(index, btnClose) {
+			lib.event.add(btnClose, self.options.clickEvent, function(e) {
+				self.hidePopup();
+				e.preventDefault();
+			});
+		});
+                lib.each(this.btnSubmit, function(index, btnSubmit) {
+			lib.event.add(btnSubmit, self.options.clickEvent, function(e) {
+                                self.hidePopup();
+				e.preventDefault();
+			});
+		});
+	},
+	outsideClickHandler: function(e) {
+		// hide popup if clicked outside
+		var currentNode = (e.changedTouches ? e.changedTouches[0] : e).target;
+		while(currentNode.parentNode) {
+			if(currentNode === this.holder) {
+				return;
+			}
+			currentNode = currentNode.parentNode;
+		}
+		this.hidePopup();
+	},
+	showPopup: function() {
+		// reveal popup
+		lib.addClass(this.holder, this.options.openClass);
+		lib.each(this.popup, function(index, popup) {
+			popup.style.display = 'block';
+		});
+
+		// outside click handler
+		if(this.clickMode && this.options.hideOnClickOutside && !this.outsideHandlerActive) {
+			this.outsideHandlerActive = true;
+			lib.event.add(document, 'click', this.outsideClickHandler);
+			lib.event.add(document, 'touchstart', this.outsideClickHandler);
+		}
+	},
+	hidePopup: function() {
+		// hide popup
+		lib.removeClass(this.holder, this.options.openClass);
+		lib.each(this.popup, function(index, popup) {
+			popup.style.display = 'none';
+		});
+
+		// outside click handler
+		if(this.clickMode && this.options.hideOnClickOutside && this.outsideHandlerActive) {
+			this.outsideHandlerActive = false;
+			lib.event.remove(document, 'click', this.outsideClickHandler);
+			lib.event.remove(document, 'touchstart', this.outsideClickHandler);
+		}
+	}
+};
 /*
  * Utility module
  */

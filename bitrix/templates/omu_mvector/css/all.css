@@ -2260,8 +2260,25 @@ strong.not-found {
 	top:-230px;
 	right:0;
 }
-.popup-active .comment-popup {display:block;}
-.comment-popup .close {
+.award-popup {
+	width:461px;
+	display:none;
+	background:#f0f0f0;
+	padding:10px 15px 14px 14px;
+	overflow:hidden;
+	border-radius:5px;
+	-moz-border-radius:5px;
+	-webkit-border-radius:5px;
+	box-shadow:6px 6px 6px #d2d2d2;
+	-moz-box-shadow:6px 6px 6px #d2d2d2;
+	-webkit-box-shadow:6px 6px 6px #d2d2d2;
+	position:absolute;
+	top:-230px;
+	right:0;
+}
+.popup-active .comment-popup, .award-active .award-popup  {display:block;}
+
+.comment-popup .close, .award-popup .close {
 	width:9px;
 	height:9px;
 	float:right;
@@ -2270,7 +2287,7 @@ strong.not-found {
 	overflow:hidden;
 	background:url(../images/bg-close3.gif) no-repeat;
 }
-.comment-popup h2 {
+.comment-popup h2, .award-popup h2 {
 	color:#fff;
 	font:18px Arial, Helvetica, sans-serif;
 	margin:0 0 14px;
@@ -2317,12 +2334,12 @@ strong.not-found {
 	-moz-box-shadow:inset 0 2px 1px #e1e1e1;
 	-webkit-box-shadow:inset 0 2px 1px #e1e1e1;
 }
-.comment-popup .submit {
+.comment-popup .submit, .award-popup .submit {
 	width:115px;
 	float:right;
 	margin:0 0 0 8px;
 }
-.comment-popup .submit .btn {
+.comment-popup .submit .btn, .award-popup .submit .btn {
 	width:108px;
 }
 ol {

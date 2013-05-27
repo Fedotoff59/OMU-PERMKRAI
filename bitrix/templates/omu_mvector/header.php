@@ -12,12 +12,14 @@
 </head>
 
 <body>
+<?
+    if ( CSite::InGroup( array(1, 8, 9) ) )
+            $APPLICATION->ShowPanel = true;
+    $APPLICATION->ShowPanel()
+?>
+    
+<?$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());?> 
 
-
-<?$APPLICATION->ShowPanel();?>
-
-</head>
-<body>
 <div id="wrapper">
     <!-- header -->
     <div id="header">
@@ -53,6 +55,9 @@
                     <li><a href="http://<?=SITE_SERVER_NAME?>">Оценка услуг</a></li>
                     <li><a href="#">Рейтинги</a></li>
                     <li><a href="#">Полезные ссылки</a></li>
+                    <?if ( CSite::InGroup( array(1, 8, 9) ) ):?>
+                        <li><a href="/social-network/">Рабочая группа</a></li>
+                    <?endif;?>
 		</ul>
 		<?$APPLICATION->IncludeComponent("bitrix:system.auth.form", "auth", Array(
 			"REGISTER_URL"	=>	"/auth/",

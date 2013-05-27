@@ -2,5 +2,4 @@
 
 $this->IncludeComponentTemplate();
     
-
 ?>
