@@ -2,15 +2,13 @@
 require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Карта удовлетворенности услугами");
 ?>
+
 <!-- content -->
 
 			<div id="content">
 				<h1>Карта удовлетворённости услугами</h1>
 				<p></p>
-				<div class="btn-row2">
-					<a href="#" class="submit2"><span><span>Выбор услуги</span></span></a>
-					<!--<a href="#" class="choose"><span>Медицинская помощь в поликлинике</span></a>-->
-				</div>
+                                <?$APPLICATION->IncludeComponent("mvector:services.list.map", "", Array());?>
 				<div class="map-info">
 					<p>Обозначения рейтина на карте</p>
 					<strong class="color1">0%-25%</strong>

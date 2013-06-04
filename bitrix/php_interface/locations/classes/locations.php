@@ -77,6 +77,27 @@ class CLocations {
         return $Location_ID;
     }
     
+        function GetLocationByProvidersID ($IB_PROVIDERS_ID) {
+        
+        global $APPLICATION;
+        $Location_ID = false;
+        if (isset($IB_PROVIDERS_ID) && $IB_PROVIDERS_ID != '') {
+            if(CModule::IncludeModule("iblock")): 
+            $arFilter = Array('IBLOCK_ID' => self::IB_LOCATIONS_ID, 
+                              'PROPERTY_IBPROVIDERS' => $IB_PROVIDERS_ID
+                             );
+            $arSelect  = Array('IBLOCK_ID', 'ID');
+            $db_List = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+            while($el = $db_List->GetNextElement())
+            {
+                $arFields = $el->GetFields();
+                $Location_ID = $arFields['ID'];
+            }  
+            endif;
+            
+        }
+        return $Location_ID;
+    }
 }
 
 ?>

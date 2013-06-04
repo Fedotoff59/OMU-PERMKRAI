@@ -11,7 +11,7 @@ $(document).ready(function(){
     <a href="#" class="close" id="close-filter">close</a>
     <div class="clearfix"></div>
     <h2>Выберите муниципальные районы для отображения соответствующих поставщиков</h2>
-    <form action="<?SITE_SERVER_NAME?>">
+    <form action="">
     <div class="column">
         
         <ul>
@@ -39,7 +39,6 @@ foreach($arLocation as $LocationID => $LocationParams)
                 <input type="submit" class="btn" value="Применить фильтр" />
                 <span class="r"></span>
             </span>
-    </span>
     </form>
     </div>
 </div>

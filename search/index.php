@@ -1,7 +1,7 @@
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/header.php");
 $APPLICATION->SetTitle("Поиск");?>
 
-<?$APPLICATION->IncludeComponent("mvector:search.page", "tags", Array(
+<?$APPLICATION->IncludeComponent("bitrix:search.page", "", Array(
 	"RESTART"	=>	"N",
 	"CHECK_DATES"	=>	"Y",
 	"arrWHERE"	=>	array(

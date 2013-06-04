@@ -13,17 +13,7 @@
 						<p>Сводный отчет за текущий отчетный период. </p>
 					</div>
 				</div>
-                                
-                                				<h2>Конфигуратор очтета</h2>
-				<div class="btn-row2">
-					<a href="#" class="submit2"><span><span>Выбор территории</span></span></a>
-					
-				</div>
-                                <div class="btn-row2">
-					<a href="#" class="submit2"><span><span>Выбор услуги</span></span></a>
-					
-				</div>                                
-
+                                <?$APPLICATION->IncludeComponent("mvector:report.configurator", "", Array());?>                              
 </div>
 <div id="sidebar">                       
     <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH."/sidebar_right.php", Array(), Array());?>

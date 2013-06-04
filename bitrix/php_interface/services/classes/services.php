@@ -29,6 +29,32 @@ class CServices {
 	}
         endif;
         return $arServices;
-    }  
+    }
+    
+    public static function GetServicesParams($arServiceIDs) {
+        // Получаем полное и скоращенное наименование услуг
+        $arServices = false;
+        if(CModule::IncludeModule("iblock")):
+            $arServices = Array();
+            $arFilter = Array('IBLOCK_ID' => self::IB_SERVICES_ID, 
+                               'ID' => $arServiceIDs
+                                );
+            $arSelect = Array(  'ID', 
+                        'NAME', 
+                        'PROPERTY_FULLNAME'
+                    );
+            $arOrder = Array("NAME" => "ASC");
+            $db_List = CIBlockElement::GetList($arOrder, $arFilter, false, false, $arSelect);
+            while($el = $db_List->GetNextElement())
+            {
+                $arFields = $el->GetFields();
+                $arServices[$arFields['ID']]['SERVICE_ID'] = $arFields['ID'];
+                $arServices[$arFields['ID']]['SERVICE_NAME'] = $arFields['NAME'];
+                $arServices[$arFields['ID']]['SERVICE_FULLNAME'] = $arFields['PROPERTY_FULLNAME_VALUE'];                
+            }
+            
+        endif;
+        return $arServices;
+    }
 }
 ?>

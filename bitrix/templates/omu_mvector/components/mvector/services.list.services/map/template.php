@@ -25,7 +25,7 @@ $(document).ready(function(){
                 foreach($arSectionData['ELEMENTS'] as $elID => $elName)
                     {
                 ?>
-                        <li><a href="http://<?=SITE_SERVER_NAME?>/services/<?=$elID;?>/<?=$arResult['LOCATION_ALIAS'];?>/"><?=$elName;?></a></li>
+                        <li><a href="?services=<?=$elID;?>"><?=$elName;?></a></li>
                 <?  }   ?>
             </ul>
 <?  } ?>
