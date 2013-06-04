@@ -348,12 +348,15 @@ ul li {
 #header .r-list li:first-child {background:none;}
 #header .r-list > a {color:#2594cb;}
 #header .r-list a:hover ,
-#header .r-list .active  a {
+#header .r-list .active  a,
+#header .r-list .popup-active a {
 	color:#4b5764;
 	text-decoration:none;
 }
-#header .r-list .login {position:relative;}
-#header .r-list > .login > a {
+#header .r-list .login {
+	position:relative;
+}
+#header .r-list .login a {
 	display:block;
 	padding:0 11px 6px 11px;
 	margin:0 -9px;
@@ -370,10 +373,7 @@ ul li {
 	-moz-border-radius:0 4px 4px 4px;
 	-webkit-border-radius:0 4px 4px 4px;
 }
-#header .r-list li:hover .drop ,
-#header .r-list .active .drop {display:block;}
-#header .r-list > .login:hover > a ,
-#header .r-list > .login.active > a {
+#header .r-list > .login .popup-active > a {
 	color:#fff;
 	text-decoration:none;
 	background:#54687a;
@@ -738,7 +738,8 @@ ul li {
 	width:97px;
 }
 .title-row .date .date-icon ,
-.registration .row .date .date-icon {
+.registration .row .date .date-icon,
+.ui-datepicker-trigger {
 	width:15px;
 	height:15px;
 	text-indent:-9999px;
@@ -909,6 +910,7 @@ ul li {
 	padding:15px 22px 0 22px;
 	overflow:hidden;
 }
+#sidebar .only-rating {padding-top:0;}
 #sidebar .about-box h3 {
 	line-height:18px;
 	color:#867c66;
@@ -917,6 +919,18 @@ ul li {
 #sidebar .about-box strong {
 	display:block;
 	color:#867c66;
+}
+#sidebar .about-box .title {
+	background:#f9f2e2;
+	font:14px/18px permian-sans-bold, Arial, Helvetica, sans-serif;
+	color:#c9570a;
+	padding:13px 22px 13px 18px;
+	margin:-15px -22px 0;
+	text-transform:uppercase;
+	border-radius:4px 0 0 4px;
+	-moz-border-radius:4px 0 0 4px;
+	-webkit-border-radius:4px 0 0 4px;
+	margin-bottom:16px;
 }
 #sidebar .about-box p {
 	margin-bottom:19px;
@@ -1038,7 +1052,7 @@ ul li {
 	margin-bottom:8px;
 	font:italic 12px Georgia, "Times New Roman", Times, serif;
 }
-.table thead td {
+.table thead th {
 	padding:5px 0;
 	background:#f2f3f3;
 	color:#4b5764;
@@ -1046,18 +1060,41 @@ ul li {
 	font-size:12px;
 	vertical-align:middle;
 }
-.table thead td.col1 {
-	width:50px;
+.table thead th.col1 {
+	width:45px;
 	text-align:center;
 }
-.table thead td.col2 {width:373px;}
-#content .table .rating-table thead td.col2 {width:343px;}
+.table thead th.col2 {
+	width:353px;
+	padding-left:10px;
+}
+#content .table .rating-table thead th.col2 {
+	width:310px;
+	padding-left:10px;
+}
+#content .table .rating-table tbody td.col2 {
+	width:310px;
+	padding-left:10px;
+}
+.table td.col3 {padding-left:20px;}
+#content .table .rating-table .num-title {padding-left:22px;}
+#content .table .rating-table thead .col3 {
+	width:174px;
+}
+#content .table .rating-table tbody .col3 {width:171px;}
+.table thead th.active {
+	background:#e1eef4;
+}
 .table tbody td {
 	padding:0;
 	border-bottom:1px solid #eceded;
 	color:#4b5764;
 	line-height:31px;
 	font-size:12px;
+}
+.table tbody td.col2 {
+	width:353px;
+	padding-left:10px;
 }
 .table tbody td.col1 {
 	text-align:center;
@@ -1573,8 +1610,12 @@ ul li {
 }
 .rating-row .box ul {
 	margin:0 -40px 0 0;
-	overflow:hidden;
 	width:340px;
+}
+.rating-row .box ul :after{
+	content:"";
+	display:block;
+	clear:both;
 }
 .rating-row .box p {margin-bottom:12px;}
 .rating-row .box ul li {
@@ -1587,45 +1628,79 @@ ul li {
 	background:none;
 	margin-right:30px;
 }
+.rating-row .box ul li.first{margin:0 37px 0 -18px;}
+.rating-row .box ul li.second{margin-right:38px;}
+.rating-row .box ul li.third{margin-right:36px;}
+.rating-row .box ul li.fourth{margin-right:37px;}
+.rating-row .box ul li.last{margin-right:-5px;}
 .rating-row .box ul li.active {
 	background:#f2f3f3;
 	border-radius:0 0 3px 3px;
 	-moz-border-radius:0 0 3px 3px;
 	-webkit-border-radius:0 0 3px 3px;
 }
-.rating-row .box .line {
+.rating-row .box .line,
+.rating-row .box .ui-slider-horizontal {
 	width:300px;
 	height:8px;
 	background:url(../images/bg-line.gif) no-repeat;
+	position:relative;
 }
-.rating-row .box .line .line-active {
+.rating-row .box .line .line-active,
+.rating-row .box .ui-slider-range {
 	height:8px;
 	background:#2e9cdc;
-	border-radius:2px;
-	-moz-border-radius:2px;
-	-webkit-border-radius:2px;
+	border-radius:4px;
+	-moz-border-radius:4px;
+	-webkit-border-radius:4px;
 	position:relative;
-	width:10px;
 }
-.rating-row .box .line .icon {
+.rating-row .box .line .icon,
+.rating-row .box .ui-slider-handle {
 	width:23px;
 	height:31px;
-	text-indent:-9999px;
-	overflow:hidden;
+	font-size:0;
+	left:0;
 	background:url(../images/icon25.png) no-repeat;
 	position:absolute;
 	top:-9px;
-	right:-4px;
+	margin-left:-9px;
+	border:0;
 }
-.rating-row .box .line .icon:active {background-position:0 -35px;}
+.rating-row .box .ui-slider-handle:after {
+	content:"";
+	width:38px;
+	line-height:30px;
+	height:30px;
+	padding:5px 0 0;
+	text-align:center;
+	font-weight:bold;
+	position:absolute;
+	top:17px;
+	left:-8px;
+	background:#f2f3f3;
+	border-radius:0 0 3px 3px;
+	-moz-border-radius:0 0 3px 3px;
+	-webkit-border-radius:0 0 3px 3px;
+	z-index:-1;
+}
+.rating-row .box .line .icon:active,
+.rating-row .box .ui-slider-handle.ui-state-active {background-position:0 -35px;}
+.rating-row .box .amount,
+.rating-row .box .val_keeper {display:none;}
 .rating-row .box .line .line-active2 {width:27px;}
 .rating-row .box .line .line-active3 {width:162px;}
 .rating-row .box .line .line-active4 {width:230px;}
 .rating-row .box .line .line-active5 {width:95px;}
 .rating-row .box .line .line-active6 {width:100%;}
 .rating-hold {
-	overflow:hidden;
+	width:100%;
 	margin-bottom:25px;
+}
+.rating-hold:after {
+	clear: both;
+	content:"";
+	display: block;
 }
 /* map-hold */
 .map-hold {
@@ -1812,6 +1887,11 @@ ul li {
 	border-radius:0 3px 3px 0;
 	-moz-border-radius:0 3px 3px 0;
 	-webkit-border-radius:0 3px 3px 0;
+}
+.btn-row2 .choose span {
+	padding-right:22px;
+	display:block;
+	background:url(../images/bg-close4.gif) no-repeat 100% 50%;
 }
 .address-list, .address-list-paging {
 	margin:0;
@@ -2342,6 +2422,7 @@ strong.not-found {
 .comment-popup .submit .btn, .award-popup .submit .btn {
 	width:108px;
 }
+.ui-datepicker {font-size:11px !important;}
 ol {
 	counter-reset: list1;
 	margin:0 0 27px 28px;

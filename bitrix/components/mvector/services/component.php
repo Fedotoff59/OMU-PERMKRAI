@@ -25,7 +25,11 @@ if ($arParams['SEF_MODE'] != 'Y')
             $CurLocation = CLocations::GetLocationByAlias($arVariables['LOCATION_ALIAS']);
         // Если переменных нет, значит, это главная страница
         // Значение территории компонента устанавливаем из выбранного пользователем
-        } else echo 'wtf!';
+        } else {
+            @define("ERROR_404","Y");
+            if(function_exists("LocalRedirect"))
+                LocalRedirect("/404.php"); 
+        }
         if($CurLocation > 0) 
             $arLocation = CLocations::GetLocationParams($CurLocation);
             foreach($arLocation as $LocationID => $LocationParams)

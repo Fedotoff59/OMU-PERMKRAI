@@ -5,10 +5,19 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8" />
 
 <title><?$APPLICATION->ShowTitle()?></title>
-<?CUtil::InitJSCore(Array('jquery'));?>
-<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/main.js"></script>
+
 <link href="<?=SITE_TEMPLATE_PATH?>/css/all.css" rel="stylesheet" type="text/css" media="all"/>
+<link href="<?=SITE_TEMPLATE_PATH?>/css/jquery.ui.all.css" rel="stylesheet" type="text/css" media="all"/>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-1.9.1.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.core.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.widget.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.mouse.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.slider.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.tablesorter.min.js"></script>
+<script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/main.js"></script>
+
 <?$APPLICATION->ShowHead()?>
+
 </head>
 
 <body>
@@ -18,7 +27,8 @@
     $APPLICATION->ShowPanel()
 ?>
     
-<?$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());?> 
+<?$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());?>
+<?$APPLICATION->IncludeComponent("mvector:feedback.error", "",	Array());?>
 
 <div id="wrapper">
     <!-- header -->
@@ -26,25 +36,17 @@
         <div class="header-hold">
             <strong class="logo"><a href="http://<?=SITE_SERVER_NAME?>">Оценка качества муниципальных услуг в Пермском крае</a></strong>
             <div class="r-box">
-                <a href="#" class="font-size">A</a>
-                <a href="#" class="font-size font-size2">A</a>
-		<!-- Location choice -->
-                <div class="select">
-                    <?$APPLICATION->IncludeComponent(
-				"mvector:location.choice",
+                <!--<a href="#" class="font-size">A</a>
+                <a href="#" class="font-size font-size2">A</a>-->
+		<!-- Location Specialist MO-Link -->
+                <?$APPLICATION->IncludeComponent(
+				"mvector:location.choice.links",
 				"",
 				Array("DEFAULT" => 470, // Пермь
                                 )
-                    );?>
-		</div>
-		<div class="clearfix"></div>
-                <div class="link">
-                    <a href="#" class="sitemap">sitemap</a>
-                    <a href="#">Информация о МО</a>
-                    <a href="#">Контакты специалиста</a>
-                </div>
-		<form action="#" class="search">
-                    <input type="text" class="input-text" value="Введите название поставщика или услуги" />
+                );?>
+		<form action="/search" class="search">
+                    <input type="text" name="q" class="input-text" value="Введите название поставщика или услуги" />
                     <input type="submit" class="btn" value="найти" />
 		</form>
             </div>
@@ -53,8 +55,24 @@
                 <ul id="nav">
                     <li><a href="/about/">О портале</a></li>
                     <li><a href="http://<?=SITE_SERVER_NAME?>">Оценка услуг</a></li>
-                    <li><a href="#">Рейтинги</a></li>
-                    <li><a href="#">Полезные ссылки</a></li>
+                    <li><a href="/ratings/">Рейтинги</a>
+                        <div class="drop">
+                            <ul>
+                                <li><a href="/ratings/serviceslist/">Рейтинг поставщиков</a></li>
+                                <li><a href="/ratings/locations/">Рейтинг муниципальных образований</a></li>
+                                <li><a href="/ratings/report/">Отчёты</a></li>
+                            </ul>
+                            <span class="arrow"></span>
+                        </div>
+                    </li>
+                    <li><a href="#">Полезные ссылки</a>
+                                            <div class="drop">
+                            <ul>
+                                <li><a href="/links/materials/">Методические материалы</a></li>
+                                <li><a href="/links/documents/">Нормативно-правовые документы</a></li>
+                            </ul>
+                            <span class="arrow"></span>
+                        </div></li>
                     <?if ( CSite::InGroup( array(1, 8, 9) ) ):?>
                         <li><a href="/social-network/">Рабочая группа</a></li>
                     <?endif;?>

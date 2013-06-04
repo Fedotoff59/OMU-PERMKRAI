@@ -221,5 +221,5 @@ endif;?>
 <?else:?>
 	<?ShowNote(GetMessage("SEARCH_NOTHING_TO_FOUND"));?>
 <?endif;?>
-        
+
 </div>

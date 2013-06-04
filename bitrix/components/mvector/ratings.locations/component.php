@@ -46,11 +46,11 @@ while($el = $db_List->GetNextElement())
       $DiagramWidth = $fullDiagramWidth * $stLoyalty / 100;
       $stLoyalty = sprintf("%.2f", $stLoyalty);
       //$stLoyalty .= ' %';
-      $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = $stLoyalty;
+      $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = '&nbsp;&nbsp;&otimes;';//$stLoyalty;
       $arLocationLoyalty[$i]['VOTES_AMOUNT'] = $arLocationRating[$arFields['ID']]['VOTES_AMOUNT'];
       $arLocationLoyalty[$i]['DIAGRAM_WIDTH'] = sprintf("%.0f", $DiagramWidth);
    } else {
-      $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = 'Нет данных';
+      $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = '&nbsp;&nbsp;&otimes;';
       $arLocationLoyalty[$i]['VOTES_AMOUNT'] = 0;
       $arLocationLoyalty[$i]['DIAGRAM_WIDTH'] = 0;
    }

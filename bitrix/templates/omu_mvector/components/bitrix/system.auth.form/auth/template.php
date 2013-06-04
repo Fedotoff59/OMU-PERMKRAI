@@ -5,7 +5,8 @@
 
 <ul class="r-list">
     <li class="login">
-        <a href="#">Войти в личный кабинет </a>
+        <div class="login-box">
+        <a href="#" class="open">Войти в личный кабинет </a>
         <div class="drop">
             <form method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
                 <?
@@ -41,6 +42,7 @@
 		</span>
             </form>
 	</div>
+        </div>
     </li>
     <li><a href="<?=$arResult["AUTH_REGISTER_URL"]?>">Зарегистрироваться</a></li>
 

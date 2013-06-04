@@ -12,6 +12,7 @@ define("IB_CRITERIAS_ID", 21);
 define("IB_VALUES_ID", 71);
 define("IB_LOCATIONS_ID", 23);
 define("IB_PROVIDERS_IDS", Array());
+define("IBT_PROVIDERS", 'IBT_PROVIDERS');
 // Задаем ID территории по умолчанию
 define("DEFAULT_LOCATION_ID", 470); // Пермь
 // Задаем имя формы для организации ajax взаимодействия
@@ -100,5 +101,42 @@ function pagenav($curpage, $elcount, $eltopagelimit = 15, $pageingrouplimit = 5)
         $arNav['UL_CLASS'] = 'address-list-paging';
         else $arNav['UL_CLASS'] = 'address-list';
     return $arNav;
+}
+/*
+ * Функция получает информацию об услуге по ее ID
+ * Краткое, полное наименование, набор критериев
+ * 
+ */
+function get_service_params($Service_ID) {
+    $arService = false;
+    if(CModule::IncludeModule("iblock") && $Service_ID > 0):
+        $arService = Array();
+        $res = CIBlockElement::GetByID($Service_ID); 
+        if($ar_res = $res->GetNext())
+            $arService['NAME'] = $ar_res['NAME'];
+        
+    endif;
+    return $arService;
+}
+
+function count_providers($arLocationsIDS, $ServiceID) {
+    $CountProviders = false;
+    if(CModule::IncludeModule("iblock")):
+    $i = 0;
+    $arFilter = Array('IBLOCK_ID' => IB_LOCATIONS_ID, 'ID' => $arLocationsIDS);
+    $arSelect = Array('IBLOCK_ID', 'ID', 'PROPERTY_IBPROVIDERS');
+    $db_List = CIBlockElement::GetList(false, $arFilter, false, false, $arSelect);
+    while($el = $db_List->GetNextElement()):
+        $arFields = $el->GetFields();
+        $arProvFilter = Array('IBLOCK_ID' => $arFields['PROPERTY_IBPROVIDERS_VALUE'],
+                              'PROPERTY_SERVICES.ID' => $ServiceID);
+        $arProvSelect = Array('ID', 'NAME');
+        $db_ProvList = CIBlockElement::GetList(false, $arProvFilter, false, false, $arProvSelect);
+        while($elProv = $db_ProvList->GetNextElement())
+            $i++;
+    endwhile;
+        $CountProviders = $i;
+    endif;
+    return $CountProviders;
 }
 ?>

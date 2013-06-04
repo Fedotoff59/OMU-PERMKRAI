@@ -55,6 +55,12 @@ $arUrlRewrite = array(
 		"PATH"	=>	"/e-store/books/index.php",
 	),
 	array(
+		"CONDITION"	=>	"#^/content/news/#",
+		"RULE"	=>	"",
+		"ID"	=>	"bitrix:news",
+		"PATH"	=>	"/content/news/index.php",
+	),
+	array(
 		"CONDITION"	=>	"#^/club/gallery/#",
 		"RULE"	=>	"",
 		"ID"	=>	"bitrix:photogallery_user",
@@ -67,28 +73,22 @@ $arUrlRewrite = array(
 		"PATH"	=>	"/content/idea/index.php",
 	),
 	array(
-		"CONDITION"	=>	"#^/content/news/#",
-		"RULE"	=>	"",
-		"ID"	=>	"bitrix:news",
-		"PATH"	=>	"/content/news/index.php",
-	),
-	array(
 		"CONDITION"	=>	"#^/content/faq/#",
 		"RULE"	=>	"",
 		"ID"	=>	"bitrix:support.faq",
 		"PATH"	=>	"/content/faq/index.php",
 	),
 	array(
-		"CONDITION"	=>	"#^/ratings/#",
-		"RULE"	=>	"",
-		"ID"	=>	"mvector:ratings",
-		"PATH"	=>	"/ratings/index.php",
-	),
-    	array(
 		"CONDITION"	=>	"#^/services/#",
 		"RULE"	=>	"",
 		"ID"	=>	"mvector:services",
 		"PATH"	=>	"/services/index.php",
+	),
+	array(
+		"CONDITION"	=>	"#^/ratings/#",
+		"RULE"	=>	"",
+		"ID"	=>	"mvector:ratings",
+		"PATH"	=>	"/ratings/index.php",
 	),
 	array(
 		"CONDITION"	=>	"#^/forum/#",

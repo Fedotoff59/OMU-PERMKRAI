@@ -24,7 +24,8 @@ class CLocations {
                         'PROPERTY_ALIAS', 
                         'PROPERTY_IBPROVIDERS', 
                         'PROPERTY_IBCOMMENTS', 
-                        'PROPERTY_SPECIALIST'
+                        'PROPERTY_SPECIALIST',
+                        'PROPERTY_LINK'
                     );
             $arOrder = Array("NAME" => "ASC");
             $db_List = CIBlockElement::GetList($arOrder, $arFilter, false, false, $arSelect);
@@ -36,6 +37,7 @@ class CLocations {
                 $arLocation[$arFields['ID']]['LOCATION_ALIAS'] = $arFields['PROPERTY_ALIAS_VALUE'];
                 $arLocation[$arFields['ID']]['IB_PROVIDERS_ID'] = $arFields['PROPERTY_IBPROVIDERS_VALUE'];
                 $arLocation[$arFields['ID']]['IB_COMMENTS_ID'] = $arFields['PROPERTY_IBCOMMENTS_VALUE'];
+                $arLocation[$arFields['ID']]['LOCATION_LINK'] = $arFields['PROPERTY_LINK_VALUE'];
                 $arLocation[$arFields['ID']]['SPECIALIST_ID'] = $arFields['PROPERTY_SPECIALIST_VALUE'];
                 
             }

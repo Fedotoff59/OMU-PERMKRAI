@@ -50,18 +50,17 @@
         <div class="rating-row">
             <div class="box">
                 <p>Оценка: <strong>неплохо</strong></p>
-                <div class="line">
-                    <div class="line-active line-active3">
-                        <span class="icon"></span>
-                    </div>
-                </div>
-                <ul>
-                    <li>1</li>
-                    <li>2</li>
-                    <li class="active">3</li>
-                    <li>4</li>
-                    <li>5</li>
-                </ul>
+		<span class="amount"></span>
+                <input type="hidden" name="criteria_<?=$i?>" value="<?=$elName['ID']?>"/>    
+                <input type="text" class="val_keeper" name="eval_<?=$i?>" value="3" />
+                    <div class="slider"></div>
+                    <ul>
+                        <li class="first">1</li>
+			<li class="second">2</li>
+			<li class="third">3</li>
+			<li class="fourth">4</li>
+			<li class="last">5</li>
+                    </ul>
             </div>
             <p><?=$elName['NAME']?></p>
         </div>

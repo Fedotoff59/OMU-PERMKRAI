@@ -25,15 +25,15 @@ $arResult['COUNT_PROVIDERS'] = $arParams['COUNT_PROVIDERS'];
 
 // Нижеследующий блок кода готовит элементы постраничной навигации
 // Устанавливаем начальные значения переменных
-$curPage = 1;
 $countProviders = count($arParams['PROVIDERS']);
 
 // Проверяем, запрошена ли какая-то страница
-if (isset($_GET['page']))
-    $curPage = $_GET['page'];
+if (isset($_GET['page']) && $_GET['page'] > 1)
+    $CurentPage = $_GET['page'];
+    else $CurentPage = 1;
  
 // Получаем массив постраничной навигации
-$arResult['PAGENAV'] = pagenav($curPage, $countProviders, ELEMENTS_PER_PAGE, PAGES_IN_GROUP);
+$arResult['PAGENAV'] = pagenav($CurentPage, $countProviders, ELEMENTS_PER_PAGE, PAGES_IN_GROUP);
     
        
 $this->IncludeComponentTemplate();

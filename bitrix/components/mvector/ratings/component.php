@@ -4,94 +4,27 @@
 
 $arDefaultUrlTemplates404 = array(
    "ratings.about" => "index.php",
-   "ratings.list" => "serviceslist",
-   "ratings.locations" => "locations",
-    "ratings.report" => "report/",
-   "ratings.services.loyalty" => "services/#SERVICE_ID#",
-   "ratings.provisors" => "services/#SERVICE_ID#/provisors/",
+   "services.list.services" => "serviceslist/",
+   "ratings.locations" => "locations/",
+   "ratings.report" => "report/",
+   "ratings.services.loyalty" => "serviceslist/#SERVICE_ID#/",
+   "ratings.providers" => "serviceslist/#SERVICE_ID#/providers/",
 );
+$arDefaultVariableAliases404 = Array();
+$arDefaultVariableAliases = Array();
+$arComponentVariables = Array();
 
-$arDefaultVariableAliases404 = array();
+if ($arParams['SEF_MODE'] != 'Y')
+    echo ERR_MESSAFE_SEF_MODE;
+    else {
+        $arResult = Array();
+        $arVariables = Array();
+        $arUrlTemplates = CComponentEngine::MakeComponentUrlTemplates($arDefaultUrlTemplates404, $arParams['SEF_URL_TEMPLATES']);
+        $componentPage = CComponentEngine::ParseComponentPath($arParams['SEF_FOLDER'], $arUrlTemplates, $arVariables);
+        // Проверяем, есть ли переменные в адресной строке
+        if (!empty($arVariables))
+            $arResult['VARIABLES'] = $arVariables;
 
-$arDefaultVariableAliases = array();
-
-$arComponentVariables = array();
-
-
-$SEF_FOLDER = "/ratings/";
-$arUrlTemplates = array();
-
-if ($arParams["SEF_MODE"] == "Y")
-{
-   $arVariables = array();
-
-    $arUrlTemplates = 
-        CComponentEngine::MakeComponentUrlTemplates($arDefaultUrlTemplates404, 
-                                                    $arParams["SEF_URL_TEMPLATES"]);
-    $arVariableAliases = 
-        CComponentEngine::MakeComponentVariableAliases($arDefaultVariableAliases404, 
-                                                       $arParams["VARIABLE_ALIASES"]);
-
-   $componentPage = CComponentEngine::ParseComponentPath(
-      $arParams["SEF_FOLDER"],
-      $arUrlTemplates,
-      $arVariables
-   );
-
-
-   if (StrLen($componentPage) <= 0)
-      $componentPage = "404";
-
-   CComponentEngine::InitComponentVariables($componentPage, 
-                                            $arComponentVariables, 
-                                            $arVariableAliases, 
-                                            $arVariables);
-
-   $SEF_FOLDER = $arParams["SEF_FOLDER"];
-}
-else
-{
-   $arVariables = array();
-
-    $arVariableAliases = 
-       CComponentEngine::MakeComponentVariableAliases($arDefaultVariableAliases, 
-                                                      $arParams["VARIABLE_ALIASES"]);
-    CComponentEngine::InitComponentVariables(false, 
-                                             $arComponentVariables, 
-                                             $arVariableAliases, $arVariables);
-
-   $componentPage = "";
-   if (IntVal($arVariables["ELEMENT_ID"]) > 0)
-      $componentPage = "ratings";
-   else
-      $componentPage = "ratings.mainpage";
-
-}
-
-$arResult = array(
-   "FOLDER" => $SEF_FOLDER,
-   "URL_TEMPLATES" => $arUrlTemplates,
-   "VARIABLES" => $arVariables,
-   "ALIASES" => $arVariableAliases
-);
-
-$arParams = array(
-'IB_SERVICES_ID' => 20,
-'IB_CRITERIAS_ID' => 21,
-'IB_VALUES_ID' => 22,
-'IB_LOCATIONS_ID' => 23,
-'IB_PROVISORS_ID' => 24,   
-'SEF_VARIABLES' => $arVariables,
-'SEF_FOLDER' => $SEF_FOLDER
-//'PLACE_ID' => 470,
-//'PLACE_NAME' => 'Пермь',
-//'PLACE_ALIAS' => 'perm'
-);
-
-//echo '<span style="color: #f00;">componentPage = '.$componentPage.'</span>';
-
-//echo '<pre>'; print_r($_GET); echo '</pre>';
-
-$this->IncludeComponentTemplate($componentPage);
-
+        $this->IncludeComponentTemplate($componentPage);
+    }
 ?>

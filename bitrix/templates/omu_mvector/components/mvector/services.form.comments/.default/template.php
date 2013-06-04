@@ -1,16 +1,16 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
-
+<?if ($USER->IsAuthorized()):    ?>
 <div class="btn-row">
+    <?if($arParams['PROVIDER_ID'] > 0):?>
     <div class="btn-award">
-        <a href="#" class="button send-btn open-award"><span></span>Отправить благодарность</a>
+        <a href="javascript:void(0)" id="link-award" class="button send-btn open-award"><span></span>Отправить благодарность</a>
     </div>
-    <?if ($USER->IsAuthorized()) {    ?>
-        <a href="#" class="button add-btn open"><span></span>Добавить  комментарий</a>
-    <?  }?>
-    <? if(count($arResult) > 0) { ?>
+    <?endif;?>
+        <a href="javascript:void(0)" class="button add-btn open"><span></span>Добавить  комментарий</a>
+    <? if(count($arResult) > 0): ?>
     <h2>Комментарии</h2>
-    <?  }?>
-    <div class="award-popup">
+    <?  endif;?>
+ <!--   <div class="award-popup">
         <form id="commentsform" action="javascript:void()" method="post" enctype="multipart/form-data">
             <a href="#" class="close">close</a>
             <h2>Отправить благодарность поставщику</h2>
@@ -26,7 +26,7 @@
                 <span class="r"></span>
             </span>
         </form>
-    </div>
+    </div> -->
     <div class="comment-popup">
         <form id="commentsform" action="javascript:void()" method="post" enctype="multipart/form-data">
             <a href="#" class="close">close</a>
@@ -50,6 +50,7 @@
         </form>
     </div>
 </div>
+<?endif;?>
 <? if(count($arResult) > 0) { ?>
 <?      for($i = 0; $i < count($arResult); $i++) { ?>
             <div class="comment-box">

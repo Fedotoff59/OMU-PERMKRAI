@@ -2,7 +2,7 @@
 
 				<div class="quote-box">
 					<blockquote>
-						<q>Текст комментария.</q>
+						<q><a href="/comments.php">Текст комментария.</a></q>
 						<cite>— Имя автора</cite>
 					</blockquote>
 					<div class="text">
@@ -11,14 +11,14 @@
 					</div>
 				</div>
 				<div class="map-banner">
-					<a href="#">
+					<a href="/links/materials/map.php">
 						<img src="<?=SITE_TEMPLATE_PATH?>/images/banner-map.gif" alt="" />
 						<span>Карта удовлетворённости услугами</span>
 					</a>
 				</div>
 				
                             <div class="banner-help">
-					<a href="http://<?=SITE_SERVER_NAME?>/links/materials/videohelper.php">
+					<a href="http://<?=SITE_SERVER_NAME?>/links/materials/">
 						Интерактивный помощник
 						<img src="<?=SITE_TEMPLATE_PATH?>/images/videohelper.png" alt="" />
 					</a>

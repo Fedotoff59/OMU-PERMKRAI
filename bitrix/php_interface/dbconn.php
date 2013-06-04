@@ -4,7 +4,7 @@ $DBType = "mysql";
 $DBHost = "localhost";
 $DBLogin = "root";
 $DBPassword = "";
-$DBName = "bitrix_27";
+$DBName = "bitrix_96";
 $DBDebug = false;
 $DBDebugToFile = false;
 

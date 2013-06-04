@@ -70,13 +70,16 @@ function save_vote($arVoteParams, $ACCESS) {
     // Выводим сообщение о статусе оценки или об ошибке сохранения
     
     $el = new CIBlockElement;
+    //$EVAL_ID = $el->Add($arAddValuesElement);
+    //echo $EVAL_ID;
+    //print_r($arAddValuesElement);
     echo '<p style="color: #f00;"><strong>';
     if($EVAL_ID = $el->Add($arAddValuesElement)) {
         if ($SAVE_MSG != THANKYOU_MSG)
             $SAVE_MSG = "<span style='font-size: 0.9em; line-height: 1.2em'>".$SAVE_MSG."</span>";
         echo $SAVE_MSG;
     }
-        // echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
+      //  echo "Оценка сохранена в БД с ID: ".$EVAL_ID;
     else
         echo "Ошибка: ".$el->LAST_ERROR;
     echo '</strong></p>';
@@ -93,8 +96,9 @@ function check_vote_acсess($arVoteParams) {
         $ACCESS = 'ERR_UNREGISTERED';
         else {
         // Проверяем, в своем ли муниципалитете голосует пользователь
-        $rsUser = CUser::GetByID($USER);
+        $rsUser = CUser::GetByID($USER->GetID());
         $arUser = $rsUser->Fetch();
+        //echo $arUser["ID"];
         if($arUser["UF_USERLOCATION"] != $arVoteParams['FIELDS']['LOCATION']) 
             $ACCESS = 'ERR_LOCATION';
             else {
@@ -108,6 +112,7 @@ function check_vote_acсess($arVoteParams) {
                         "PROPERTY_SERVICE" => $arVoteParams['FIELDS']['SERVICE'],
                         "PROPERTY_PROVIDER" => $arVoteParams['FIELDS']['PROVIDER'],
                         "PROPERTY_USERID" =>  $USER->GetID(),
+                        "PROPERTY_STATUS_VALUE" => "OK",
                         "PROPERTY_PERIODOFVOTE" => $arVoteParams['PERIODOFVOTE']['ID']);
                 $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
                 $i = 0;
@@ -135,7 +140,7 @@ if (isset($_POST['count_values']))
     $vote_aceess = check_vote_acсess($arVoteParams);
     // Сохраняем оценки в БД
     save_vote($arVoteParams, $vote_aceess);
-    //echo '<pre>'; print_r($arVoteParams); echo '</pre>';
+    //echo '<pre>'; print_r($_POST); echo '</pre>';
  }
 endif;
 

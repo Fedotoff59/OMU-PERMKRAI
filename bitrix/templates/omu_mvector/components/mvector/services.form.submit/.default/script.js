@@ -10,9 +10,10 @@ BX.ready(function(){
         $.ajax({
           type: 'POST',
           url: '/bitrix/components/mvector/services.form.submit/ajax-submit.php',
+          dataType: 'html',
           data: msg,
-          success: function(data) {
-            $('#results').html(data);
+          success: function(text) {
+            $('#results').html(text);
           },
           error:  function(xhr, str){
                 alert(xhr.responseCode);

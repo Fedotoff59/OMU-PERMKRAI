@@ -2,6 +2,9 @@
 bindReady(function(){
 	initInputs();
 	initPopups();
+	initTabs();
+	initOpenClose();
+	initAccordion();
 });
 
 // clear inputs on focus
@@ -776,13 +779,11 @@ function findPosX(obj) {
 
 if (window.addEventListener) window.addEventListener("load", initCustomForms, false);
 else if (window.attachEvent) window.attachEvent("onload", initCustomForms);
+
 // popups init
 function initPopups() {
 	lib.each(lib.queryElementsBySelector('.btn-row'), function(){
 		new ContentPopup({
-			holder: this
-		});
-                new AwardPopup({
 			holder: this
 		});
 	});
@@ -797,27 +798,7 @@ function ContentPopup(opt) {
 		popup: '.comment-popup',
 		btnOpen: '.open',
 		btnClose: '.close',
-                btnSubmit: '.submit',
 		openClass: 'popup-active',
-		clickEvent: 'click',
-		mode: 'click',
-		hideOnClickLink: true,
-		hideOnClickOutside: true,
-		delay: 50
-	}, opt);
-	if(this.options.holder) {
-		this.holder = this.options.holder;
-		this.init();
-	}
-}
-function AwardPopup(opt) {
-	this.options = lib.extend({
-		holder: null,
-		popup: '.award-popup',
-		btnOpen: '.open-award',
-		btnClose: '.close',
-                btnSubmit: '.submit',
-		openClass: 'award-active',
 		clickEvent: 'click',
 		mode: 'click',
 		hideOnClickLink: true,
@@ -837,8 +818,7 @@ ContentPopup.prototype = {
 	findElements: function() {
 		this.popup = lib.queryElementsBySelector(this.options.popup, this.holder);
 		this.btnOpen = lib.queryElementsBySelector(this.options.btnOpen, this.holder);
-		this.btnSubmit = lib.queryElementsBySelector(this.options.btnSubmit, this.holder);
-                this.btnClose = lib.queryElementsBySelector(this.options.btnClose, this.holder);
+		this.btnClose = lib.queryElementsBySelector(this.options.btnClose, this.holder);
 		this.isTouchDevice = /MSIE 10.*Touch/.test(navigator.userAgent) || ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
 	},
 	attachEvents: function() {
@@ -896,12 +876,6 @@ ContentPopup.prototype = {
 				e.preventDefault();
 			});
 		});
-                lib.each(this.btnSubmit, function(index, btnSubmit) {
-			lib.event.add(btnSubmit, self.options.clickEvent, function(e) {
-                                self.hidePopup();
-				e.preventDefault();
-			});
-		});
 	},
 	outsideClickHandler: function(e) {
 		// hide popup if clicked outside
@@ -943,120 +917,7 @@ ContentPopup.prototype = {
 		}
 	}
 };
-AwardPopup.prototype = {
-	init: function() {
-		this.findElements();
-		this.attachEvents();
-	},
-	findElements: function() {
-		this.popup = lib.queryElementsBySelector(this.options.popup, this.holder);
-		this.btnOpen = lib.queryElementsBySelector(this.options.btnOpen, this.holder);
-		this.btnSubmit = lib.queryElementsBySelector(this.options.btnSubmit, this.holder);
-                this.btnClose = lib.queryElementsBySelector(this.options.btnClose, this.holder);
-		this.isTouchDevice = /MSIE 10.*Touch/.test(navigator.userAgent) || ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
-	},
-	attachEvents: function() {
-		// handle popup openers
-		var self = this;
-		this.clickMode = this.isTouchDevice || (self.options.mode === self.options.clickEvent);
 
-		if(this.clickMode) {
-			// handle click mode
-			lib.each(this.btnOpen, function(index, btnOpen) {
-				lib.event.add(btnOpen, self.options.clickEvent, function(e) {
-					if(lib.hasClass(self.holder, self.options.openClass)) {
-						if(self.options.hideOnClickLink) {
-							self.hidePopup();
-						}
-					} else {
-						self.showPopup();
-					}
-					e.preventDefault();
-				});
-			});
-
-			// prepare outside click handler
-			this.outsideClickHandler = lib.bind(this.outsideClickHandler, this);
-		} else {
-			// handle hover mode
-			var timer, delayedFunc = function(func) {
-				clearTimeout(timer);
-				timer = setTimeout(function() {
-					func.call(self);
-				}, self.options.delay);
-			};
-			lib.each(this.btnOpen, function(index, btnOpen) {
-				lib.event.add(btnOpen, 'mouseover', function() {
-					delayedFunc(self.showPopup);
-				});
-				lib.event.add(btnOpen, 'mouseout', function() {
-					delayedFunc(self.hidePopup);
-				});
-			});
-			lib.each(this.popup, function(index, popup) {
-				lib.event.add(popup, 'mouseover', function() {
-					delayedFunc(self.showPopup);
-				});
-				lib.event.add(popup, 'mouseout', function() {
-					delayedFunc(self.hidePopup);
-				});
-			});
-		}
-
-		// handle close buttons
-		lib.each(this.btnClose, function(index, btnClose) {
-			lib.event.add(btnClose, self.options.clickEvent, function(e) {
-				self.hidePopup();
-				e.preventDefault();
-			});
-		});
-                lib.each(this.btnSubmit, function(index, btnSubmit) {
-			lib.event.add(btnSubmit, self.options.clickEvent, function(e) {
-                                self.hidePopup();
-				e.preventDefault();
-			});
-		});
-	},
-	outsideClickHandler: function(e) {
-		// hide popup if clicked outside
-		var currentNode = (e.changedTouches ? e.changedTouches[0] : e).target;
-		while(currentNode.parentNode) {
-			if(currentNode === this.holder) {
-				return;
-			}
-			currentNode = currentNode.parentNode;
-		}
-		this.hidePopup();
-	},
-	showPopup: function() {
-		// reveal popup
-		lib.addClass(this.holder, this.options.openClass);
-		lib.each(this.popup, function(index, popup) {
-			popup.style.display = 'block';
-		});
-
-		// outside click handler
-		if(this.clickMode && this.options.hideOnClickOutside && !this.outsideHandlerActive) {
-			this.outsideHandlerActive = true;
-			lib.event.add(document, 'click', this.outsideClickHandler);
-			lib.event.add(document, 'touchstart', this.outsideClickHandler);
-		}
-	},
-	hidePopup: function() {
-		// hide popup
-		lib.removeClass(this.holder, this.options.openClass);
-		lib.each(this.popup, function(index, popup) {
-			popup.style.display = 'none';
-		});
-
-		// outside click handler
-		if(this.clickMode && this.options.hideOnClickOutside && this.outsideHandlerActive) {
-			this.outsideHandlerActive = false;
-			lib.event.remove(document, 'click', this.outsideClickHandler);
-			lib.event.remove(document, 'touchstart', this.outsideClickHandler);
-		}
-	}
-};
 /*
  * Utility module
  */
@@ -1284,3 +1145,631 @@ function bindReady(handler){
 	if (window.addEventListener) window.addEventListener('load', ready, false);
 	else if (window.attachEvent) window.attachEvent('onload', ready);
 }
+// content tabs init
+function initTabs() {
+	jQuery('ul.tabset').contentTabs({
+		tabLinks: 'a'
+	});
+}
+
+/*
+ * jQuery Tabs plugin
+ */
+;(function($){
+	$.fn.contentTabs = function(o){
+		// default options
+		var options = $.extend({
+			activeClass:'active',
+			addToParent:false,
+			autoHeight:false,
+			autoRotate:false,
+			checkHash:false,
+			animSpeed:400,
+			switchTime:3000,
+			effect: 'none', // "fade", "slide"
+			tabLinks:'a',
+			attrib:'href',
+			event:'click'
+		},o);
+
+		return this.each(function(){
+			var tabset = $(this), tabs = $();
+			var tabLinks = tabset.find(options.tabLinks);
+			var tabLinksParents = tabLinks.parent();
+			var prevActiveLink = tabLinks.eq(0), currentTab, animating;
+			var tabHolder;
+
+			// handle location hash
+			if(options.checkHash && tabLinks.filter('[' + options.attrib + '="' + location.hash + '"]').length) {
+				(options.addToParent ? tabLinksParents : tabLinks).removeClass(options.activeClass);
+				setTimeout(function() {
+					window.scrollTo(0,0);
+				},1);
+			}
+
+			// init tabLinks
+			tabLinks.each(function(){
+				var link = $(this);
+				var href = link.attr(options.attrib);
+				var parent = link.parent();
+				href = href.substr(href.lastIndexOf('#'));
+
+				// get elements
+				var tab = $(href);
+				tabs = tabs.add(tab);
+				link.data('cparent', parent);
+				link.data('ctab', tab);
+
+				// find tab holder
+				if(!tabHolder && tab.length) {
+					tabHolder = tab.parent();
+				}
+
+				// show only active tab
+				var classOwner = options.addToParent ? parent : link;
+				if(classOwner.hasClass(options.activeClass) || (options.checkHash && location.hash === href)) {
+					classOwner.addClass(options.activeClass);
+					prevActiveLink = link; currentTab = tab;
+					tab.removeClass(tabHiddenClass).width('');
+					contentTabsEffect[options.effect].show({tab:tab, fast:true});
+				} else {
+					var tabWidth = tab.width();
+					if(tabWidth) {
+						tab.width(tabWidth);
+					}
+					tab.addClass(tabHiddenClass);
+				}
+
+				// event handler
+				link.bind(options.event, function(e){
+					if(link != prevActiveLink && !animating) {
+						switchTab(prevActiveLink, link);
+						prevActiveLink = link;
+					}
+				});
+				if(options.attrib === 'href') {
+					link.bind('click', function(e){
+						e.preventDefault();
+					});
+				}
+			});
+
+			// tab switch function
+			function switchTab(oldLink, newLink) {
+				animating = true;
+				var oldTab = oldLink.data('ctab');
+				var newTab = newLink.data('ctab');
+				prevActiveLink = newLink;
+				currentTab = newTab;
+
+				// refresh pagination links
+				(options.addToParent ? tabLinksParents : tabLinks).removeClass(options.activeClass);
+				(options.addToParent ? newLink.data('cparent') : newLink).addClass(options.activeClass);
+
+				// hide old tab
+				resizeHolder(oldTab, true);
+				contentTabsEffect[options.effect].hide({
+					speed: options.animSpeed,
+					tab:oldTab,
+					complete: function() {
+						// show current tab
+						resizeHolder(newTab.removeClass(tabHiddenClass).width(''));
+						contentTabsEffect[options.effect].show({
+							speed: options.animSpeed,
+							tab:newTab,
+							complete: function() {
+								if(!oldTab.is(newTab)) {
+									oldTab.width(oldTab.width()).addClass(tabHiddenClass);
+								}
+								animating = false;
+								resizeHolder(newTab, false);
+								autoRotate();
+							}
+						});
+					}
+				});
+			}
+
+			// holder auto height
+			function resizeHolder(block, state) {
+				var curBlock = block && block.length ? block : currentTab;
+				if(options.autoHeight && curBlock) {
+					tabHolder.stop();
+					if(state === false) {
+						tabHolder.css({height:''});
+					} else {
+						var origStyles = curBlock.attr('style');
+						curBlock.show().css({width:curBlock.width()});
+						var tabHeight = curBlock.outerHeight(true);
+						if(!origStyles) curBlock.removeAttr('style'); else curBlock.attr('style', origStyles);
+						if(state === true) {
+							tabHolder.css({height: tabHeight});
+						} else {
+							tabHolder.animate({height: tabHeight}, {duration: options.animSpeed});
+						}
+					}
+				}
+			}
+			if(options.autoHeight) {
+				$(window).bind('resize orientationchange', function(){
+					tabs.not(currentTab).removeClass(tabHiddenClass).show().each(function(){
+						var tab = jQuery(this), tabWidth = tab.css({width:''}).width();
+						if(tabWidth) {
+							tab.width(tabWidth);
+						}
+					}).hide().addClass(tabHiddenClass);
+
+					resizeHolder(currentTab, false);
+				});
+			}
+
+			// autorotation handling
+			var rotationTimer;
+			function nextTab() {
+				var activeItem = (options.addToParent ? tabLinksParents : tabLinks).filter('.' + options.activeClass);
+				var activeIndex = (options.addToParent ? tabLinksParents : tabLinks).index(activeItem);
+				var newLink = tabLinks.eq(activeIndex < tabLinks.length - 1 ? activeIndex + 1 : 0);
+				prevActiveLink = tabLinks.eq(activeIndex);
+				switchTab(prevActiveLink, newLink);
+			}
+			function autoRotate() {
+				if(options.autoRotate && tabLinks.length > 1) {
+					clearTimeout(rotationTimer);
+					rotationTimer = setTimeout(function() {
+						if(!animating) {
+							nextTab();
+						} else {
+							autoRotate();
+						}
+					}, options.switchTime);
+				}
+			}
+			autoRotate();
+		});
+	};
+
+	// add stylesheet for tabs on DOMReady
+	var tabHiddenClass = 'js-tab-hidden';
+	$(function() {
+		var tabStyleSheet = $('<style type="text/css">')[0];
+		var tabStyleRule = '.'+tabHiddenClass;
+		tabStyleRule += '{position:absolute !important;left:-9999px !important;top:-9999px !important;display:block !important}';
+		if (tabStyleSheet.styleSheet) {
+			tabStyleSheet.styleSheet.cssText = tabStyleRule;
+		} else {
+			tabStyleSheet.appendChild(document.createTextNode(tabStyleRule));
+		}
+		$('head').append(tabStyleSheet);
+	});
+
+	// tab switch effects
+	var contentTabsEffect = {
+		none: {
+			show: function(o) {
+				o.tab.css({display:'block'});
+				if(o.complete) o.complete();
+			},
+			hide: function(o) {
+				o.tab.css({display:'none'});
+				if(o.complete) o.complete();
+			}
+		},
+		fade: {
+			show: function(o) {
+				if(o.fast) o.speed = 1;
+				o.tab.fadeIn(o.speed);
+				if(o.complete) setTimeout(o.complete, o.speed);
+			},
+			hide: function(o) {
+				if(o.fast) o.speed = 1;
+				o.tab.fadeOut(o.speed);
+				if(o.complete) setTimeout(o.complete, o.speed);
+			}
+		},
+		slide: {
+			show: function(o) {
+				var tabHeight = o.tab.show().css({width:o.tab.width()}).outerHeight(true);
+				var tmpWrap = $('<div class="effect-div">').insertBefore(o.tab).append(o.tab);
+				tmpWrap.css({width:'100%', overflow:'hidden', position:'relative'}); o.tab.css({marginTop:-tabHeight,display:'block'});
+				if(o.fast) o.speed = 1;
+				o.tab.animate({marginTop: 0}, {duration: o.speed, complete: function(){
+					o.tab.css({marginTop: '', width: ''}).insertBefore(tmpWrap);
+					tmpWrap.remove();
+					if(o.complete) o.complete();
+				}});
+			},
+			hide: function(o) {
+				var tabHeight = o.tab.show().css({width:o.tab.width()}).outerHeight(true);
+				var tmpWrap = $('<div class="effect-div">').insertBefore(o.tab).append(o.tab);
+				tmpWrap.css({width:'100%', overflow:'hidden', position:'relative'});
+
+				if(o.fast) o.speed = 1;
+				o.tab.animate({marginTop: -tabHeight}, {duration: o.speed, complete: function(){
+					o.tab.css({display:'none', marginTop:'', width:''}).insertBefore(tmpWrap);
+					tmpWrap.remove();
+					if(o.complete) o.complete();
+				}});
+			}
+		}
+	};
+}(jQuery));
+
+// open-close init
+function initOpenClose() {
+	jQuery('div.slide-content').openClose({
+		activeClass: 'active',
+		opener: '.opener',
+		slider: '.slide',
+		animSpeed: 400,
+		effect: 'slide'
+	});
+}
+
+/*
+ * jQuery Open/Close plugin
+ */
+;(function($) {
+	function OpenClose(options) {
+		this.options = $.extend({
+			addClassBeforeAnimation: true,
+			activeClass:'active',
+			opener:'.opener',
+			slider:'.slide',
+			animSpeed: 400,
+			effect:'fade',
+			event:'click'
+		}, options);
+		this.init();
+	}
+	OpenClose.prototype = {
+		init: function() {
+			if(this.options.holder) {
+				this.findElements();
+				this.attachEvents();
+				this.makeCallback('onInit');
+			}
+		},
+		findElements: function() {
+			this.holder = $(this.options.holder);
+			this.opener = this.holder.find(this.options.opener);
+			this.slider = this.holder.find(this.options.slider);
+
+			if (!this.holder.hasClass(this.options.activeClass)) {
+				this.slider.addClass(slideHiddenClass);
+			}
+		},
+		attachEvents: function() {
+			// add handler
+			var self = this;
+			this.eventHandler = function(e) {
+				e.preventDefault();
+				if (self.slider.hasClass(slideHiddenClass)) {
+					self.showSlide();
+				} else {
+					self.hideSlide();
+				}
+			};
+			self.opener.bind(self.options.event, this.eventHandler);
+
+			// hove mode handler
+			if(self.options.event === 'over') {
+				self.opener.bind('mouseenter', function() {
+					self.holder.removeClass(self.options.activeClass);
+					self.opener.trigger(self.options.event);
+				});
+				self.holder.bind('mouseleave', function() {
+					self.holder.addClass(self.options.activeClass);
+					self.opener.trigger(self.options.event);
+				});
+			}
+		},
+		showSlide: function() {
+			var self = this;
+			if (self.options.addClassBeforeAnimation) {
+				self.holder.addClass(self.options.activeClass);
+			}
+			self.slider.removeClass(slideHiddenClass);
+
+			self.makeCallback('animStart', true);
+			toggleEffects[self.options.effect].show({
+				box: self.slider,
+				speed: self.options.animSpeed,
+				complete: function() {
+					if (!self.options.addClassBeforeAnimation) {
+						self.holder.addClass(self.options.activeClass);
+					}
+					self.makeCallback('animEnd', true);
+				}
+			});
+		},
+		hideSlide: function() {
+			var self = this;
+			if (self.options.addClassBeforeAnimation) {
+				self.holder.removeClass(self.options.activeClass);
+			}
+
+			self.makeCallback('animStart', false);
+			toggleEffects[self.options.effect].hide({
+				box: self.slider,
+				speed: self.options.animSpeed,
+				complete: function() {
+					if (!self.options.addClassBeforeAnimation) {
+						self.holder.removeClass(self.options.activeClass);
+					}
+					self.slider.addClass(slideHiddenClass);
+					self.makeCallback('animEnd', false);
+				}
+			});
+		},
+		destroy: function() {
+			this.slider.removeClass(slideHiddenClass).css({display:''});
+			this.opener.unbind(this.options.event, this.eventHandler);
+			this.holder.removeClass(this.options.activeClass).removeData('OpenClose');
+		},
+		makeCallback: function(name) {
+			if(typeof this.options[name] === 'function') {
+				var args = Array.prototype.slice.call(arguments);
+				args.shift();
+				this.options[name].apply(this, args);
+			}
+		}
+	};
+
+	// add stylesheet for slide on DOMReady
+	var slideHiddenClass = 'js-slide-hidden';
+	$(function() {
+		var tabStyleSheet = $('<style type="text/css">')[0];
+		var tabStyleRule = '.' + slideHiddenClass;
+		tabStyleRule += '{position:absolute !important;left:-9999px !important;top:-9999px !important;display:block !important}';
+		if (tabStyleSheet.styleSheet) {
+			tabStyleSheet.styleSheet.cssText = tabStyleRule;
+		} else {
+			tabStyleSheet.appendChild(document.createTextNode(tabStyleRule));
+		}
+		$('head').append(tabStyleSheet);
+	});
+
+	// animation effects
+	var toggleEffects = {
+		slide: {
+			show: function(o) {
+				o.box.stop(true).hide().slideDown(o.speed, o.complete);
+			},
+			hide: function(o) {
+				o.box.stop(true).slideUp(o.speed, o.complete);
+			}
+		},
+		fade: {
+			show: function(o) {
+				o.box.stop(true).hide().fadeIn(o.speed, o.complete);
+			},
+			hide: function(o) {
+				o.box.stop(true).fadeOut(o.speed, o.complete);
+			}
+		},
+		none: {
+			show: function(o) {
+				o.box.hide().show(0, o.complete);
+			},
+			hide: function(o) {
+				o.box.hide(0, o.complete);
+			}
+		}
+	};
+
+	// jQuery plugin interface
+	$.fn.openClose = function(opt) {
+		return this.each(function() {
+			jQuery(this).data('OpenClose', new OpenClose($.extend(opt, {holder: this})));
+		});
+	};
+}(jQuery));
+
+
+// popups init
+function initPopups() {
+	jQuery('.login-box').contentPopup({
+		mode: 'click',
+		popup: '.drop'
+	});
+	jQuery('.btn-row').contentPopup({
+		mode: 'click',
+		popup: '.popup'
+	});
+}
+
+/*
+ * Popups plugin
+ */
+;(function($) {
+	function ContentPopup(opt) {
+		this.options = $.extend({
+			holder: null,
+			popup: '.popup',
+			btnOpen: '.open',
+			btnClose: '.close',
+			openClass: 'popup-active',
+			clickEvent: 'click',
+			mode: 'click',
+			hideOnClickLink: true,
+			hideOnClickOutside: true,
+			delay: 50
+		}, opt);
+		if(this.options.holder) {
+			this.holder = $(this.options.holder);
+			this.init();
+		}
+	}
+	ContentPopup.prototype = {
+		init: function() {
+			this.findElements();
+			this.attachEvents();
+		},
+		findElements: function() {
+			this.popup = this.holder.find(this.options.popup);
+			this.btnOpen = this.holder.find(this.options.btnOpen);
+			this.btnClose = this.holder.find(this.options.btnClose);
+		},
+		attachEvents: function() {
+			// handle popup openers
+			var self = this;
+			this.clickMode = isTouchDevice || (self.options.mode === self.options.clickEvent);
+
+			if(this.clickMode) {
+				// handle click mode
+				this.btnOpen.bind(self.options.clickEvent, function(e) {
+					if(self.holder.hasClass(self.options.openClass)) {
+						if(self.options.hideOnClickLink) {
+							self.hidePopup();
+						}
+					} else {
+						self.showPopup();
+					}
+					e.preventDefault();
+				});
+
+				// prepare outside click handler
+				this.outsideClickHandler = this.bind(this.outsideClickHandler, this);
+			} else {
+				// handle hover mode
+				var timer, delayedFunc = function(func) {
+					clearTimeout(timer);
+					timer = setTimeout(function() {
+						func.call(self);
+					}, self.options.delay);
+				};
+				this.btnOpen.bind('mouseover', function() {
+					delayedFunc(self.showPopup);
+				}).bind('mouseout', function() {
+					delayedFunc(self.hidePopup);
+				});
+				this.popup.bind('mouseover', function() {
+					delayedFunc(self.showPopup);
+				}).bind('mouseout', function() {
+					delayedFunc(self.hidePopup);
+				});
+			}
+
+			// handle close buttons
+			this.btnClose.bind(self.options.clickEvent, function(e) {
+				self.hidePopup();
+				e.preventDefault();
+			});
+		},
+		outsideClickHandler: function(e) {
+			// hide popup if clicked outside
+			var currentNode = (e.changedTouches ? e.changedTouches[0] : e).target;
+			if(!$(currentNode).parents().filter(this.holder).length) {
+				this.hidePopup();
+			}
+		},
+		showPopup: function() {
+			// reveal popup
+			this.holder.addClass(this.options.openClass);
+			this.popup.css({display:'block'});
+
+			// outside click handler
+			if(this.clickMode && this.options.hideOnClickOutside && !this.outsideHandlerActive) {
+				this.outsideHandlerActive = true;
+				$(document).bind('click touchstart', this.outsideClickHandler);
+			}
+		},
+		hidePopup: function() {
+			// hide popup
+			this.holder.removeClass(this.options.openClass);
+			this.popup.css({display:'none'});
+
+			// outside click handler
+			if(this.clickMode && this.options.hideOnClickOutside && this.outsideHandlerActive) {
+				this.outsideHandlerActive = false;
+				$(document).unbind('click touchstart', this.outsideClickHandler);
+			}
+		},
+		bind: function(f, scope, forceArgs){
+			return function() {return f.apply(scope, forceArgs ? [forceArgs] : arguments);};
+		}
+	};
+
+	// detect touch devices
+	var isTouchDevice = /MSIE 10.*Touch/.test(navigator.userAgent) || ('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch;
+
+	// jQuery plugin interface
+	$.fn.contentPopup = function(opt) {
+		return this.each(function() {
+			new ContentPopup($.extend(opt, {holder: this}));
+		});
+	};
+}(jQuery));
+
+// accordion menu init
+function initAccordion() {
+	jQuery('ul.accordion').slideAccordion({
+		opener: 'a.opener',
+		slider: 'div.slide',
+		animSpeed: 300
+	});
+}
+
+/*
+ * jQuery Accordion plugin
+ */
+;(function($){
+	$.fn.slideAccordion = function(opt){
+		// default options
+		var options = $.extend({
+			addClassBeforeAnimation: false,
+			activeClass:'active',
+			opener:'.opener',
+			slider:'.slide',
+			animSpeed: 300,
+			collapsible:true,
+			event:'click'
+		},opt);
+
+		return this.each(function(){
+			// options
+			var accordion = $(this);
+			var items = accordion.find(':has('+options.slider+')');
+
+			items.each(function(){
+				var item = $(this);
+				var opener = item.find(options.opener);
+				var slider = item.find(options.slider);
+				opener.bind(options.event, function(e){
+					if(!slider.is(':animated')) {
+						if(item.hasClass(options.activeClass)) {
+							if(options.collapsible) {
+								slider.slideUp(options.animSpeed, function(){
+									hideSlide(slider);
+									item.removeClass(options.activeClass);
+								});
+							}
+						} else {
+							// show active
+							var levelItems = item.siblings('.'+options.activeClass);
+							var sliderElements = levelItems.find(options.slider);
+							item.addClass(options.activeClass);
+							showSlide(slider).hide().slideDown(options.animSpeed);
+						
+							// collapse others
+							sliderElements.slideUp(options.animSpeed, function(){
+								levelItems.removeClass(options.activeClass);
+								hideSlide(sliderElements);
+							});
+						}
+					}
+					e.preventDefault();
+				});
+				if(item.hasClass(options.activeClass)) showSlide(slider); else hideSlide(slider);
+			});
+		});
+	};
+
+	// accordion slide visibility
+	var showSlide = function(slide) {
+		return slide.css({position:'', top: '', left: '', width: '' });
+	};
+	var hideSlide = function(slide) {
+		return slide.show().css({position:'absolute', top: -9999, left: -9999, width: slide.width() });
+	};
+}(jQuery));

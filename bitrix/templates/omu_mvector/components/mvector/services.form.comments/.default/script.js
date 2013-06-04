@@ -1,10 +1,4 @@
 BX.ready(function(){
-    $("#submit-comment").click(function(){
-             $("#commentsform").submit();
-    })
-});
-
-BX.ready(function(){
     $("#commentsform").submit(function(){
         if (!(BX('comment-topic').value == '' || BX('comment-text').value == '')) {
             //var msg = $('#commentsform').serialize();
@@ -29,4 +23,19 @@ BX.ready(function(){
                 alert('Пожалуйста, заполните все поля!');
             }
     })
+    $('#link-award').click(function(e) {
+          e.preventDefault();
+          var msg = null;
+          $.ajax({
+            type: 'GET',
+            url: '/bitrix/components/mvector/services.form.comments/add-award.php',
+            data: msg,
+            success: function(data) {
+                $('#page-ovaerlay').html(data);
+            },
+            error:  function(xhr, str){
+                alert(xhr.responseCode);
+            }
+        });
+   });
 });
