@@ -3,7 +3,7 @@
     global $APPLICATION;
     $APPLICATION->IncludeComponent(
         "mvector:services.list.services",
-        "map",
+        $_GET['service_tmpl'], // Приходит по ajax
         Array(), 
         false
     ); 

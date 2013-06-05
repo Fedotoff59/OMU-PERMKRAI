@@ -1,10 +1,10 @@
 BX.ready(function() {
-     $('#chose-location-filter').click(function(e) {
+    $('#config-report-filter').click(function(e) {
           e.preventDefault();
-          var msg = null;
+          var msg = 'service_tmpl=checkbox&location_tmpl=checkbox';
           $.ajax({
             type: 'GET',
-            url: '/bitrix/components/mvector/location.choice.links/location-choice-rating-filter.php',
+            url: '/bitrix/components/mvector/report.configurator/config-report-popup.php',
             data: msg,
             success: function(data) {
                 $('#page-ovaerlay').html(data);
@@ -13,6 +13,6 @@ BX.ready(function() {
                 alert(xhr.responseCode);
             }
         });
-   });
+    });
 });
 	

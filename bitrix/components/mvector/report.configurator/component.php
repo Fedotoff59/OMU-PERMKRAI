@@ -29,5 +29,8 @@ if (isset($arServicesIDs)) {
                 $arResult['FILTERED_SERVICES'][$elID]['REMOVE_FILTER_SERVICE_LINK'] = $RemoveServiceLink;
     }  
 }
+$report_link = $APPLICATION->GetCurUri();
+$params = $k = explode('?', $report_link);
+//echo$arResult['EXCEL_REPORT_LINK'] = '/report/dataexport/?'.$params[0];
 $this->IncludeComponentTemplate();
 ?>

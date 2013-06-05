@@ -10,7 +10,7 @@ $(document).ready(function(){
 <div class="lightbox">
     <a href="#" class="close" id="close-popup">close</a>
     <div class="clearfix"></div>
-		<h2>Выберите услугу</h2>
+<h2>Выберите услугу</h2>
 <div class="column"> 
 <?
     $i = 0;

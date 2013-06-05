@@ -13,7 +13,8 @@
 						<p>Сводный отчет за текущий отчетный период. </p>
 					</div>
 				</div>
-                                <?$APPLICATION->IncludeComponent("mvector:report.configurator", "", Array());?>                              
+                                <?$APPLICATION->IncludeComponent("mvector:report.configurator", "", Array());?>
+
 </div>
 <div id="sidebar">                       
     <?$APPLICATION->IncludeFile(SITE_TEMPLATE_PATH."/sidebar_right.php", Array(), Array());?>

@@ -9,6 +9,7 @@ $arDefaultUrlTemplates404 = array(
    "ratings.report" => "report/",
    "ratings.services.loyalty" => "serviceslist/#SERVICE_ID#/",
    "ratings.providers" => "serviceslist/#SERVICE_ID#/providers/",
+   "data.export" => "report/export/"
 );
 $arDefaultVariableAliases404 = Array();
 $arDefaultVariableAliases = Array();
