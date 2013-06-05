@@ -30,7 +30,7 @@ if (isset($arServicesIDs)) {
     }  
 }
 $report_link = $APPLICATION->GetCurUri();
-$params = $k = explode('?', $report_link);
-//echo$arResult['EXCEL_REPORT_LINK'] = '/report/dataexport/?'.$params[0];
+$params = explode('?', $report_link);
+$arResult['EXCEL_REPORT_LINK']['FORM_2'] = '/ratings/report/export/?'.$params[1].'&format=xlsx&form=2';
 $this->IncludeComponentTemplate();
 ?>

@@ -56,5 +56,30 @@ class CServices {
         endif;
         return $arServices;
     }
+    
+    public static function GetServiceCriterias($SID) {
+        // Формируем данные для формы оценки
+    $arFields = false;
+// Получаем по ID услуги IDs соответствующих критериев
+    $db_props = CIBlockElement::GetProperty(IB_SERVICES_ID, 
+                $SID, "sort", "asc", array("CODE" => "CRITERIAS"));
+    while ($ob = $db_props->GetNext())
+    {
+        if ($ob['VALUE'])
+        {   // Зная IDs критериев оценки, получаем их имена
+           $arSelect = Array("ID","NAME"); 
+           $arFilter = Array(   "IBLOCK_ID" => IB_CRITERIAS_ID, 
+                                "ID" => $ob['VALUE'],
+                                "ACTIVE" => "Y"
+                            );
+            $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
+           if ($ob2 = $res->GetNextElement())
+           {
+             $arFields[] = $ob2->GetFields();
+           }
+        }
+    }
+    return $arFields;
+    }
 }
 ?>
