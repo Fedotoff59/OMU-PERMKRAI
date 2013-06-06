@@ -92,7 +92,17 @@
 	</ul>
     </div>
     <?  }   ?>
-<p>
-    <a href="http://omu.m-vector.org/ratings/report/?load=locations&format=xlsx">Загрузить отчет (*.xls)</a>
-    <a href="http://omu.m-vector.org/ratings/report/?load=locations&format=pdf">Загрузить отчет (*.pdf)</a>
-</p>
+<div class="doc-hold" style="float:right;">
+    <div class="doc-box" style="float:left;">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon27.gif" alt="" /> <a href="<?=$arResult['PDF_REPORT_LINK']['FORM_2']?>">Загрузить отчет</a> <span>(pdf)</span></strong>
+    </div>
+    <div class="doc-box" style="float:left; margin-left: 15px; margin-right: 15px;">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="<?=$arResult['EXCEL_REPORT_LINK']['FORM_2']?>">Загрузить отчет</a> <span>(xlsx)</span></strong>
+    </div>
+    <div class="btn-row2" style="float:left; margin-right: 15px;">
+        <a href="#" class="submit2" id="print"><span><span>Распечатать</span></span></a>
+    </div>
+    <div class="btn-row2">
+        <a href="/ratings/serviceslist/<?=$arParams['SERVICE_ID']?>/providers/?<?=$arResult['FILTER_LINK']?>" class="submit2"><span><span>Подписаться на рассылку</span></span></a>
+    </div>
+</div>

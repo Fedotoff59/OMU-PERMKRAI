@@ -14,6 +14,7 @@ BX.ready(function(){
           data: msg,
           success: function(text) {
             $('#results').html(text);
+            setTimeout("document.location.href='/'", 3000);
           },
           error:  function(xhr, str){
                 alert(xhr.responseCode);

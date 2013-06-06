@@ -68,9 +68,11 @@ if (isset($_GET['nofilter']) && $_GET['nofilter'] == 'yes') {
         else {
             foreach($_GET as $key => $value) {
                 $k = explode('_', $key);
-                $key = $k[0];
-                if ($key == 'lid')
+                $lid = $k[0];
+                if ($lid == 'lid') {
                     $arLocationsIDS[] = $value;
+                    $report_link .= '&'.$key.'='.$value;
+                }
             }
             if(!$arLocationsIDS)
                 $arLocationsIDS[] = (CLocations::GetCurrentLocationID() > 0) ? CLocations::GetCurrentLocationID() : DEFAULT_LOCATION_ID;
@@ -92,7 +94,8 @@ if (isset($_GET['nofilter']) && $_GET['nofilter'] == 'yes') {
 $countProviders = count_providers($arLocationsIDS, $Service_ID);
 $arResult['PAGENAV'] = pagenav($CurentPage, $countProviders, ELEMENTS_PER_PAGE, PAGES_IN_GROUP);
 $arResult['PROVIDERS'] = get_providers($arLocationsIDS, $Service_ID, $arResult['PAGENAV']);
-
+$arResult['PDF_REPORT_LINK']['FORM_2'] = '/export.php?format=pdf&form=2&sid_0='.$Service_ID.$report_link;
+$arResult['EXCEL_REPORT_LINK']['FORM_2'] = '/export.php?format=xlsx&form=2&sid_0='.$Service_ID.$report_link;
 
 //echo '<pre>'; print_r($countProviders); echo '</pre>';
 $this->IncludeComponentTemplate();
