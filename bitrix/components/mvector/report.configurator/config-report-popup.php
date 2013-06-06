@@ -12,6 +12,9 @@ $(document).ready(function(){
         if ($(this).index() == 1)
             $(this).html('<h2>Выбор услуг</h2>').siblings().html('<a href="#"><h2>Выбор территорий</h2></a>');
     })
+    $('#submit-form').click(function() {
+        $('#choice-params').submit();
+    });
 });
 </script>
 <div class="overlay"></div>
@@ -25,7 +28,7 @@ $(document).ready(function(){
             <li><a href="#"><h2>Выбор услуг</h2></a></li>
         </ul>
     </div>
-    <form name="service-choice" action="<?SITE_SERVER_NAME?>">
+    <form name="service-choice" id="choice-params" action="<?SITE_SERVER_NAME?>">
      <div class="box visible">   
 
      <?
@@ -49,10 +52,10 @@ $(document).ready(function(){
      </div>
         </div>
 <div class="clearfix"></div>
-<div style="padding-right: 30px;">
+<div style="padding: 30px;">
     <div style="float:right">      
         <span class="submit">
-            <input type="submit" class="btn" value="Подтвердить выбор" />
+            <input type="button" class="btn" id="submit-form" value="Подтвердить выбор" />
             <span class="r"></span>
        </span>
     </div>

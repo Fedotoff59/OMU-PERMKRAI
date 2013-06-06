@@ -85,8 +85,9 @@ CModule::AddAutoloadClasses(
                 'CLocations' => '/bitrix/php_interface/locations/classes/locations.php',
                 'CServices' =>  '/bitrix/php_interface/services/classes/services.php',
                 'CDataExport' => '/bitrix/php_interface/dataexport/classes/dataexport.php',
+                'TCPDF' => '/bitrix/php_interface/tcpdf/tcpdf.php',
                 'PHPExcel' => '/bitrix/php_interface/Excel/classes/PHPExcel.php',
-                'TCPDF' => '/bitrix/php_interface/tcpdf/tcpdf.php'
+                
         )
 );
 ?>

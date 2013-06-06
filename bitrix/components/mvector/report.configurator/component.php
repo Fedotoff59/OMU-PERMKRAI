@@ -31,6 +31,12 @@ if (isset($arServicesIDs)) {
 }
 $report_link = $APPLICATION->GetCurUri();
 $params = explode('?', $report_link);
-$arResult['EXCEL_REPORT_LINK']['FORM_2'] = '/ratings/report/export/?'.$params[1].'&format=xlsx&form=2';
+if($params[1] != '') {
+    $arResult['EXCEL_REPORT_LINK']['FORM_2'] = '/export.php?'.$params[1].'&format=xlsx&form=2';
+    $arResult['PDF_REPORT_LINK']['FORM_2'] = '/export.php?'.$params[1].'&format=pdf&form=2';
+} else {
+    $arResult['EXCEL_REPORT_LINK']['FORM_2'] = '/upload/ExcelExport/full-report-'.date('m-Y').'_02.xlsx';
+    $arResult['PDF_REPORT_LINK']['FORM_2'] = '/upload/PDFExport/full-report-'.date('m-Y').'_02.pdf';
+}
 $this->IncludeComponentTemplate();
 ?>

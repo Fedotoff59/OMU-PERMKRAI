@@ -316,6 +316,7 @@ class CDataExport {
         $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 1).$i.':'.self::GetLetter($lastCriteriaCell + 1).($i+1));
         $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 2).$i.':'.self::GetLetter($lastCriteriaCell + 2).($i+1));
         $i++;
+        $aSheet->freezePane('A'.($i+1));
         for ($k = 3; $k <= ($lastCriteriaCell); $k++) {
             $aSheet->setCellValue(self::GetLetter($k).$i, $k - 2);
             $aSheet->getColumnDimension(self::GetLetter($k))->setWidth(5);
@@ -339,7 +340,64 @@ class CDataExport {
         self::SaveData($objPHPExcel, 'Excel2007');
     }
     
-    public function ScreenExport ($arFilter) {
+    private function PDFExport_Form2($arServices) {
+    ob_end_clean();
+    $pdf = new TCPDF('L', 'mm', 'A4', true, 'UTF-8', false);
+    // set default header data
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
+    $pdf->SetFont('dejavusanscondensed', '', 11);
+    $pdf->AddPage();
+    
+                 
+                foreach ($arServices as $key => $CurService):
+                    $html .= $CurService['SERVICE_NAME'].'<br />';
+                    $i = 0;
+                    $html .= 'Критерии оценки<br />';
+                    foreach ($CurService['CRITERIAS'] as $key => $CurCriteria) {
+                        $i++;
+                        $html .= $i.'. '.$CurCriteria['NAME'].'<br />';
+                    }
+                    $html .= '<table border="1" width="100%">';
+                    $html .= '<thead>';
+                        $html .= '<tr>';
+                            $html .= '<th width="20" align="center" rowspan="2">№</th>';
+                            $html .= '<th width="250" rowspan="2">Информация о поставщике (наименование, контакты)</th>';
+                            $html .= '<th width="150" rowspan="2">МО</th>';
+                            $html .= '<th width="200" colspan="'.($i).'">Текущий балл рейтинга по каждому критерию</th>';
+                            $html .= '<th width="150" rowspan="2">Текущий усредненный балл рейтинга по всем критериям</th>';
+                            $html .= '<th width="200" rowspan="2">Число голосов</th>';
+                        $html .= '</tr>';
+                                                $html .= '<tr>';
+
+                            for ($j = 1; $j <= $i; $j++)
+                                $html .= '<th width="20">'.$j.'</th>';
+
+                        $html .= '</tr>';
+                    $html .= '</thead>';
+                    $html .= '<tbody>';
+                    foreach ($CurService['PROVIDERS'] as $key => $CurProvider):
+                        $html .= '<tr>';
+                            $html .= '<td width="20">'.($key + 1).'</td>';
+                            $html .= '<td width="250">'.$CurProvider['NAME'].'</td>';
+                            $html .= '<td width="100">'.$CurProvider['LOCATION'].'</td>';
+                            for ($j = 1; $j <= $i; $j++)
+                                $html .= '<td width="20" align="center">&otimes;</td>';
+                            $html .= '<td width="150" align="center">&otimes;</td>';
+                            $html .= '<td width="150" align="center">&otimes;</td>';
+                        $html .= '</tr>';
+                    endforeach;
+                    $html .= '</tbody>';
+                    $html .= '</table>';
+                endforeach;
+                 
+    $pdf->writeHTML($html, true, false, true, false, '');
+    $tmp_filename="report-".date("d-m-y")."_".time().".pdf";
+    $pdf->Output($tmp_filename, 'I');
+
+    }
+    
+    public function Export ($arFilter) {
         switch ($arFilter['FORM']):
             case 1:
             case 2: // Форма по поставщикам 2
@@ -351,49 +409,19 @@ class CDataExport {
                         $arServices[$key]['CRITERIAS'] = CServices::GetServiceCriterias($CurService['SERVICE_ID']);
                     }   else unset($arServices[$key]);
                 }
-                /*
-                foreach ($arServices as $key => $CurService):
-                    echo $CurService['SERVICE_NAME'].'<br />';
-                    $i = 0;
-                    echo 'Критерии оценки<br />';
-                    foreach ($CurService['CRITERIAS'] as $key => $CurCriteria) {
-                        $i++;
-                        echo $i.'. '.$CurCriteria['NAME'].'<br />';
-                    }
-                    echo '<div class="table"><table border="1" width="100%">';
-                    echo '<thead>';
-                        echo '<tr>';
-                            echo '<th class="col2" rowspan="2">№</th>';
-                            echo '<th class="col2" rowspan="2">Информация о поставщике (наименование, контакты)</th>';
-                            echo '<th class="col2" rowspan="2">МО</th>';
-                            echo '<th class="col2" colspan="'.$i.'">Текущий балл рейтинга по каждому критерию</th>';
-                            echo '<th class="col2" rowspan="2">Текущий усредненный балл рейтинга по всем критериям</th>';
-                            echo '<th class="col2" rowspan="2">Число голосов</th>';
-                        echo '</tr>';
-                                                echo '<tr>';
-
-                            for ($j = 1; $j <= $i; $j++)
-                                echo '<th>'.$j.'</th>';
-
-                        echo '</tr>';
-                    echo '</thead>';
-                    echo '<tbody>';
-                    foreach ($CurService['PROVIDERS'] as $key => $CurProvider):
-                        echo '<tr>';
-                            echo '<td>'.($key + 1).'</td>';
-                            echo '<td>'.$CurProvider['NAME'].'</td>';
-                            echo '<td>'.$CurProvider['LOCATION'].'</td>';
-                            for ($j = 1; $j <= $i; $j++)
-                                echo '<td align="center">&otimes;</td>';
-                            echo '<td align="center">&otimes;</td>';
-                            echo '<td align="center">&otimes;</td>';
-                        echo '</tr>';
-                    endforeach;
-                    echo '</tbody>';
-                    echo '</table></div>';
-                endforeach;
-                 */
-                self::ExcelExport_Form2($arServices);
+                if($arServices) {
+                    switch ($arFilter['FORMAT']):
+                        case 'xlsx': self::ExcelExport_Form2($arServices); break;
+                        case 'pdf'; self::PDFExport_Form2($arServices); break;
+                    endswitch;
+                    
+                 } else {
+                        $backURL = '/ratings/report/?';
+                        foreach ($_GET as $param => $value)
+                            if(stripos($param, 'id') !== false)
+                                $backURL .= '&'.$param.'='.$value;
+                        LocalRedirect($backURL);
+                 }
                 //echo '<pre>'; print_r($arServices); echo '</pre>';
                 break;
         endswitch;
