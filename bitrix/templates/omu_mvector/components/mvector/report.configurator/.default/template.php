@@ -1,12 +1,34 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <div class="doc-hold">
-    <h2>Отчет о поставщиках (по услугам) за предыдущий отчетный период</h2>
+    <h2>Отчет по оценке качества по перечню услуг (ежеквартальный)</h2>
+    <div class="doc-box">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon27.gif" alt="" /> <a href="<?=$arResult['PDF_REPORT_LINK']['FORM_1']?>">Загрузить отчет</a> <span>(pdf)</span></strong>
+        <p>Отчет сформирован в соответствии с условиями конфигуратора</p>
+    </div>
+    <div class="doc-box">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="<?=$arResult['EXCEL_REPORT_LINK']['FORM_1']?>">Загрузить отчет</a> <span>(xlsx)</span></strong>
+	<p>Отчет сформирован в соответствии с условиями конфигуратора</p>
+    </div>
+</div>
+<div class="doc-hold">
+    <h2>Отчет о поставщиках (по услугам) за предыдущий отчетный период (ежемесячный)</h2>
     <div class="doc-box">
         <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon27.gif" alt="" /> <a href="<?=$arResult['PDF_REPORT_LINK']['FORM_2']?>">Загрузить отчет</a> <span>(pdf)</span></strong>
         <p>Отчет сформирован в соответствии с условиями конфигуратора</p>
     </div>
     <div class="doc-box">
         <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="<?=$arResult['EXCEL_REPORT_LINK']['FORM_2']?>">Загрузить отчет</a> <span>(xlsx)</span></strong>
+	<p>Отчет сформирован в соответствии с условиями конфигуратора</p>
+    </div>
+</div>
+<div class="doc-hold">
+    <h2>Ежемесячный отчет рейтинга МО</h2>
+    <div class="doc-box">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon27.gif" alt="" /> <a href="<?=$arResult['PDF_REPORT_LINK']['FORM_3']?>">Загрузить отчет</a> <span>(pdf)</span></strong>
+        <p>Отчет сформирован в соответствии с условиями конфигуратора</p>
+    </div>
+    <div class="doc-box">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="<?=$arResult['EXCEL_REPORT_LINK']['FORM_3']?>">Загрузить отчет</a> <span>(xlsx)</span></strong>
 	<p>Отчет сформирован в соответствии с условиями конфигуратора</p>
     </div>
 </div>

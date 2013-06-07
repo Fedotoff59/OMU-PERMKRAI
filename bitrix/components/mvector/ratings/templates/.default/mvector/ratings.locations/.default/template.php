@@ -1,6 +1,15 @@
 <?if(!defined("B_PROLOG_INCLUDED") || B_PROLOG_INCLUDED!==true)die();?>
 <div id="content">
     <h1>Рейтинг муниципальных образований</h1>
+        <div style="float:right;">
+    <div class="btn-row2" style="float:left; margin-right: 15px;">
+        <a href="#" onclick="window.open('/export.php?format=print&form=1');return(false)" class="submit2" id="print"><span><span>Распечатать</span></span></a>
+    </div>
+    <div class="btn-row2">
+        <a href="javascript:void(0)" id="subscribe" class="submit2"><span><span>Подписаться на рассылку</span></span></a>
+    </div>
+        
+</div>
     <div class="section">
     <div class="btn-row2">
         <ul class="tabset-table tabs">
@@ -53,6 +62,15 @@
         </div>
     </div>
     </div>
+
+        <div class="doc-hold" style="float:right;">
+    <div class="doc-box" style="float:left;">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon27.gif" alt="" /> <a href="/export.php?format=pdf&form=1">Загрузить отчет</a> <span>(pdf)</span></strong>
+    </div>
+    <div class="doc-box" style="float:left; margin-left: 15px; margin-right: 15px;">
+        <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="/export.php?format=xlsx&form=1">Загрузить отчет</a> <span>(xlsx)</span></strong>
+    </div>
+        </div>
     <p>&nbsp;</p>
     <ul class="rating-box">
         <li>
