@@ -19,7 +19,7 @@
                 foreach($arSectionData['ELEMENTS'] as $elID => $elName)
                     {
                 ?>
-                        <li><a href="<?=$elID;?>/"><?=$elName;?></a></li>
+                        <li><a href="<?=$elID;?>/providers/"><?=$elName;?></a></li>
                 <?  }   ?>
             </ul>
             <span class="arrow"></span>

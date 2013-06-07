@@ -14,6 +14,14 @@ foreach($_GET as $key => $value) {
     if ($key == 'format')
         $arFilter['FORMAT'] = $value;
 }
-CDataExport::Export($arFilter);
 ?>
+<?if ($arFilter['FORMAT'] == 'print'):?>
+<script type="text/javascript">
+    window.onload = function(){
+        window.print();
+        setTimeout('window.close()', 1000);
+    }
+</script>
+<?endif;?>
+<?CDataExport::Export($arFilter);?>
 <?require($_SERVER["DOCUMENT_ROOT"]."/bitrix/modules/main/include/epilog_after.php");?>

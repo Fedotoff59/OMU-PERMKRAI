@@ -100,9 +100,18 @@
         <strong class="title"><img src="<?=SITE_TEMPLATE_PATH?>/images/icon41.gif" alt="" /> <a href="<?=$arResult['EXCEL_REPORT_LINK']['FORM_2']?>">Загрузить отчет</a> <span>(xlsx)</span></strong>
     </div>
     <div class="btn-row2" style="float:left; margin-right: 15px;">
-        <a href="#" class="submit2" id="print"><span><span>Распечатать</span></span></a>
+        <a href="#" onclick="window.open('<?=$arResult['PRINT_REPORT_LINK']['FORM_2']?>');return(false)" class="submit2" id="print"><span><span>Распечатать</span></span></a>
     </div>
     <div class="btn-row2">
-        <a href="/ratings/serviceslist/<?=$arParams['SERVICE_ID']?>/providers/?<?=$arResult['FILTER_LINK']?>" class="submit2"><span><span>Подписаться на рассылку</span></span></a>
+        <a href="javascript:void(0)" id="subscribe" class="submit2"><span><span>Подписаться на рассылку</span></span></a>
     </div>
 </div>
+<form name="rating-filter" id="filter-params" action="<?SITE_SERVER_NAME?>">
+<input type="hidden" name="form" value="2">
+<input type="hidden" name="format" value="print">
+<input type="hidden" name="sid_0" value="<?=$arParams['SERVICE_ID']?>">
+<?foreach($arResult['FILTERED_LOCATIONS'] as $elID => $arLocation):?>
+    <input type="hidden" name="lid_<?=$elID?>" value="<?=$arLocation['LOCATION_ID']?>">
+<?endforeach;?>
+</form>
+<div id="log"></div>

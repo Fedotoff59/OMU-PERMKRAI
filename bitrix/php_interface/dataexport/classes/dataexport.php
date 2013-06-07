@@ -239,8 +239,54 @@ class CDataExport {
         
     }
     
-    public function PrintExport ($arData) {
-        
+    public function PrintExport_Form2 ($arServices) {
+                      foreach ($arServices as $key => $CurService):
+
+                    $html .= '<h2>Услуга: '.$CurService['SERVICE_NAME'].'</h2>';
+                    $i = 0;
+                    $html .= '<h3>Критерии оценки</h3>';
+                    $html .= '<ol style="font-size:0.8em">';
+                    foreach ($CurService['CRITERIAS'] as $key => $CurCriteria) {
+                        $i++;
+                        $html .= '<li>'.$CurCriteria['NAME'].'</li>';
+                    }
+                    $html .= '</ol>';  
+                    $html .= '<table border="1" cellpadding="3" style="font-size:0.8em">';
+                    $html .= '<thead>';
+                        $html .= '<tr>';
+                            $html .= '<th align="center" width="30" rowspan="2">№</th>';
+                            $html .= '<th align="center" width="150"  rowspan="2">Информация о поставщике (наименование, контакты)</th>';
+                            $html .= '<th align="center" width="70" rowspan="2">МО</th>';
+                            $html .= '<th align="center" width="'.($i * 30).'" colspan="'.($i).'">Текущий балл рейтинга по каждому критерию</th>';
+                            $html .= '<th align="center" width="100" rowspan="2">Текущий усредненный балл рейтинга по всем критериям</th>';
+                            $html .= '<th align="center" width="100" rowspan="2">Число голосов</th>';
+                        $html .= '</tr>';
+                                                $html .= '<tr>';
+
+                            for ($j = 1; $j <= $i; $j++)
+                                $html .= '<th align="center" width="30" >'.$j.'</th>';
+
+                        $html .= '</tr>';
+                    $html .= '</thead>';
+                    $html .= '<tbody>';
+                    foreach ($CurService['PROVIDERS'] as $key => $CurProvider):
+                        $html .= '<tr>';
+                            $html .= '<td width="30">'.($key + 1).'</td>';
+                            $html .= '<td width="150">'.$CurProvider['NAME'].'</td>';
+                            $html .= '<td width="70">'.$CurProvider['LOCATION'].'</td>';
+                            for ($j = 1; $j <= $i; $j++)
+                                $html .= '<td align="center" width="30">&otimes;</td>';
+                            $html .= '<td width="100" align="center">&otimes;</td>';
+                            $html .= '<td width="100" align="center">&otimes;</td>';
+                        $html .= '</tr>';
+                    endforeach;
+                    $html .= '</tbody>';
+                    $html .= '</table>';
+                    
+                echo $html;    
+                    
+                endforeach;
+
     }
     
     private function ExcelExport_Form2($arServices) {
@@ -349,11 +395,13 @@ class CDataExport {
     $pdf->setPrintHeader(false);
     $pdf->setPrintFooter(false);
     $pdf->SetFont('freesans', '', 7);
-    
-                 
+    $html .= '<h1>Отчет о поставщиках (по услугам)</h1>';
+    $k = 0;             
                 foreach ($arServices as $key => $CurService):
                     $pdf->AddPage();
                     $pdf->lastPage();
+                    //if ($k > 0)
+                    //    $pdf->Cell(0, 15, 'Продолжение отчета', 0, false, 'C', 0, '', 0, false, 'M', 'M');
                     $html .= '<h1>Услуга: '.$CurService['SERVICE_NAME'].'</h1>';
                     $i = 0;
                     $html .= '<h2>Критерии оценки</h2>';
@@ -395,8 +443,9 @@ class CDataExport {
                     $html .= '</tbody>';
                     $html .= '</table>';
                     $pdf->writeHTML($html, true, false, true, false, '');
-                    
-                    
+                    $k++;
+                    //$pdf->SetY(-15);
+                    //$pdf->Cell(0, 10, 'Страница '.$pdf->getAliasNumPage().'/'.$pdf->getAliasNbPages(), 0, false, 'C', 0, '', 0, false, 'T', 'M');
                 endforeach;
                  
     
@@ -483,7 +532,7 @@ class CDataExport {
                     switch ($arFilter['FORMAT']):
                         case 'xlsx': self::ExcelExport_Form2($arServices); break;
                         case 'pdf'; self::PDFExport_Form2($arServices); break;
-                        case 'mpdf'; self::mPDFExport_Form2($arServices); break;
+                        case 'print'; self::PrintExport_Form2($arServices); break;
                     endswitch;
                     
                  } else {

@@ -14,9 +14,19 @@ BX.ready(function() {
             }
         });
    });
-   $('#print').click(function(e) {
-        e.preventDefault();
-        window.print();
-   });
-});
-	
+//   $('#print').click(function(e) {
+//        e.preventDefault();
+//        var msg = $('#filter-params').serialize();
+//        $.ajax({
+//            type: 'GET',
+//            url: '/export.php',
+//            data: msg,
+//            success: function(data) {
+//                $('#log').html(data);
+//            },
+//            error:  function(xhr, str){
+//                alert(xhr.responseCode);
+//            }
+//        });
+//  });
+});	

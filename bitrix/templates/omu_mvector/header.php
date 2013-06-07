@@ -29,6 +29,7 @@
     
 <?$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());?>
 <?$APPLICATION->IncludeComponent("mvector:feedback.error", "",	Array());?>
+<?$APPLICATION->IncludeComponent("mvector:subscribe.reports", "", Array());?>
 
 <div id="wrapper">
     <!-- header -->
