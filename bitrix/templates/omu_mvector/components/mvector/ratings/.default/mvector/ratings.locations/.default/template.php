@@ -17,7 +17,7 @@
             <li><a href="#">Диаграмма</a></li>
         </ul>
     </div>
-        <div class="clearfix"></div>
+        <div class="clearfix"></div> 
     <div class="table box visible">
         <table class="rating-table" id="Sortable">
             <thead>
