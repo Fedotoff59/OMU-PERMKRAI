@@ -25,7 +25,7 @@ class CDataExport {
         :  $cutStr;
     }
     
-    private function SaveData($objPHPExcel, $type) {
+    private function SaveData($objPHPExcel, $type) { 
               
         if ($type == 'Excel2007') {
             $savepath=$_SERVER["DOCUMENT_ROOT"].self::SAVE_PATH_EXCEL;
@@ -54,9 +54,9 @@ class CDataExport {
         
         $objWriter->save($savepath.$tmp_filename);
         LocalRedirect($link.$tmp_filename);
-    }
+    }                        // Переделать, оставить только Excel    
     
-    private function get_providers($arLocationsIDS, $ServiceID) {
+    private function get_providers($arLocationsIDS, $ServiceID) { 
     $arProv = false;
     if(CModule::IncludeModule("iblock")):
     $arFilter = Array('IBLOCK_ID' => IB_LOCATIONS_ID, 'ID' => $arLocationsIDS);
@@ -100,7 +100,7 @@ class CDataExport {
     endwhile;
     endif;
     return $arProv;
-    }
+    }           // Сделать отдельный класс для работы с поставщиками
     
     public function ExcelExport($arData, $stDataType) {
         
@@ -170,7 +170,7 @@ class CDataExport {
 
         self::SaveData($objPHPExcel, 'Excel2007');
         
-    }
+    }                     // Проверить совместимость и убрать эту функцию    
     
     public function PDFExport ($arData) {
         $objPHPExcel = new PHPExcel();
@@ -237,58 +237,53 @@ class CDataExport {
         
         self::SaveData($objPHPExcel, 'PDF');
         
-    }
+    }                                   // Проверить совместимость и убрать эту функцию 
     
-    public function PrintExport_Form2 ($arServices) {
+    public function PrintExport_Form2 ($arServices) {   
         $html .= '<h1>Отчет о поставщиках (по услугам)</h1>';            
         foreach ($arServices as $key => $CurService):
-
-                    $html .= '<h2>Услуга: '.$CurService['SERVICE_NAME'].'</h2>';
-                    $i = 0;
-                    $html .= '<h3>Критерии оценки</h3>';
-                    $html .= '<ol style="font-size:0.8em">';
-                    foreach ($CurService['CRITERIAS'] as $key => $CurCriteria) {
-                        $i++;
-                        $html .= '<li>'.$CurCriteria['NAME'].'</li>';
-                    }
-                    $html .= '</ol>';  
-                    $html .= '<table border="1" cellpadding="3" style="font-size:0.8em">';
-                    $html .= '<thead>';
-                        $html .= '<tr>';
-                            $html .= '<th align="center" width="30" rowspan="2">№</th>';
-                            $html .= '<th align="center" width="150"  rowspan="2">Информация о поставщике (наименование, контакты)</th>';
-                            $html .= '<th align="center" width="70" rowspan="2">МО</th>';
-                            $html .= '<th align="center" width="'.($i * 30).'" colspan="'.($i).'">Текущий балл рейтинга по каждому критерию</th>';
-                            $html .= '<th align="center" width="100" rowspan="2">Текущий усредненный балл рейтинга по всем критериям</th>';
-                            $html .= '<th align="center" width="100" rowspan="2">Число голосов</th>';
-                        $html .= '</tr>';
-                                                $html .= '<tr>';
-
-                            for ($j = 1; $j <= $i; $j++)
-                                $html .= '<th align="center" width="30" >'.$j.'</th>';
-
-                        $html .= '</tr>';
-                    $html .= '</thead>';
-                    $html .= '<tbody>';
-                    foreach ($CurService['PROVIDERS'] as $key => $CurProvider):
-                        $html .= '<tr>';
-                            $html .= '<td width="30">'.($key + 1).'</td>';
-                            $html .= '<td width="150">'.$CurProvider['NAME'].'</td>';
-                            $html .= '<td width="70">'.$CurProvider['LOCATION'].'</td>';
-                            for ($j = 1; $j <= $i; $j++)
-                                $html .= '<td align="center" width="30">&otimes;</td>';
-                            $html .= '<td width="100" align="center">&otimes;</td>';
-                            $html .= '<td width="100" align="center">&otimes;</td>';
-                        $html .= '</tr>';
-                    endforeach;
-                    $html .= '</tbody>';
-                    $html .= '</table>';
-                    
-                echo $html;    
-                 $html = '';   
-                endforeach;
-
-    }
+            $html .= '<h2>Услуга: '.$CurService['SERVICE_NAME'].'</h2>';
+            $i = 0;
+            $html .= '<h3>Критерии оценки</h3>';
+            $html .= '<ol style="font-size:0.8em">';
+            foreach ($CurService['CRITERIAS'] as $key => $CurCriteria) {
+                $i++;
+                $html .= '<li>'.$CurCriteria['NAME'].'</li>';
+            }
+            $html .= '</ol>';  
+            $html .= '<table border="1" cellpadding="3" style="font-size:0.8em">';
+            $html .= '<thead>';
+            $html .= '<tr>';
+            $html .= '<th align="center" width="30" rowspan="2">№</th>';
+            $html .= '<th align="center" width="150"  rowspan="2">Информация о поставщике (наименование, контакты)</th>';
+            $html .= '<th align="center" width="70" rowspan="2">МО</th>';
+            $html .= '<th align="center" width="'.($i * 30).'" colspan="'.($i).'">Текущий балл рейтинга по каждому критерию</th>';
+            $html .= '<th align="center" width="100" rowspan="2">Текущий усредненный балл рейтинга по всем критериям</th>';
+            $html .= '<th align="center" width="100" rowspan="2">Число голосов</th>';
+            $html .= '</tr>';
+            $html .= '<tr>';
+            for ($j = 1; $j <= $i; $j++)
+                $html .= '<th align="center" width="30" >'.$j.'</th>';
+            $html .= '</tr>';
+            $html .= '</thead>';
+            $html .= '<tbody>';
+            foreach ($CurService['PROVIDERS'] as $key => $CurProvider):
+                $html .= '<tr>';
+                $html .= '<td width="30">'.($key + 1).'</td>';
+                $html .= '<td width="150">'.$CurProvider['NAME'].'</td>';
+                $html .= '<td width="70">'.$CurProvider['LOCATION'].'</td>';
+                for ($j = 1; $j <= $i; $j++)
+                    $html .= '<td align="center" width="30">&otimes;</td>';
+                $html .= '<td width="100" align="center">&otimes;</td>';
+                $html .= '<td width="100" align="center">&otimes;</td>';
+                $html .= '</tr>';
+            endforeach;
+            $html .= '</tbody>';
+            $html .= '</table>';
+            echo $html;    
+            $html = '';   
+        endforeach;
+    }                       // Прокомментировать действия
     
     private function ExcelExport_Form2($arServices) {
         $objPHPExcel = new PHPExcel();
@@ -305,83 +300,80 @@ class CDataExport {
                     'vertical'=>PHPExcel_Style_Alignment::VERTICAL_CENTER
                     )
          );
-
         $style_header = Array (
                     'fill' => array(
                     'type' => PHPExcel_Style_Fill::FILL_SOLID,
                     'color' => array('rgb'=>'CCCCCC'),
                     )
           );
-        
         $H1 = array('font'=>array('name'=>'Calibri', 'size'=>'12', 'bold'=>true));
         $H2 = array('font'=>array('name'=>'Calibri', 'size'=>'11', 'bold'=>true));
         $SheetNum = 0;
         foreach ($arServices as $key => $CurService):
-        $CurServiceNAME = self::cutString($CurService['SERVICE_NAME'], 27);
-        if($SheetNum > 0)
-            $objPHPExcel->createSheet($SheetNum);
-        $objPHPExcel->setActiveSheetIndex($SheetNum);
-        $objPHPExcel->getActiveSheet()->setTitle($CurServiceNAME);
-        $aSheet = $objPHPExcel->getActiveSheet();
-        $aSheet->getColumnDimension('A')->setWidth(5);
-        $aSheet->getColumnDimension('B')->setWidth(40);
-
-        $aSheet->setCellValue('A1', $CurService['SERVICE_FULLNAME']);
-        $aSheet->getStyle('A1')->applyFromArray($H1);
-        $aSheet->setCellValue('A2', 'Критерии оценки');
-        $aSheet->getStyle('A2')->applyFromArray($H2);
-        $j = 3;
-        foreach ($CurService['CRITERIAS'] as $row => $arCurCriteria) {            
-            $aSheet->setCellValue('A'.$j, ($row+1).'. '.$arCurCriteria['NAME']);
+            $CurServiceNAME = self::cutString($CurService['SERVICE_NAME'], 27);
+            if($SheetNum > 0)
+                $objPHPExcel->createSheet($SheetNum);
+            $objPHPExcel->setActiveSheetIndex($SheetNum);
+            $objPHPExcel->getActiveSheet()->setTitle($CurServiceNAME);
+            $aSheet = $objPHPExcel->getActiveSheet();
+            $aSheet->getColumnDimension('A')->setWidth(5);
+            $aSheet->getColumnDimension('B')->setWidth(40);
+            $aSheet->setCellValue('A1', $CurService['SERVICE_FULLNAME']);
+            $aSheet->getStyle('A1')->applyFromArray($H1);
+            $aSheet->setCellValue('A2', 'Критерии оценки');
+            $aSheet->getStyle('A2')->applyFromArray($H2);
+            $j = 3;
+            foreach ($CurService['CRITERIAS'] as $row => $arCurCriteria) {            
+                $aSheet->setCellValue('A'.$j, ($row+1).'. '.$arCurCriteria['NAME']);
             $j++;
-        }
-        $i = $j;
-        $lastCriteriaCell = $row + 3;
-        $i++;
-        $aSheet->setCellValue('A'.$i, '№');
-        $aSheet->getStyle('A'.$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->setCellValue('B'.$i, 'Информация о поставщике');
-        $aSheet->getStyle('B'.$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->setCellValue('C'.$i, 'МО');
-        $aSheet->getStyle('C'.$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->setCellValue('D'.$i, 'Текущий балл рейтинга по каждому критерию');
-        $aSheet->getStyle('D'.$i)->getAlignment()->setWrapText(true);
-        $aSheet->getRowDimension($i)->setRowHeight(50);
-        $aSheet->mergeCells('D'.$i.':'.self::GetLetter($lastCriteriaCell).$i);
-        $aSheet->getStyle('D'.$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 1).$i, 'Текущий усредненный балл рейтинга по всем критериям');
-        $aSheet->getColumnDimension(self::GetLetter($lastCriteriaCell + 1))->setWidth(20);
-        $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 1).$i)->getAlignment()->setWrapText(true);
-        $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 1).$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 2).$i, 'Число голосов');
-        $aSheet->getColumnDimension(self::GetLetter($lastCriteriaCell + 2))->setWidth(15);
-        $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 2).$i)->getAlignment()->setWrapText(true);
-        $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 2).$i)->applyFromArray($style_header)->applyFromArray($center);
-        $aSheet->mergeCells('A'.$i.':A'.($i+1));
-        $aSheet->mergeCells('B'.$i.':B'.($i+1));
-        $aSheet->mergeCells('C'.$i.':C'.($i+1));
-        $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 1).$i.':'.self::GetLetter($lastCriteriaCell + 1).($i+1));
-        $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 2).$i.':'.self::GetLetter($lastCriteriaCell + 2).($i+1));
-        $i++;
-        $aSheet->freezePane('A'.($i+1));
-        for ($k = 3; $k <= ($lastCriteriaCell); $k++) {
-            $aSheet->setCellValue(self::GetLetter($k).$i, $k - 2);
-            $aSheet->getColumnDimension(self::GetLetter($k))->setWidth(5);
-            $aSheet->getStyle(self::GetLetter($k).$i)->applyFromArray($style_header)->applyFromArray($center);
-        }
-        foreach($CurService['PROVIDERS'] as $row => $arCurProvider) {
-            $aSheet->setCellValue(self::GetLetter(0).($i+1), $i - $j - 1);
-            $arCurProviderNAME = str_replace('&quot;', '"', $arCurProvider['NAME']);
-            $aSheet->setCellValue(self::GetLetter(1).($i+1), $arCurProviderNAME);
-            $aSheet->setCellValue(self::GetLetter(2).($i+1), $arCurProvider['LOCATION']);
-            for ($k = 3; $k <= ($lastCriteriaCell); $k++)
-                $aSheet->setCellValue(self::GetLetter($k).($i+1), 'X'); // Оценки по критериям. Пока пустые значения
-            $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 1).($i+1), 'Х'); // Общий балл по критериям
-            $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 2).($i+1), 'Х'); // Число голосов
+            }
+            $i = $j;
+            $lastCriteriaCell = $row + 3;
             $i++;
-        }
-        $aSheet->setSelectedCell('A1');
-        $SheetNum++;
+            $aSheet->setCellValue('A'.$i, '№');
+            $aSheet->getStyle('A'.$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->setCellValue('B'.$i, 'Информация о поставщике');
+            $aSheet->getStyle('B'.$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->setCellValue('C'.$i, 'МО');
+            $aSheet->getStyle('C'.$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->setCellValue('D'.$i, 'Текущий балл рейтинга по каждому критерию');
+            $aSheet->getStyle('D'.$i)->getAlignment()->setWrapText(true);
+            $aSheet->getRowDimension($i)->setRowHeight(50);
+            $aSheet->mergeCells('D'.$i.':'.self::GetLetter($lastCriteriaCell).$i);
+            $aSheet->getStyle('D'.$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 1).$i, 'Текущий усредненный балл рейтинга по всем критериям');
+            $aSheet->getColumnDimension(self::GetLetter($lastCriteriaCell + 1))->setWidth(20);
+            $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 1).$i)->getAlignment()->setWrapText(true);
+            $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 1).$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 2).$i, 'Число голосов');
+            $aSheet->getColumnDimension(self::GetLetter($lastCriteriaCell + 2))->setWidth(15);
+            $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 2).$i)->getAlignment()->setWrapText(true);
+            $aSheet->getStyle(self::GetLetter($lastCriteriaCell + 2).$i)->applyFromArray($style_header)->applyFromArray($center);
+            $aSheet->mergeCells('A'.$i.':A'.($i+1));
+            $aSheet->mergeCells('B'.$i.':B'.($i+1));
+            $aSheet->mergeCells('C'.$i.':C'.($i+1));
+            $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 1).$i.':'.self::GetLetter($lastCriteriaCell + 1).($i+1));
+            $aSheet->mergeCells(self::GetLetter($lastCriteriaCell + 2).$i.':'.self::GetLetter($lastCriteriaCell + 2).($i+1));
+            $i++;
+            $aSheet->freezePane('A'.($i+1));
+            for ($k = 3; $k <= ($lastCriteriaCell); $k++) {
+                $aSheet->setCellValue(self::GetLetter($k).$i, $k - 2);
+                $aSheet->getColumnDimension(self::GetLetter($k))->setWidth(5);
+                $aSheet->getStyle(self::GetLetter($k).$i)->applyFromArray($style_header)->applyFromArray($center);
+            }
+            foreach($CurService['PROVIDERS'] as $row => $arCurProvider) {
+                $aSheet->setCellValue(self::GetLetter(0).($i+1), $i - $j - 1);
+                $arCurProviderNAME = str_replace('&quot;', '"', $arCurProvider['NAME']);
+                $aSheet->setCellValue(self::GetLetter(1).($i+1), $arCurProviderNAME);
+                $aSheet->setCellValue(self::GetLetter(2).($i+1), $arCurProvider['LOCATION']);
+                for ($k = 3; $k <= ($lastCriteriaCell); $k++)
+                    $aSheet->setCellValue(self::GetLetter($k).($i+1), 'X'); // Оценки по критериям. Пока пустые значения
+                $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 1).($i+1), 'Х'); // Общий балл по критериям
+                $aSheet->setCellValue(self::GetLetter($lastCriteriaCell + 2).($i+1), 'Х'); // Число голосов
+                $i++;
+            }
+            $aSheet->setSelectedCell('A1');
+            $SheetNum++;
         endforeach;
         $objPHPExcel->setActiveSheetIndex(0);
         self::SaveData($objPHPExcel, 'Excel2007');
