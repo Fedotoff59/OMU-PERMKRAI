@@ -2,12 +2,13 @@
 
 <?if ($arResult["FORM_TYPE"] == "login"):?>
 
-
 <ul class="r-list">
     <li class="login">
         <div class="login-box">
         <a href="#" class="open">Войти в личный кабинет </a>
         <div class="drop">
+                <?if ($arResult['SHOW_ERRORS'] == 'Y' && $arResult['ERROR']) 
+                ShowMessage($arResult['ERROR_MESSAGE']);?>
             <form method="post" target="_top" action="<?=$arResult["AUTH_URL"]?>">
                 <?
                 if (strlen($arResult["BACKURL"]) > 0)
@@ -36,6 +37,15 @@
 		<div class="input">
                     <input type="password" name="USER_PASSWORD" maxlength="50" size="17" />
 		</div>
+                <?if ($arResult["CAPTCHA_CODE"]):?>   
+			<label for="input3">Введите буквы с картинки:</label>
+                        
+			<input type="hidden" name="captcha_sid" value="<?=$arResult["CAPTCHA_CODE"]?>" />
+			<img src="/bitrix/tools/captcha.php?captcha_sid=<?=$arResult["CAPTCHA_CODE"]?>" width="180" height="40" alt="CAPTCHA" style="margin-bottom: 12px;" />
+                        <div class="input">
+                            <input type="text" name="captcha_word" maxlength="5" value="" size="17" />
+                        </div>
+                <?endif;?>
 		<span class="submit">
                     <input type="submit" class="btn" name="Login" value="Войти в личный кабинет" />
                     <span class="r"></span>

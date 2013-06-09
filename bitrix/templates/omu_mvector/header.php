@@ -80,11 +80,11 @@
 		</ul>
 		<?$APPLICATION->IncludeComponent("bitrix:system.auth.form", "auth", Array(
 			"REGISTER_URL"	=>	"/auth/",
-			"PROFILE_URL"	=>	"/personal/profile/"
+			"PROFILE_URL"	=>	"/personal/profile/",
+                        "SHOW_ERRORS" => "Y"
 			)
                 );?>
             </div>
         </div>
     </div>
-    <?//=parse_url($_SERVER['PHP_SELF'], PHP_URL_PATH)?>
     <div id="main">

@@ -2,7 +2,7 @@
 
 <h1><? echo $arResult['SERVICE_FULL_NAME']; ?></h1>
 <div class="title-row">
-<?$APPLICATION->IncludeComponent("bitrix:main.calendar","",Array(
+<?$APPLICATION->IncludeComponent("bitrix:main.calendar","criteriasform",Array(
                                             "SHOW_INPUT" => "Y",
                                             "FORM_NAME" => "values_iblock_add",
                                             "INPUT_NAME" => "service_date",
