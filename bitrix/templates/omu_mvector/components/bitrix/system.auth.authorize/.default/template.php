@@ -6,8 +6,7 @@ ShowMessage($arParams["~AUTH_RESULT"]);
 ShowMessage($arResult['ERROR_MESSAGE']);
 ?>
 <div id="content">
-    <p><strong>Уважаемые пользователи! <br /> По техническим причинам регистрация на портале будет доступна с 10 июня.</strong></p>
-<div class="bx-auth">
+    <div class="bx-auth">
 <?if($arResult["AUTH_SERVICES"]):?>
 	<div class="bx-auth-title"><?echo GetMessage("AUTH_TITLE")?></div>
 <?endif?>

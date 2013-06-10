@@ -47,11 +47,11 @@ while($el = $db_List->GetNextElement())
       $stLoyalty = sprintf("%.2f", $stLoyalty);
       //$stLoyalty .= ' %';
       $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = '&nbsp;&nbsp;&otimes;';//$stLoyalty;
-      $arLocationLoyalty[$i]['VOTES_AMOUNT'] = $arLocationRating[$arFields['ID']]['VOTES_AMOUNT'];
+      $arLocationLoyalty[$i]['VOTES_AMOUNT'] = '&nbsp;&nbsp;&otimes;';//$arLocationRating[$arFields['ID']]['VOTES_AMOUNT'];
       $arLocationLoyalty[$i]['DIAGRAM_WIDTH'] = sprintf("%.0f", $DiagramWidth);
    } else {
       $arLocationLoyalty[$i]['AVERAGE_PERCENT_RATING'] = '&nbsp;&nbsp;&otimes;';
-      $arLocationLoyalty[$i]['VOTES_AMOUNT'] = 0;
+      $arLocationLoyalty[$i]['VOTES_AMOUNT'] = '&nbsp;&nbsp;&otimes;';
       $arLocationLoyalty[$i]['DIAGRAM_WIDTH'] = 0;
    }
        

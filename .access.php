@@ -1,0 +1,9 @@
+<?
+$PERM["social-network"]["9"]="R";
+$PERM["social-network"]["8"]="R";
+$PERM["social-network"]["5"]="D";
+$PERM["social-network"]["2"]="D";
+$PERM["social-network"]["*"]="D";
+$PERM["desktop_app"]["*"]="R";
+$PERM["/"]["*"]="R";
+?>

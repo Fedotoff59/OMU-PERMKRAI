@@ -47,15 +47,21 @@ if (strlen($arResult["BACKURL"]) > 0)
             <input type="text" class="input-text" id="input003" />
             <span class="error-text">Нужно заполнить</span>
 	</div>
+        <?// ********************* User properties ***************************************************?>
+<?if($arResult["USER_PROPERTIES"]["SHOW"] == "Y"):?>
+	
+	<?foreach ($arResult["USER_PROPERTIES"]["DATA"] as $FIELD_NAME => $arUserField):?>
 	<div class="row">
-            <label class="other" for="select001">Муниципальное образование*</label>
-            <select id="select001">
-                <option>г.Пермь</option>
-                <option>г.Москва</option>
-                <option>г.Уфа</option>
-            </select>
-            <span class="error-text">Нужно заполнить</span>
+		<label for="input003"><?=$arUserField["EDIT_FORM_LABEL"]?><?if ($arUserField["MANDATORY"]=="Y"):?><span class="required">*</span><?endif;?></label>
+			<?$APPLICATION->IncludeComponent(
+				"bitrix:system.field.edit",
+				$arUserField["USER_TYPE"]["USER_TYPE_ID"],
+				array("bVarsFromForm" => $arResult["bVarsFromForm"], "arUserField" => $arUserField, "form_name" => "bform"), null, array("HIDE_ICONS"=>"Y"));?>
 	</div>
+                                    <?endforeach;?>
+<?endif;?>
+<?// ******************** /User properties ***************************************************?>
+
 	<div class="row">
             <label for="input004">Электронная почта*</label>
             <input type="text" name="USER_EMAIL" maxlength="255" value="<?=$arResult["USER_EMAIL"]?>" class="input-text" id="input004" />
@@ -71,27 +77,26 @@ if (strlen($arResult["BACKURL"]) > 0)
             <input type="password" name="USER_CONFIRM_PASSWORD" maxlength="50" value="<?=$arResult["USER_CONFIRM_PASSWORD"]?>" class="input-text" id="input006" />
             <span class="error-text">Нужно заполнить</span>
 	</div>
-	<div class="row">
-            <label for="input008">Дата рождения</label>
-            <div class="date">
-                <input type="text" class="input-text" id="input008" value="10.02.2013" />
-                <a href="#" class="date-icon"></a>
-            </div>
-            <span class="error-text">Нужно заполнить</span>
-	</div>
-	<div class="hold">
-            <div class="radio-row">
-                <input type="radio" id="radio01" name="sex" />
-		<label for="radio01">мужчина</label>
-		<input type="radio" id="radio02" name="sex" />
-		<label for="radio02">женщина</label>
-            </div>
+	            <?	if ($arResult["USE_CAPTCHA"] == "Y")
+	{
+		?>
+		<div class="hold">
+                <?=GetMessage("CAPTCHA_REGF_TITLE")?>
+				<input type="hidden" name="captcha_sid" value="<?=$arResult["CAPTCHA_CODE"]?>" /><br />
+				<img src="/bitrix/tools/captcha.php?captcha_sid=<?=$arResult["CAPTCHA_CODE"]?>" width="180" height="40" alt="CAPTCHA" />
+		</div>	
+			<div class="row"><label for="captcha_word">Проверочный код*</label><input type="text" name="captcha_word" id="captcha_word" class="input-text" maxlength="50" value="" />
+                        </div>
+		
+		<?
+	}
+	/* CAPTCHA */?>
             <span class="submit">
                 <input type="submit" name="Register" class="btn" value="Зарегистрироваться" />
                 <span class="r"></span>
             </span>
-            <p><a href="#">Закон о персональных данных</a></p>
-	</div>
+            <p><a href="http://www.consultant.ru/popular/o-personalnyh-dannyh/" target="_blank">Закон о персональных данных</a></p>
+	
 <p><span class="starrequired">*</span><?=GetMessage("AUTH_REQ")?></p>
 
 

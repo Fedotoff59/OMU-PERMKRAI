@@ -22,12 +22,14 @@
 
 <body>
 <?
-    if ( CSite::InGroup( array(1, 8, 9) ) )
+    if ( CSite::InGroup( array(1, 8, 9) ) ) {
             $APPLICATION->ShowPanel = true;
-    $APPLICATION->ShowPanel()
+            $APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());
+    }
+    $APPLICATION->ShowPanel();
 ?>
     
-<?$APPLICATION->IncludeComponent("bitrix:im.messenger", "", Array());?>
+
 <?$APPLICATION->IncludeComponent("mvector:feedback.error", "",	Array());?>
 <?$APPLICATION->IncludeComponent("mvector:subscribe.reports", "", Array());?>
 

@@ -43,22 +43,16 @@ $arUrlRewrite = array(
 		"PATH"	=>	"/social-network/index.php",
 	),
 	array(
-		"CONDITION"	=>	"#^/content/photo/#",
-		"RULE"	=>	"",
-		"ID"	=>	"bitrix:photogallery",
-		"PATH"	=>	"/content/photo/index.php",
-	),
-	array(
 		"CONDITION"	=>	"#^/e-store/books/#",
 		"RULE"	=>	"",
 		"ID"	=>	"bitrix:catalog",
 		"PATH"	=>	"/e-store/books/index.php",
 	),
 	array(
-		"CONDITION"	=>	"#^/content/news/#",
+		"CONDITION"	=>	"#^/content/photo/#",
 		"RULE"	=>	"",
-		"ID"	=>	"bitrix:news",
-		"PATH"	=>	"/content/news/index.php",
+		"ID"	=>	"bitrix:photogallery",
+		"PATH"	=>	"/content/photo/index.php",
 	),
 	array(
 		"CONDITION"	=>	"#^/club/gallery/#",
@@ -71,6 +65,12 @@ $arUrlRewrite = array(
 		"RULE"	=>	"",
 		"ID"	=>	"bitrix:idea",
 		"PATH"	=>	"/content/idea/index.php",
+	),
+	array(
+		"CONDITION"	=>	"#^/content/news/#",
+		"RULE"	=>	"",
+		"ID"	=>	"bitrix:news",
+		"PATH"	=>	"/content/news/index.php",
 	),
 	array(
 		"CONDITION"	=>	"#^/content/faq/#",
@@ -97,16 +97,16 @@ $arUrlRewrite = array(
 		"PATH"	=>	"/forum/index.php",
 	),
 	array(
-		"CONDITION"	=>	"#^/club/#",
-		"RULE"	=>	"",
-		"ID"	=>	"bitrix:socialnetwork",
-		"PATH"	=>	"/club/index.php",
-	),
-	array(
 		"CONDITION"	=>	"#^/blog/#",
 		"RULE"	=>	"",
 		"ID"	=>	"bitrix:blog",
 		"PATH"	=>	"/blog/index.php",
+	),
+	array(
+		"CONDITION"	=>	"#^/club/#",
+		"RULE"	=>	"",
+		"ID"	=>	"bitrix:socialnetwork",
+		"PATH"	=>	"/club/index.php",
 	),
 );
 

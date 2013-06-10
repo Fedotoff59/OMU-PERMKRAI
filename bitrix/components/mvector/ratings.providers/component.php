@@ -42,8 +42,9 @@ function get_providers($arLocationsIDS, $ServiceID, $arNav = Array()) {
             //$arProv[$i]['AVERAGE_PERCENT_RATING'] = $arProv[$i]['AVERAGE_PERCENT_RATING'].' %';
             } else {
                 $arProv[$i]['AVERAGE_PERCENT_RATING'] = '&nbsp;&nbsp;&otimes;';
-                $arProv[$i]['VOTES_AMOUNT'] = 0;
+                $arProv[$i]['VOTES_AMOUNT'] = '&nbsp;&nbsp;&otimes;';
             }
+            $arProv[$i]['VOTES_AMOUNT'] = '&nbsp;&nbsp;&otimes;';
             endif;
             $i++;
         endwhile;
