@@ -13,6 +13,7 @@ function FunctionName(params)
 AddEventHandler("iblock", "OnAfterIBlockElementAdd", Array("AfterProviderActivity", "OnAfterProviderActivity"));
 AddEventHandler("iblock", "OnAfterIBlockElementUpdate", Array("AfterProviderActivity", "OnAfterProviderActivity"));
 AddEventHandler("main", "OnAfterUserLogin", Array("SetUserLocation", "OnAfterUserLoginHandler"));
+AddEventHandler("main", "OnBeforeUserRegister", Array("CheckUserFields", "OnBeforeUserRegisterHandler"));
 
 class AfterProviderActivity
 {
@@ -73,6 +74,12 @@ class SetUserLocation
                 }
 
         }
+    }
+}
+
+class CheckUserFields {
+    function OnBeforeUserRegisterHandler($args) {
+      //  print_r($args);
     }
 }
 ?>
