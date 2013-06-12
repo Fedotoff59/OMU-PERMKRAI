@@ -1,0 +1,37 @@
+/* 
+    Document   : ie7fix
+    Created on : 12.06.2013, 19:57:05
+    Author     : Fedotoff
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.services > li {
+    background:#2594cb;
+    display: block;
+    padding-top: 30px;
+    height: 59px;
+}
+.services > li.item1 > a{background:url(../images/icon09.png) no-repeat 17px 0px;}
+.services > li.item2 > a{background:url(../images/icon10.png) no-repeat 24px 0px;}
+.services > li.item3 > a{background:url(../images/icon11.png) no-repeat 22px 0px;}
+.services > li.item4 > a{background:url(../images/icon12.png) no-repeat 22px 0px;}
+.services > li.item5 > a{background:url(../images/icon13.png) no-repeat 22px 0px;}
+.services > li.item6 > a{background:url(../images/icon14.png) no-repeat 22px 0px;}
+.services > li.item7 > a{background:url(../images/icon15.png) no-repeat 22px 0px;}
+.services > li.item8 > a{background:url(../images/icon16.png) no-repeat 22px 0px;}
+.services > li.item9 > a{background:url(../images/icon17.png) no-repeat 22px 0px;}
+.services > li > a{
+    display: block;
+}
+.rating-box {
+    margin-top: 15px;
+}
+.rating-box > li {
+    
+    display: block;
+}
+.rating-box .img div {
+    display: block;
+    padding-top: 30px;
+}

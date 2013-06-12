@@ -2,12 +2,16 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-edge" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 
 <title><?$APPLICATION->ShowTitle()?></title>
-
+<link rel="icon" type="image/x-icon" href="/favicon.ico" />
 <link href="<?=SITE_TEMPLATE_PATH?>/css/all.css" rel="stylesheet" type="text/css" media="all"/>
 <link href="<?=SITE_TEMPLATE_PATH?>/css/jquery.ui.all.css" rel="stylesheet" type="text/css" media="all"/>
+<!--[if lte IE 7]>
+<link href="<?=SITE_TEMPLATE_PATH?>/css/ie7fix.css" rel="stylesheet" type="text/css" media="all"/>
+<![endif]-->
 <script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery-1.9.1.js"></script>
 <script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.core.js"></script>
 <script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.ui.widget.js"></script>
@@ -16,11 +20,23 @@
 <script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/jquery.tablesorter.min.js"></script>
 <script type="text/javascript" src="<?=SITE_TEMPLATE_PATH?>/js/main.js"></script>
 
+
 <?$APPLICATION->ShowHead()?>
 
 </head>
 
 <body>
+<script type="text/javascript"> 
+var $buoop = {} 
+$buoop.ol = window.onload; 
+window.onload=function(){ 
+ try {if ($buoop.ol) $buoop.ol();}catch (e) {} 
+ var e = document.createElement("script"); 
+ e.setAttribute("type", "text/javascript"); 
+ e.setAttribute("src", "http://browser-update.org/update.js"); 
+ document.body.appendChild(e); 
+} 
+</script> 
 <?
     if ( CSite::InGroup( array(1, 8, 9) ) ) {
             $APPLICATION->ShowPanel = true;
@@ -54,6 +70,9 @@
 		</form>
             </div>
             <div class="clearfix"></div>
+            <!--[if lte IE 7]>
+                <div style="clear: both"></div>
+            <![endif]-->
             <div class="nav-row">
                 <ul id="nav">
                     <li><a href="/about/">О портале</a></li>

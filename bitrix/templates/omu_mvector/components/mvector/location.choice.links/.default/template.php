@@ -4,7 +4,7 @@
         <?=$arResult['LOCATION_NAME']?>
     </a>
 </div>
-<div class="clearfix"></div>
+<div class="clearfix" style="clear:both"></div>
 <div class="link">
     <a href="/links/materials/sitemap.php" class="sitemap">sitemap</a>
         <ul>

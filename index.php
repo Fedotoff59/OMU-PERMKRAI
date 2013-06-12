@@ -31,6 +31,9 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 	)
 );?> 
 <!-- infographic -->
+<!--[if lte IE 7]>
+<div class="clearfix">&nbsp;</div>
+<![endif]-->
 <a href="/ratings/">
  <?
     $APPLICATION->IncludeComponent(
@@ -42,6 +45,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
         false
     ); 
     ?> </a>
+
 <!-- banner-hold -->
  
 <!--    <div class="banner-hold">
