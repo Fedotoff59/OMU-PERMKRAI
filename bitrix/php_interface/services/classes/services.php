@@ -9,10 +9,10 @@ class CServices {
  * 
  */    
     
-    public static function GetServices() {
+    public static function GetServices($arSections = Array()) {
         if(CModule::IncludeModule("iblock")):
         $arServices = Array();
-	$arFilter = Array('IBLOCK_ID'=>self::IB_SERVICES_ID, 'ACTIVE'=>'Y');
+        $arFilter = Array('IBLOCK_ID'=>self::IB_SERVICES_ID, 'ID' => $arSections, 'ACTIVE'=>'Y');
 	$db_Section_list = CIBlockSection::GetList(Array("sort"=>"asc"), $arFilter, true);
 	while($arSection_result = $db_Section_list->GetNext())
 	{
@@ -80,6 +80,21 @@ class CServices {
         }
     }
     return $arFields;
+    }
+ /*
+ * Функция проверяет, существует ли запрошеный раздел
+ * 
+ */    
+    
+    public static function CheckSection($SectionID) {
+        $bRightSection = false;
+        if(CModule::IncludeModule("iblock")):
+        $arFilter = Array('IBLOCK_ID'=>self::IB_SERVICES_ID, 'ID' => $SectionID, 'ACTIVE'=>'Y');
+	$db_Section_list = CIBlockSection::GetList(Array("sort"=>"asc"), $arFilter, true);
+	if ($arSection_result = $db_Section_list->GetNext())
+            $bRightSection = true;    
+        endif;
+        return $bRightSection;
     }
 }
 ?>

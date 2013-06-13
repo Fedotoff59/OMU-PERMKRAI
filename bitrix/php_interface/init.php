@@ -91,9 +91,9 @@ CModule::AddAutoloadClasses(
                 'CRating' => '/bitrix/php_interface/rating/classes/rating.php',
                 'CLocations' => '/bitrix/php_interface/locations/classes/locations.php',
                 'CServices' =>  '/bitrix/php_interface/services/classes/services.php',
+                'CProviders' =>  '/bitrix/php_interface/providers/classes/providers.php',
                 'CDataExport' => '/bitrix/php_interface/dataexport/classes/dataexport.php',
                 'TCPDF' => '/bitrix/php_interface/tcpdf/tcpdf.php',
-                'mPDF' => '/bitrix/php_interface/MPDF56/mpdf.php',
                 'PHPExcel' => '/bitrix/php_interface/Excel/classes/PHPExcel.php',
                 
         )

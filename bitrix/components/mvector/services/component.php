@@ -4,6 +4,7 @@
 $arDefaultUrlTemplates404 = Array(
    "services.votespage.service" => "#SERVICE_ID#/#LOCATION_ALIAS#/",
    "services.votespage.provider" => "#SERVICE_ID#/providers/#LOCATION_ALIAS#/#PROVIDER_ID#/",
+   "services.section.providers" => "providers/#SECTION_ID#/#LOCATION_ALIAS#/"
 );
 $arDefaultVariableAliases404 = Array();
 $arDefaultVariableAliases = Array();

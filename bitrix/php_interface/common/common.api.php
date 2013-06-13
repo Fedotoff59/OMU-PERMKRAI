@@ -23,6 +23,16 @@ define("ERR_MESSAFE_SEF_MODE", "Ошибка! Для работы компоне
 // Задаем текстовые константы для постраничной навигации
 define("TEXT_NEXT_PAGE", "Следующая страница");
 define("TEXT_PREV_PAGE", "Предыдущая страница");
+// Задаем константы направлений услуг
+define("SEC_SERVICE_EDU_ID", 155);
+define("SEC_SERVICE_HEALTH_ID", 156);
+define("SEC_SERVICE_HOUSING_ID", 157);
+define("SEC_SERVICE_EMPLOYMENT_ID", 159);
+define("SEC_SERVICE_SECURITY_ID", 160);
+define("SEC_SERVICE_CULTURE_ID", 158);
+define("SEC_SERVICE_SPORT_ID", 163);
+define("SEC_SERVICE_TRADE_ID", 161);
+define("SEC_SERVICE_TRANSPORT_ID", 162);
 /*
  * Функция возвращает данные о текущем отчетном периоде
  * 
@@ -92,6 +102,7 @@ function pagenav($curpage, $elcount, $eltopagelimit = 15, $pageingrouplimit = 5)
     if ($pageend > $totalpages)
         $pageend = $totalpages;
     $arNav['ACTIVE_PAGE'] = $curpage;
+    $arNav['SIZE_PAGE'] = $eltopagelimit;
     $arNav['START_PAGE'] = $pagestart;
     $arNav['END_PAGE'] = $pageend;
     $arNav['START_NAV'] = $navstart;
@@ -138,5 +149,11 @@ function count_providers($arLocationsIDS, $ServiceID) {
         $CountProviders = $i;
     endif;
     return $CountProviders;
+}
+
+function GoTo404() {
+   @define("ERROR_404","Y");
+   if(function_exists("LocalRedirect"))
+      LocalRedirect("/404.php"); 
 }
 ?>
