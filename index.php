@@ -34,7 +34,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 <!--[if lte IE 7]>
 <div class="clearfix">&nbsp;</div>
 <![endif]-->
-<a href="/ratings/">
+
  <?
     $APPLICATION->IncludeComponent(
         "mvector:services.infographic",
@@ -44,7 +44,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
         ), 
         false
     ); 
-    ?> </a>
+    ?> 
 
 <!-- banner-hold -->
  

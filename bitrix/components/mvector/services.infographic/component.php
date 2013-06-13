@@ -2,8 +2,9 @@
 if(CModule::IncludeModule("iblock")):
 
     $arComServices = CServices::GetServices();
-    $arLocation = CLocations::GetLocationParams($arParams['LOCATION_ID']);
-    $IB_PROVIDERS_ID = $arLocation[$arParams['LOCATION_ID']]['IB_PROVIDERS_ID'];
+    $LocationID = $arParams['LOCATION_ID'];
+    $CurLocatin = CLocations::GetLocationParams($LocationID);
+    $CurLocatinAlias = $CurLocatin[$LocationID]['LOCATION_ALIAS'];
     $arResult = Array();
     $arResult['COUNT_PROVIDERS'] = Array();
     // Проверка числа поставщиков
@@ -12,19 +13,10 @@ if(CModule::IncludeModule("iblock")):
         unset($arServicesIDs);
         foreach ($arServices['ELEMENTS'] as $Service_ID => $Service_Name)
             $arServicesIDs[] = $Service_ID;
-    $arProviders = Array();
-    $arSelect = Array("ID", "NAME");
-    $arFilter = Array("IBLOCK_ID" => $IB_PROVIDERS_ID, 
-                      "ACTIVE" => "Y", 
-                      "PROPERTY_SERVICES.ID" => $arServicesIDs
-                );
-    $res = CIBlockElement::GetList(Array(), $arFilter, false, false, $arSelect);
-    while($ob = $res->GetNextElement())
-     {
-            $arProviders[] = $ob->GetFields();
-     }
-     $arResult['COUNT_PROVIDERS'][] = count($arProviders);
-     //print_r($arServicesIDs);
+        $CountProviders = CProviders::CountProviders($LocationID, $arServicesIDs);
+        $arResult['COUNT_PROVIDERS'][] = $CountProviders;
+        $arResult['S_PROVIDERS_URLS'][] = ($CountProviders > 0) ? 
+            '/services/providers/'.$Section_ID.'/'.$CurLocatinAlias.'/' : '#';
     }
 endif;
     $this->IncludeComponentTemplate();

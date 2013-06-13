@@ -10,19 +10,19 @@
                         <table>
                             <tbody>
                                 <tr>
-                                    <td><strong class="item1"><?=$arResult['COUNT_PROVIDERS'][0]?></strong></td>
-                                    <td><strong class="item2"><?=$arResult['COUNT_PROVIDERS'][1]?></strong></td>
-                                    <td class="last"><strong class="item3"><?=$arResult['COUNT_PROVIDERS'][2]?></strong></td>
+                                    <td><strong class="item1"><a href="<?=$arResult['S_PROVIDERS_URLS'][0]?>"><?=$arResult['COUNT_PROVIDERS'][0]?></a></strong></td>
+                                    <td><strong class="item2"><a href="<?=$arResult['S_PROVIDERS_URLS'][1]?>"><?=$arResult['COUNT_PROVIDERS'][1]?></a></strong></td>
+                                    <td class="last"><strong class="item3"><a href="<?=$arResult['S_PROVIDERS_URLS'][2]?>"><?=$arResult['COUNT_PROVIDERS'][2]?></a></strong></td>
                                 </tr>
                                 <tr>
-                                    <td><strong class="item4"><?=$arResult['COUNT_PROVIDERS'][3]?></strong></td>
-                                    <td><strong class="item5"><?=$arResult['COUNT_PROVIDERS'][4]?></strong></td>
-                                    <td class="last"><strong class="item6"><?=$arResult['COUNT_PROVIDERS'][5]?></strong></td>
+                                    <td><strong class="item4"><a href="<?=$arResult['S_PROVIDERS_URLS'][3]?>"><?=$arResult['COUNT_PROVIDERS'][3]?></a></strong></td>
+                                    <td><strong class="item5"><a href="<?=$arResult['S_PROVIDERS_URLS'][4]?>"><?=$arResult['COUNT_PROVIDERS'][4]?></a></strong></td>
+                                    <td class="last"><strong class="item6"><a href="<?=$arResult['S_PROVIDERS_URLS'][5]?>"><?=$arResult['COUNT_PROVIDERS'][5]?></a></strong></td>
                                 </tr>
                                 <tr class="other">
-                                    <td><strong class="item7"><?=$arResult['COUNT_PROVIDERS'][6]?></strong></td>
-                                    <td><strong class="item8"><?=$arResult['COUNT_PROVIDERS'][7]?></strong></td>
-                                    <td class="last"><strong class="item9"><?=$arResult['COUNT_PROVIDERS'][8]?></strong></td>
+                                    <td><strong class="item7"><a href="<?=$arResult['S_PROVIDERS_URLS'][6]?>"><?=$arResult['COUNT_PROVIDERS'][6]?></a></strong></td>
+                                    <td><strong class="item8"><a href="<?=$arResult['S_PROVIDERS_URLS'][7]?>"><?=$arResult['COUNT_PROVIDERS'][7]?></a></strong></td>
+                                    <td class="last"><strong class="item9"><a href="<?=$arResult['S_PROVIDERS_URLS'][8]?>"><?=$arResult['COUNT_PROVIDERS'][8]?></a></strong></td>
                                 </tr>
                             </tbody>
                         </table>
