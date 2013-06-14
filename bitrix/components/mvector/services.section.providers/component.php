@@ -43,6 +43,6 @@ foreach($arProviders as $Pid => $curProvider)
 // Передаем переменные в массив результатов
 $arResult['PAGENAV'] = $arNav;
 $arResult['PROVIDERS'] = $arProviders;
-
+//echo '<pre>'; print_r($arResult); echo '</pre>';
 $this->IncludeComponentTemplate();
 ?>

@@ -34,8 +34,7 @@ $APPLICATION->SetPageProperty("NOT_SHOW_NAV_CHAIN", "Y");
 <!--[if lte IE 7]>
 <div class="clearfix">&nbsp;</div>
 <![endif]-->
-
- <?
+<?
     $APPLICATION->IncludeComponent(
         "mvector:services.infographic",
         ".default",

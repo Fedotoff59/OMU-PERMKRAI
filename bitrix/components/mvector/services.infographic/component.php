@@ -16,7 +16,7 @@ if(CModule::IncludeModule("iblock")):
         $CountProviders = CProviders::CountProviders($LocationID, $arServicesIDs);
         $arResult['COUNT_PROVIDERS'][] = $CountProviders;
         $arResult['S_PROVIDERS_URLS'][] = ($CountProviders > 0) ? 
-            '/services/providers/'.$Section_ID.'/'.$CurLocatinAlias.'/' : '#';
+            '/services/providers/'.$Section_ID.'/'.$CurLocatinAlias.'/' : 'javascript:void(0)';
     }
 endif;
     $this->IncludeComponentTemplate();

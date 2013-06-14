@@ -7,7 +7,7 @@
                         <strong>Количество поставщиков (по направлениям)</strong>
                     </div>
                     <div class="slide">
-                        <table>
+                        <table id="secton_providers">
                             <tbody>
                                 <tr>
                                     <td><strong class="item1"><a href="<?=$arResult['S_PROVIDERS_URLS'][0]?>"><?=$arResult['COUNT_PROVIDERS'][0]?></a></strong></td>
