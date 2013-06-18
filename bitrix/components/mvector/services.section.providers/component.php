@@ -33,13 +33,17 @@ $arNav = pagenav($CurentPage, $countProviders, ELEMENTS_PER_PAGE, PAGES_IN_GROUP
 
 // Получаем выборку поставщиков в соответствии с запросом
 $arProviders = CProviders::GetProviders($Location_ID, $arServicesIDs, $arNav);
+
 // Получаем имена услуг поставщиков
 foreach($arProviders as $Pid => $curProvider)
     foreach($curProvider['PROVIDER_FORM_URLS'] as $Sid => $SLink) {
         $curService = CServices::GetServicesParams($Sid);
         $arProviders[$Pid]['PROVIDER_SERVICE_NAMES'][$Sid] = $curService[$Sid]['SERVICE_NAME'];
     }
-
+// Если в выборке 1 поставщик и он оказывает одну услугу, переадресуем на форму оценки
+if ($countProviders == 1 && count($curProvider['PROVIDER_FORM_URLS']) == 1)
+    LocalRedirect('/services/'.$Sid.'/providers/'.$Location_Alias.'/'.$Pid.'/');
+    
 // Передаем переменные в массив результатов
 $arResult['PAGENAV'] = $arNav;
 $arResult['PROVIDERS'] = $arProviders;

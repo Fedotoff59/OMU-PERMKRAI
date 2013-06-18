@@ -15,7 +15,7 @@ ShowMessage($arParams["~AUTH_RESULT"]);
 	<p><?echo GetMessage("AUTH_EMAIL_WILL_BE_SENT")?></p>
 <?endif?>
 <noindex>
-<form method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" class="registration">
+<form method="post" action="<?=$arResult["AUTH_URL"]?>" name="bform" class="registration" onsubmit="return check_register_form()">
     
 <?
 if (strlen($arResult["BACKURL"]) > 0)
@@ -91,6 +91,11 @@ if (strlen($arResult["BACKURL"]) > 0)
 		<?
 	}
 	/* CAPTCHA */?>
+        <p>
+            <input type="checkbox" name="agreement" id="agreement">
+            <label for="agreement">Я принимаю</label> <a href="javacript:void(0)" id="agreement-link">соглашения на обработку персональных данных.</a>
+            
+        </p>
             <span class="submit">
                 <input type="submit" name="Register" class="btn" value="Зарегистрироваться" />
                 <span class="r"></span>

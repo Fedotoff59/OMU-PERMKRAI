@@ -32,7 +32,7 @@
 	<p>Отчет сформирован в соответствии с условиями конфигуратора</p>
     </div>
 </div>
-<h2>Конфигуратор очтета</h2>
+<h2>Конфигуратор отчета</h2>
 <div class="btn-row2">
     <a href="#" class="submit2" id="config-report-filter"><span><span>Сформировать фильтр</span></span></a>
 </div>

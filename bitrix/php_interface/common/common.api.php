@@ -23,6 +23,8 @@ define("ERR_MESSAFE_SEF_MODE", "Ошибка! Для работы компоне
 // Задаем текстовые константы для постраничной навигации
 define("TEXT_NEXT_PAGE", "Следующая страница");
 define("TEXT_PREV_PAGE", "Предыдущая страница");
+// Задаем ID пользовательского соглашения
+define("ID_USER_AGREEMENT", 17944);
 // Задаем константы направлений услуг
 define("SEC_SERVICE_EDU_ID", 155);
 define("SEC_SERVICE_HEALTH_ID", 156);
