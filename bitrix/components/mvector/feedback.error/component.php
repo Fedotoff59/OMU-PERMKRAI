@@ -8,7 +8,7 @@ if (check_bitrix_sessid() && $_SERVER['REQUEST_METHOD'] == "POST" && !empty($_RE
 	$arMailFields["ERROR_REFERER"] = $_REQUEST["error_referer"];
 	$arMailFields["ERROR_USERAGENT"] = $_REQUEST["error_useragent"];
 
-	CEvent::Send("SEND_ERROR", SITE_ID, $arMailFields);
+	CEvent::Send("SEND_ERROR", 's1', $arMailFields);
 }
 $this->IncludeComponentTemplate();
 ?>
